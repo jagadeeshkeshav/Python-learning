@@ -1,0 +1,56 @@
+800-654-5669 - mileage plan 
+
+
+import re
+line = '''
+Queue                    Rate Limit(in pps)       Protocols
+0                        600
+1                        1000
+2                        300                      IGMP MLD
+3                        1300                     VLT NDS
+4                        2000                     IPV6_ICMP IPV4_ICMP
+5                        400                      ARP_REQ ICMPV6_RS ICMPV6_NS ISCSI
+6                        600                      ARP_RESP ICMPV6_RA ICMPV6_NA SSH TELNET TACACS NTP FTP'''
+pattern ="(\d+)\s+(\d+)\s*(.*)"
+for l in line.splitlines():
+    match=re.search(pattern,l)
+    if match:
+        queue = {match.group(1):{match.group(2):str(re.split('\s+', match.group(3)))}}
+        print queue
+                                                                            
+'''    if match: print "1:"+match.group(1)+" 2:"+match.group(2)+" 3:"+str(re.split('\s+', match.group(3)))
+v = re.split('\s',match.group(1))
+print v'''
+
+
+
+import re, pprint
+line = '''
+Queue                    Rate Limit(in pps)       Protocols
+0                        600
+1                        1000
+2                        300                      IGMP MLD
+3                        1300                     VLT NDS
+4                        2000                     IPV6_ICMP IPV4_ICMP
+5                        400                      ARP_REQ ICMPV6_RS ICMPV6_NS ISCSI
+6                        600                      ARP_RESP ICMPV6_RA ICMPV6_NA SSH TELNET TACACS NTP FTP'''
+queue={}
+ptc ={}
+pattern ="(\d+)\s+(\d+)\s*(.*)"
+for l in line.splitlines():
+    match=re.search(pattern,l)
+    if match:
+#        if match.group(0) is not in queue:
+        #queue=({str(re.split('\s+', match.group(3))):{'QUEUE':match.group(1),'RATE':match.group(2)}})
+        queue[match.group(1)] = {'RATE': match.group(2), 'Protocols': match.group(3).split(' ')}
+        #print queue
+        for p in match.group(3).split(' '):
+            if p not in ptc: ptc[p] = {}
+            ptc[p].update({'Q': match.group(1), 'RATE': match.group(2)})
+#pprint.pprint(queue)
+pprint.pprint(ptc)
+print (ptc['SSH']['RATE'])
+                                                                            
+'''    if match: print "1:"+match.group(1)+" 2:"+match.group(2)+" 3:"+str(re.split('\s+', match.group(3)))
+v = re.split('\s',match.group(1))
+print v'''
