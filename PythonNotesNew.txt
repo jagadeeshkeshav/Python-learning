@@ -1,0 +1,3404 @@
+﻿
+Python Unit Test Frameworks - Very Important (how to build one or improve)
+Fundamentals of Python: Data Structures (Fremont Library Electronic version)
+Python Algorithms: Mastering Basic Algorithms in the Python Language, Second Edition (Fremont Library)
+Foundations of Python Network Programming, Third Edition (Fremont Library)
+All things that you have put in your resume (Git/Gerrit, Jenkins, OpenStack)
+Specifically for AWS : Solid TCP/IP, HTTP fundamentals, REST Architecture
+Situational Questions : Tell me about a time when .., Why Amazon, etc
+Openstack + Python
+Most popular libraries and how to use them
+Modules and Packages - Real good Understanding (You will be developing Libraries and Frameworks)
+Go through the vipp_uitls.py and understand the structure.
+Submit some code into GITHub
+At Amazon, every code must be able to handle date of infinite size.
+
+
+Python documentation online - how things are implemented (Python 3.5 has amazing new features)
+https://docs.python.org/3/library/index.html
+Concentrate on solving problems and Applications, not just the language itself 
+https://leetcode.com/
+
+
+On Ericsson ITM:
+----------------
+Cloud Fundamentals: Analytics for Enterprises. Algorithms search and index data (WBL LZU1400053)
+Ericsson IAAS
+Ericsson PAAS
+Ericsson How to build Cloud Applications
+Web Services and XML (WBL wd_xmle_a05_it_enus)
+XML APIs (WBL 213609_eng)
+Programming and Deploying Apache Spark Applications (WBL df_apsf_a01_it_enus)
+
+
+
+YouTube videos:
+https://www.youtube.com/watch?v=OSGv2VnC0go
+https://www.youtube.com/watch?v=EiOglTERPEo
+https://www.youtube.com/watch?v=wf-BqAjZb8M
+https://www.youtube.com/watch?v=0oTh1CXRaQ0
+https://www.youtube.com/watch?v=g0gNWGg2JxM
+
+
+WRITING GOOD CODE
+-----------------
+
+0) Always include the standard boilerplate if __name__ == '__main__' and call the main() function
+1) Always write Functions which are extensible (meaning optional parameters).
+2) Always include the 'docstring' inside each Function you write.
+3) Always look out for possible code failures and handle exceptions gracefully (try.. except.. finally).
+   Python uses try...except blocks to handle exceptions, and the raise statement to generate them.
+
+	if size < 0:
+		raise ValueError('number must be non-negative')
+
+		The syntax for raising an exception is simple enough. Use the raise statement, followed by the exception
+		name, and an optional human-readable string for debugging purposes. The syntax is reminiscent of calling a
+		function. (In reality, exceptions are implemented as classes, and this raise statement is actually creating an
+		instance of the ValueError class and passing the string 'number must be non-negative' to its initialization method.
+
+		You don’t need to handle an exception in the function that raises it. If one function
+		doesn’t handle it, the exception is passed to the calling function, then that function’s
+		calling function, and so on “up the stack.” If the exception is never handled, your
+		program will crash, Python will print a “traceback” to standard error, end of that.
+
+4) Catch Import Errors as below. Importing a fallback Module if required Module is not available.
+
+		try:
+			from lxml import etree
+		except ImportError:
+			import xml.etree.ElementTree as etree
+
+		if etree:
+			# do something
+		else:
+			# continue anyway
+			
+
+
+
+BASIC DATATYPES AND THEIR PERSONALITY
+-------------------------------------
+
+Tuple 		= Ordered, Immutable, uses ()
+List 		= Ordered, Mutable, uses []		
+Set 		= Unordered, Mutable, uses {} or set()	
+Dictionary 	= Unordered, Mutable, uses {} 
+			
+Mutability of Sets:
+-------------------
+>>>> x = set([1, 2, 3])
+>>>> y = x
+>>>> 
+>>>> y |= set([4, 5, 6])
+
+>>>> print x
+set([1, 2, 3, 4, 5, 6])
+>>>> print y
+set([1, 2, 3, 4, 5, 6])
+
+Both x and y are pointing to the same object. 
+
+			
+			
+Dealing with Exceptions:
+------------------------
+
+def main():
+  try:
+    for line in readfile('file1.txt'):
+        print(line.strip())
+  except IOError as e:
+        print("Cannot read file %s" % e)  <-- kicks in when File doesn't exist
+  except ValueError as e:
+        print("Wrong file extension %s" % e)  <-- kicks in when Filename is not in expected format
+
+def readfile(filename):
+   if filename.endswith('.txt'):
+       fh = open(filename)
+       return fh.readlines()
+   else:
+      raise ValueError('Filename must end with .txt')
+
+main()
+
+eussjlts0615 [15:37] [enavsre/Desktop/Python-3.5.1] -> python file.py  <-- filename = 'file1.txt'
+Hello Naveen
+What a wonderful day this is
+Enjoy while the Sunshine lasts
+eussjlts0615 [15:38] [enavsre/Desktop/Python-3.5.1] -> python file.py  <-- filename = 'file1'
+Wrong file extension Filename must end with .txt
+eussjlts0615 [15:31] [enavsre/Desktop/Python-3.5.1] -> python file.py  <-- file doesn't exist
+Cannot read file, [Errno 2] No such file or directory: 'file1.txt'
+eussjlts0615 [15:31] [enavsre/Desktop/Python-3.5.1] ->
+
+
+Dealing with Multi Exception Errors:
+------------------------------------
+
+def main():
+  try:
+    f = open('filex.txt')    <-- Raises FileNotFoundError if file doesn't exist
+	x=1/0                    <-- Raises ZeroDivisionError
+  except FileNotFoundError as e:
+    print("File open failed %s", % e)
+  except ZeroDivisionError as e:
+    print("Division failed %s", % e)
+  except:                    <-- General exception (should be the last exception)
+    print("Unknown probem occured")
+	
+main()
+
+
+Ignoring the Exception:
+-----------------------
+
+def main():
+    counter=0
+    try:
+        fh = open('file1.txt'):  <-- if the file doesn't exist, control goes to 'except:'
+		fh.readlines()    <-- this will not get executed if above line fails
+    except:
+	    counter += 1
+        pass   <-- this will ignore the Exception Error
+    finally:   <-- this will run whether or not an exception was raised
+		print('All work was done')
+		print('there were %d errors' % counter)
+		
+
+Decorators:
+===========
+
+class Files:
+   def __init__(self, **kwargs):
+      self.properties = kwargs
+
+   def copy(self):
+      print("copying")
+
+   def move(self):
+      print("moving")
+
+   def remove(self):
+      print("removing")
+
+   def get_properties(self):
+      return self.properties
+
+   def get_property(self,key):
+      return self.properties.get(key,None)
+
+   @property              <-- Decorate the 'privacy' function with 'property' decorator
+   def privacy(self):
+      return self.properties.get('privacy',None)
+
+   @privacy.setter
+   def privacy(self,c):
+      self.properties['privacy'] = c
+
+   @privacy.deleter
+   def privacy(self):
+      del self.properties['privacy']
+
+
+def main():
+
+  imageDoc = Files(privacy="secret")   # Setting up a Key-Value when Files object is created
+  print(imageDoc.get_property("privacy"))
+  imageDoc.privacy = "archive"
+  print(imageDoc.privacy)
+
+main()
+
+
+eussjlts0615 [17:11] [enavsre/Desktop/Python-3.5.1] -> ./python decorators.py
+secret
+archive
+eussjlts0615 [17:11] [enavsre/Desktop/Python-3.5.1] -> 
+
+
+LAMBDA functions:
+-----------------
+
+>>> t = lambda x: x**2   <-- Lambda functions return the value of a single expression
+>>> print(t(3))
+9
+>>> 
+>>> result = lambda x,y: x**y    <-- Lambda functions can take more than one operator                                
+>>> result(15,3)
+3375
+>>>
+
+Itemgetter method in Operator Module
+------------------------------------
+
+import operator
+getseconditem = operator.itemgetter(1)
+ls = ['a','b','c','d','e']
+print(getseconditem(ls))
+print(operator.itemgetter(1,3,5)('abcdef'))
+
+eussjlts0615 [17:38] [enavsre/Desktop/Python-3.5.1] -> ./python itemget.py
+b
+('b', 'd', 'f')
+eussjlts0615 [17:38] [enavsre/Desktop/Python-3.5.1] -> 
+
+------------
+ENUMERATION:
+------------
+Enumerate works on Iterable objects
+Enumarated object returns a tuple of (index,item) in each iteration
+Enumeration removes the need to keep track of current index in a loop
+
+names = ['albert','bob','charlie']
+for i,name in enumerate(names):    <-- No need to initialize 'i'
+    print(i,name)
+
+eussjlts0602 [14:06] [enavsre/Desktop/Python-3.5.1] -> ./python test.py
+0 albert
+1 bob
+2 charlie
+eussjlts0602 [14:06] [enavsre/Desktop/Python-3.5.1] -> 
+
+Another example:
+~~~~~~~~~~~~~~~~
+
+>>> seasons = ['spring','summer','autumn','winter']
+>>> eObj = enumerate(seasons)
+>>> next(eObj)
+(0, 'spring')
+>>> next(eObj)
+(1, 'summer')
+>>> next(eObj)
+(2, 'autumn')
+>>> next(eObj)
+(3, 'winter')
+>>> next(eObj)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+>>> 
+>>> list(enumerate(seasons))
+[(0, 'spring'), (1, 'summer'), (2, 'autumn'), (3, 'winter')]
+>>> list(enumerate(seasons, start=5))
+[(5, 'spring'), (6, 'summer'), (7, 'autumn'), (8, 'winter')]
+>>> 
+
+
+--------------------
+Generator Functions:
+--------------------
+
+Generators work like normal functions, however will 'yield' a value instead of 'return'.
+It is generally used when the sequence of numbers or list items to process is very large.
+Instead of building the entire sequence in memory, sequence is built/consumed one item at a time.
+
+Few things to note:
+-------------------
+
+1) The control returns to the caller at the point the 'yield' is called.
+
+2) All the variables and context info is frozen until the Generator is called again.
+   The next time the Generator gets called, it starts from the code line next to 'yield'
+
+3) If you need to generate a Generator object, simply enclose it in parenthesis.
+   For example: nums = (x*2 for x in range(1,100))
+
+4) All Generator Objects implement a next() method internally to iterate over 
+   the items one at a time. This next() method need not be specifically implemented.
+   Hence to consume the Generator, you would do something like this: next(nums)
+
+5)    
+   
+
+Example-1:
+----------   
+   
+def paid_customer():
+   print('Entering Generator Function')
+   for custid in range(1,10):            <-- the range() in Python-3 is a Generator object
+       print('Current customer id = ' + str(custid))
+       if custid < 6:
+           yield custid          <-- makes this function a Generator
+
+if __name__ == '__main__':
+    for cid in paid_customer():  <-- Treating the function as an Iterable
+        print(cid)
+
+eussjlts0602 [14:25] [enavsre/Desktop/Python-3.5.1] -> ./python gen.py
+Entering Generator Function
+Current customer id = 1
+1
+Current customer id = 2
+2
+Current customer id = 3
+3
+Current customer id = 4
+4
+Current customer id = 5
+5
+Current customer id = 6
+Current customer id = 7
+Current customer id = 8
+Current customer id = 9
+eussjlts0602 [14:25] [enavsre/Desktop/Python-3.5.1] ->
+	
+	
+Example-2:
+----------
+
+>>> numsquared = (x**2 for x in range(1,100000,5))  <-- makes 'numsquared' a Generator Object (Not a generator function)
+>>> next(numsquared)
+1
+>>> next(numsquared)
+36
+>>> next(numsquared)
+121
+>>> next(numsquared)
+256
+>>> next(numsquared)
+441
+>>> next(numsquared)
+676
+>>>	
+
+The above can also be implemented as a Generator function (as shown below).
+
+def sendmesquared():
+  numsquared = (x**2 for x in range(2,100,5))   <-- Create a Generator 
+  for num in numsquared:
+      yield num              <-- Makes this function itself as Generator function
+
+if __name__ == '__main__':
+    for nextsq in sendmesquared():    <-- Using the Function 'sendmesquared' as an Iterable
+        print(nextsq)
+
+
+eussjlts0602 [17:19] [enavsre/Desktop/Python-3.5.1] -> ./python gen1.py
+4
+49
+144
+289
+484
+729
+1024
+1369
+1764
+2209
+2704
+3249
+3844
+4489
+5184
+5929
+6724
+7569
+8464
+9409
+eussjlts0602 [17:19] [enavsre/Desktop/Python-3.5.1] ->
+	
+	
+Example-3:
+----------
+
+def main():
+    print("this is a sample generator function")
+    for i in inclusive_range(0,10,1):
+        print(i,end=' ')
+
+def inclusive_range(start,stop,step):
+    x = start
+    while x <= stop:
+        yield x
+        x += step
+
+main()
+
+eussjlts0602 [18:07] [enavsre/Desktop/Python-3.5.1] -> ./python gen2.py
+this is a sample generator function
+0 1 2 3 4 5 6 7 8 9 10 
+eussjlts0602 [18:07] [enavsre/Desktop/Python-3.5.1] ->
+
+
+Example-4:
+----------
+
+class inclusive_range:
+    def __init__(self,*args):
+        numargs = len(args)
+        if numargs < 1:
+            raise TypeError("requires atleast 1 parameter")
+        elif numargs == 1:
+            self.stop = args[0]
+            self.step = 1
+            self.start = 0
+        elif numargs == 2:
+            (self.start, self.stop) = args
+            self.step = 1
+        elif numargs == 3:
+            (self.start, self.stop, self.step) = args
+        else:
+            raise TypeError('expected atmost 3 parameters. received {}'.format(numargs))
+
+    def __iter__(self):
+        print('Going to iterate now')
+        i = self.start
+        while i <= self.stop:
+            yield i
+            i += self.step
+
+def main():
+    print('Implementing a Generator Class')
+    R = inclusive_range(5,25,2)       <-- Create an Instance Object of Class 'inclusive_range'
+    for x in R:                       <-- 'r' is the object that is iterable now because it 
+        print(x,end=' ')              <-- it implements the __iter__ method
+
+main()
+
+
+eussjlts0602 [18:31] [enavsre/Desktop/Python-3.5.1] -> ./python gen3.py
+Implementing a Generator Class
+Going to iterate now
+5 7 9 11 13 15 17 19 21 23 25
+eussjlts0602 [18:31] [enavsre/Desktop/Python-3.5.1] -> 
+
+
+	
+--------------		
+eval function
+--------------
+Used to test certain expressions without actually affecting the change.
+Can be used to check the 'what if' condition or checking for certain state
+before affecting a change.
+
+>>> x = 2
+>>> eval('x+5')  <-- Do not make changes to x. Just check what the result of 'x+5' is !
+7
+>>> x
+2
+>>> eval('x==7')    <-- Checking the True or False condition
+False
+>>> eval('x==2')
+True
+>>> expression = eval('x+10')   <-- save the state for further testing
+>>> expression
+12
+>>>
+
+
+-------------
+iter function
+-------------
+To iter function returns an iterator object
+
+with open('file1.txt') as f:
+    for line in iter(f.readline,''):
+        print(line)
+
+eussjlts0602 [17:51] [enavsre/Desktop/Python-3.5.1] -> ./python iter.py 
+Hello Naveen
+What a wonderful day this is
+Enjoy while the Sunshine lasts
+eussjlts0602 [17:51] [enavsre/Desktop/Python-3.5.1] ->
+
+----------------------------
+File reading Tips and Tricks
+----------------------------
+
+fh.seek(10)   <-- go to 10th byte inside the file
+fh.read(5)    <-- read 5-bytes starting from 10th byte location
+fh.tell()     <-- tell the current byte location
+fh.read(7)    <-- read 7-bytes starting from 15th byte location
+
+
+----------------
+Nested Sequences		
+----------------
+
+>>> seasons = ['favorite',('spring','summer'),['fall','winter']]
+>>> seasons[0]
+'favorite'
+>>> seasons[1]
+('spring', 'summer')
+>>> seasons[2]
+['fall', 'winter']
+>>> 
+
+
+----------------
+Parsing XML DOM
+----------------
+
+https://docs.python.org/3/library/xml.dom.html#module-xml.dom
+https://docs.python.org/3/library/xml.dom.minidom.html#module-xml.dom.minidom
+
+xml.dom.minidom is a minimal implementation of the Document Object Model interface, with an API similar to that in other languages. It is intended to be simpler than the full DOM and also significantly smaller. Users who are not already proficient with the DOM should consider using the xml.etree.ElementTree module for their XML processing instead.
+
+sample.xml
+----------
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<person>
+  <firstname>Alex</firstname>
+  <lastname>Whitman</lastname>
+  <home>Sherman</home>
+  <skill name="C Plus Plus"/>
+  <skill name="SQL"/>
+  <skill name="VMware"/>
+  <skill name="Cloud"/>
+</person>
+
+
+Python program to parse the above XML
+-------------------------------------
+
+import xml.dom.minidom
+
+def main():
+
+    doc = xml.dom.minidom.parse("sample.xml")
+
+    print('nodeName = ' + str(doc.nodeName))
+    print('nodeType = ' + str(doc.nodeType))
+    print('attributes = ' + str(doc.attributes))
+    print('childNodes = ' + str(doc.childNodes))
+    print('firstChild.tagName = ' + str(doc.firstChild.tagName))
+
+    skills = doc.getElementsByTagName("skill")
+    print("\nTo begin with, there are %d skills: \n" % skills.length)
+
+    for index,skill in enumerate(skills):
+        print("Skill #",index,"-",skill.getAttribute("name"))
+
+    newSkill = doc.createElement("skill")
+    newSkill.setAttribute("name","javascript")
+    doc.firstChild.appendChild(newSkill)
+
+    skills = doc.getElementsByTagName("skill")
+    print("\nAfter adding new skills, we have %d skills: \n" % skills.length)
+
+    for index,skill in enumerate(skills):
+        print("Skill #",index,"-",skill.getAttribute("name"))
+
+
+main()
+
+
+eussjlts0602 [17:20] [enavsre/Desktop/Python-3.5.1] -> ./python xmlparse.py
+nodeName = #document
+nodeType = 9
+attributes = None
+childNodes = [<DOM Element: person at 0x7f5a780339c8>]
+firstChild.tagName = person
+
+To begin with, there are 4 skills: 
+
+Skill # 0 - C Plus Plus
+Skill # 1 - SQL
+Skill # 2 - VMware
+Skill # 3 - Cloud
+
+After adding new skills, we have 5 skills: 
+
+Skill # 0 - C Plus Plus
+Skill # 1 - SQL
+Skill # 2 - VMware
+Skill # 3 - Cloud
+Skill # 4 - javascript
+
+eussjlts0602 [17:20] [enavsre/Desktop/Python-3.5.1] -> 
+
+
+If you need to find out if a file is an xml file, then check for the <?xml tag in the beginning of the line.
+
+----------------
+FILE OPERATIONS
+----------------
+
+Example-1:  
+----------
+Reading from one file and Writing to another
+
+infilehdl = open("file1.txt", 'r')
+outfilehdl = open("file2.txt", 'w')
+
+for line in infilehdl.readlines():
+    print(line,file=outfilehdl,end='')
+
+infilehdl.close()
+outfilehdl.close()
+
+
+Example-2: 
+----------
+Reading and Writing very large files
+
+eussjlts0602 [19:16] [enavsre/Desktop/Python-3.5.1] -> ls -l bigfile.txt 
+-rw-r--r-- 1 enavsre ussjpduip 26888890 Jun  1 19:16 bigfile.txt
+eussjlts0602 [19:16] [enavsre/Desktop/Python-3.5.1] -> 
+
+def main():
+
+   infilehdl = open('bigfile.txt','r')
+   outfilehdl = open('newbigfile.txt','w')
+
+   buffersize = 50000                       <-- Set buffersize=50 KB
+   buffer = infilehdl.read(buffersize)      <-- Read 50 KB at a time
+
+   while len(buffer):
+       outfilehdl.write(buffer)
+       print('.',end='')                    <-- Put a '.' after writing 50 KB of data
+       buffer = infilehdl.read(buffersize)  <-- Keep reading 50KB and processing
+
+   print()
+   print('Done processing the bigfile.txt')
+
+
+main()
+
+
+eussjlts0602 [19:16] [enavsre/Desktop/Python-3.5.1] -> ./python fileops1.py 
+..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+Done processing the bigfile.txt
+eussjlts0602 [19:16] [enavsre/Desktop/Python-3.5.1] -> 
+eussjlts0602 [19:17] [enavsre/Desktop/Python-3.5.1] -> ls -l | grep big
+-rw-r--r--  1 enavsre ussjpduip 26888890 Jun  1 19:16 bigfile.txt
+-rw-r--r--  1 enavsre ussjpduip 26888890 Jun  1 19:16 newbigfile.txt
+eussjlts0602 [19:17] [enavsre/Desktop/Python-3.5.1] -> 
+
+NOTE: There are 538 dots ('.') in the output printed, with one '.' for every 50 KB of filesize. 
+      If we cross verify, 538 x 50 KB = 26900 KB which is close to 26888.890 KB
+	
+	
+Example-3:
+----------
+Reading and Writing Binary files
+
+def main():
+
+   infilehdl = open('bday1.jpg','rb')       <-- Read in Binary mode
+   outfilehdl = open('bday2.jpg','wb')      <-- Write in Binary mode
+
+   buffersize = 50000                       <-- Set buffersize=50 KB
+   buffer = infilehdl.read(buffersize)      <-- Read 50 KB at a time
+
+   while len(buffer):
+       outfilehdl.write(buffer)
+       print('.',end='')                    <-- Put a '.' after writing 50 KB of data
+       buffer = infilehdl.read(buffersize)  <-- Keep reading 50KB and processing
+
+   print()
+   print('Copy Complete!')
+
+
+main()
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+FILE SYSTEM SHELL METHODS
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import os
+import shutil
+from os import path
+
+def main():
+
+    if path.exists("file1.txt"):                  <-- path.exists() 
+        fullpath = path.realpath('file1.txt')     <-- path.realpath()
+        location,filename = path.split(fullpath)  <-- path.split()
+        print('Location: ',location)
+        print('Filename: ',filename)
+        print('Fullpath: ',fullpath)
+    else:
+        fullpath = "No such file found"
+
+    srcfile = filename
+    dstfile = srcfile + '.bak'
+    shutil.copy(srcfile,dstfile)                  <-- Copy the file contents only
+    shutil.copystat(srcfile,dstfile)              <-- Copy the file attributes such as Permissions, Date etc.
+    print('Done with Copying file and all its Attributes')
+
+    root_dir,tail = path.split(fullpath)
+    shutil.make_archive("archive","zip",root_dir) <-- make_archive takes filename and extension for the archive
+    print('Done with Archiving files under ',root_dir)
+
+main()
+
+eussjlts0602 [19:49] [enavsre/Desktop/Python-3.5.1] -> ls -l | grep file1
+-rw-r--r--  1 enavsre ussjpduip       73 May 26 15:32 file1.txt
+eussjlts0602 [19:50] [enavsre/Desktop/Python-3.5.1] -> 
+eussjlts0602 [19:50] [enavsre/Desktop/Python-3.5.1] -> ./python shell.py
+Location:  /home/enavsre/Desktop/Python-3.5.1
+Filename:  file1.txt
+Fullpath:  /home/enavsre/Desktop/Python-3.5.1/file1.txt
+Done with Copying file and all its Attributes
+Done with Archiving files under /home/enavsre/Desktop/Python-3.5.1
+eussjlts0602 [19:50] [enavsre/Desktop/Python-3.5.1] ->
+eussjlts0602 [19:51] [enavsre/Desktop/Python-3.5.1] -> ls -l | grep file1
+-rw-r--r--  1 enavsre ussjpduip       73 May 26 15:32 file1.txt
+-rw-r--r--  1 enavsre ussjpduip       73 May 26 15:32 file1.txt.bak
+eussjlts0602 [19:51] [enavsre/Desktop/Python-3.5.1] ->  
+eussjlts0602 [20:01] [enavsre/Desktop/Python-3.5.1] -> ls -l archive.zip
+-rw-r--r-- 1 enavsre ussjpduip 232656881 Jun  1 20:00 archive.zip
+eussjlts0602 [20:01] [enavsre/Desktop/Python-3.5.1] ->
+ 
+ 
+PARSING DIRECTORY STRUCTURES
+----------------------------
+
+import os
+import sys
+
+def main():
+
+    path = sys.argv[1]                     <-- Takes the Second Argument
+    for path,dirs,files in os.walk(path):  <-- Walk through recursively on all dirs and files under path
+        print('Path : ',path)
+        print('Dirs : ',dirs)
+		for file in files:
+            print('File : ',file)
+
+main()
+
+
+eussjlts0602 [20:18] [Desktop/Python-3.5.1/test] -> ../python ../dir.py /home/enavsre/Desktop/Python-3.5.1/test
+Path :  /home/enavsre/Desktop/Python-3.5.1/test
+Dirs :  []
+File :  file1.txt
+File :  file2.txt
+File :  file3.txt
+eussjlts0602 [20:18] [Desktop/Python-3.5.1/test] -> 
+eussjlts0602 [20:17] [Desktop/Python-3.5.1/test] -> ll
+total 12
+drwxr-xr-x  2 enavsre ussjpduip 4096 Jun  1 20:17 ./
+drwxr-xr-x 19 enavsre ussjpduip 8192 Jun  1 20:17 ../
+-rw-r--r--  1 enavsre ussjpduip    0 Jun  1 20:17 file1.txt
+-rw-r--r--  1 enavsre ussjpduip    0 Jun  1 20:17 file2.txt
+-rw-r--r--  1 enavsre ussjpduip    0 Jun  1 20:17 file3.txt
+eussjlts0602 [20:17] [Desktop/Python-3.5.1/test] ->
+
+
+PROCESSING ZIP FILES
+--------------------
+
+eussjlts0602 [20:54] [Desktop/Python-3.5.1/test] -> ll
+-rw-r--r--  1 enavsre ussjpduip 268890 Jun  1 20:54 file1.txt
+-rw-r--r--  1 enavsre ussjpduip 268890 Jun  1 20:54 file2.txt
+-rw-r--r--  1 enavsre ussjpduip 268890 Jun  1 20:54 file3.txt
+eussjlts0602 [20:54] [Desktop/Python-3.5.1/test] -> 
+
+
+import zipfile
+
+fh = zipfile.ZipFile('codefiles.zip','w')  <-- Open a new Zip File
+fh.write('file1.txt')                      <-- Add file1.txt to Zip file
+fh.write('file2.txt')
+fh.write('file3.txt')          <-- Add file2.txt and file3.txt to Zip file
+
+
+eussjlts0602 [20:59] [Desktop/Python-3.5.1/test] -> ll
+-rw-r--r--  1 enavsre ussjpduip 806974 Jun  1 21:03 codefiles.zip  <-- Zip file created
+-rw-r--r--  1 enavsre ussjpduip 268890 Jun  1 20:54 file1.txt
+-rw-r--r--  1 enavsre ussjpduip 268890 Jun  1 20:54 file2.txt
+-rw-r--r--  1 enavsre ussjpduip 268890 Jun  1 20:54 file3.txt
+eussjlts0602 [20:59] [Desktop/Python-3.5.1/test] -> 
+eussjlts0602 [21:03] [Desktop/Python-3.5.1/test] -> unzip -l codefiles.zip
+Archive:  codefiles.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+   268890  06-01-2016 20:54   file1.txt
+   268890  06-01-2016 20:54   file2.txt
+   268890  06-01-2016 20:54   file3.txt
+---------                     -------
+   806670                     3 files
+eussjlts0602 [21:03] [Desktop/Python-3.5.1/test] -> 
+
+
+WORKING WITH GLOB MODULE
+------------------------
+
+>>> import glob
+>>> glob.glob('examples/*.xml') ①
+		['examples\\feed-broken.xml',
+		'examples\\feed-ns0.xml',
+		'examples\\feed.xml']
+>>> os.chdir('examples/') ②
+>>> glob.glob('*test*.py') ③
+		['alphameticstest.py',
+		'pluraltest1.py',
+		'pluraltest2.py',
+		'pluraltest3.py',
+		'pluraltest4.py',
+		'pluraltest5.py',
+		'pluraltest6.py',
+		'romantest1.py',
+		'romantest10.py',
+		'romantest2.py',
+		'romantest3.py',
+		'romantest4.py',
+		'romantest5.py',
+		'romantest6.py',
+		'romantest7.py',
+		'romantest8.py',
+		'romantest9.py']
+>>> glob.glob('*.py')
+['setup.py', 'python-gdb.py', 'python-config.py', 'file.py', 'decorators.py', 'itemget.py', 'gen.py', 'gen1.py', 'iter.py', 'gen2.py', 'gen3.py', 'name.py', 'xmlparse.py', 'xmlparse1.py', 'fileops1.py', 'fileops.py', 'test.py', 'shell.py', 'dir.py', 'os.py', 'os1.py', 'size.py']
+>>> 
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+WORKING WITH MODULES AND PACKAGES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import os
+import sys
+import datetime
+
+def main():
+   print("Script name is: ",sys.argv[0])
+   print(sys.platform)
+   print(os.path)
+   print(os.name)
+   print(os.getenv("path"))
+   print(os.getenv("username"))
+   print(os.getcwd())
+   now = datetime.datetime.now()
+   print(now)
+   print(now.year,now.month,now.day,now.hour)
+   
+main()
+
+eussjlts0602 [21:51] [enavsre/Desktop/Python-3.5.1] -> ./python os1.py
+Script name is:  os1.py
+linux
+<module 'posixpath' from '/home/enavsre/Desktop/Python-3.5.1/Lib/posixpath.py'>
+posix
+None
+None
+/home/enavsre/Desktop/Python-3.5.1
+2016-06-01 21:51:11.659160
+2016 6 1 21
+eussjlts0602 [21:51] [enavsre/Desktop/Python-3.5.1] -> 
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+NOTES FROM 'DIVING INTO PYTHON 3'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In Python, everything is an object in the sense that it can be assigned to a variable or passed as an argument to a function.
+
+(1) Always include a 'docstring' inside a Function 'def' using Triple quotes '''
+--------------------------------------------------------------------------------
+
+def approximate_size(size, a_kilobyte_is_1024_bytes=True):
+	'''Convert a file size to human-readable form.
+	Keyword arguments:
+		size -- file size in bytes
+		a_kilobyte_is_1024_bytes -- if True (default), use multiples of 1024
+		if False, use multiples of 1000
+	Returns: string
+	'''
+
+You can get the 'docstring' inside a function by calling the '__doc__' attribute.
+For example: approximate_size.__doc__
+	
+	
+(2) Adding a new search directory for Python to search for modules
+------------------------------------------------------------------
+
+>>> import sys
+>>> sys.path
+['', '/usr/local/lib/python35.zip', '/home/enavsre/Desktop/Python-3.5.1/Lib', '/home/enavsre/Desktop/Python-3.5.1/Lib/plat-linux', '/home/enavsre/Desktop/Python-3.5.1/build/lib.linux-x86_64-3.5', '/home/enavsre/.local/lib/python3.5/site-packages']
+>>> sys.path.insert(0,'/home/enavsre/Desktop/Python-3.5.1')
+>>> sys.path
+['/home/enavsre/Desktop/Python-3.5.1', '', '/usr/local/lib/python35.zip', '/home/enavsre/Desktop/Python-3.5.1/Lib', '/home/enavsre/Desktop/Python-3.5.1/Lib/plat-linux', '/home/enavsre/Desktop/Python-3.5.1/build/lib.linux-x86_64-3.5', '/home/enavsre/.local/lib/python3.5/site-packages']
+>>> 
+
+
+(3) Difference between 'append' and 'extend' methods for a list
+---------------------------------------------------------------
+
+>>> a_list = ['a', 'b', 'c']
+>>> a_list.extend(['d', 'e', 'f']) 
+>>> a_list
+['a', 'b', 'c', 'd', 'e', 'f']
+>>> len(a_list) 
+6
+>>> a_list[-1]
+'f'
+>>> a_list.append(['g', 'h', 'i']) 
+>>> a_list
+['a', 'b', 'c', 'd', 'e', 'f', ['g', 'h', 'i']]
+>>> len(a_list) 
+7
+>>> a_list[-1]
+['g', 'h', 'i']
+
+The extend() method takes a single argument, which is always a list, and adds each of the items of that list to a_list.
+On the other hand, the append() method takes a single argument, which can be any datatype. Here, you’re calling the 
+append() method with a list of three items.
+
+
+(4) Adding and removing items a Set:
+------------------------------------
+
+Remember that Set is a 'bag' of Unique values.
+
+>>> a_set = {1, 2}
+>>> a_set.add(4) 
+>>> a_set
+{1, 2, 4}
+>>> len(a_set) 
+3
+>>> a_set.add(1) 
+>>> a_set
+{1, 2, 4}
+>>> len(a_set) 
+3
+>>> a_set = {1, 2, 3}
+>>> a_set
+{1, 2, 3}
+>>> a_set.update({2, 4, 6}) 
+>>> a_set 
+{1, 2, 3, 4, 6}
+>>> a_set.update({3, 6, 9}, {1, 2, 3, 5, 8, 13}) 
+>>> a_set
+{1, 2, 3, 4, 5, 6, 8, 9, 13}
+>>> a_set.update([10, 20, 30]) 
+>>> a_set
+{1, 2, 3, 4, 5, 6, 8, 9, 10, 13, 20, 30}
+>>> a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}
+>>> a_set
+{1, 3, 36, 6, 10, 45, 15, 21, 28}
+>>> a_set.discard(10) 
+>>> a_set
+{1, 3, 36, 6, 45, 15, 21, 28}
+>>> a_set.discard(10) 
+>>> a_set
+{1, 3, 36, 6, 45, 15, 21, 28}
+>>> a_set.remove(21) 
+>>> a_set
+{1, 3, 36, 6, 45, 15, 28}
+>>> a_set.remove(21) 
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+KeyError: 21
+>>> a_set = {1, 3, 6, 10, 15, 21, 28, 36, 45}
+>>> a_set.pop() 
+1
+>>> a_set.pop()
+3
+>>> a_set.pop()
+36
+>>> a_set
+{6, 10, 45, 15, 21, 28}
+>>> a_set.clear() 
+>>> a_set
+set()
+>>> a_set.pop() 
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+KeyError: 'pop from an empty set'
+>>>
+
+
+5) NONE
+-------
+
+None is a special constant in Python. It is a null value. None is not the same as False. None is not 0. None is
+not an empty string. Comparing None to anything other than None will always return False.
+None is the only null value. It has its own datatype (NoneType). You can assign None to any variable, but you
+can not create other NoneType objects. All variables whose value is None are equal to each other.
+
+>>> type(None)
+<class 'NoneType'>
+>>> None == False
+False
+>>> None == 0
+False
+>>> None == ''
+False
+>>> None == None
+True
+>>> x = None
+>>> x == None
+True
+>>> y = None
+>>> x == y
+True
+
+
+6) Format Specifier
+-------------------
+
+return '{0:.1f} {1}'.format(size, suffix)
+
+{0} refers to size
+{1} refers to suffix
+.1f is the format specifier, which controls the decimal precision
+
+if size = 674.86 and suffix = GB, the above statement will return '674.9 GB'
+
+
+7) FIBONACCI SEQUENCE
+======================
+
+Note: Generators can be Expressions, Functions, or Classes where they implement an __iter__ method
+
+
+Writing a Generator function:
+-----------------------------
+
+def fib(max):
+	a, b = 0, 1 
+	while a < max:
+		yield a 
+		a, b = b, a + b
+
+for n in fib(1000):     <-- the 'fib(1000)' call will keep getting value of 'a'
+    print(n,end=',')        and hence needs to be handled by variable 'n' in a 'for' loop
+	
+	
+eussjlts0602 [20:14] [enavsre/Desktop/Python-3.5.1] -> ./python fib.py
+0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987
+eussjlts0602 [20:14] [enavsre/Desktop/Python-3.5.1] ->
+
+
+Writing a Class and Methods:
+----------------------------
+		
+class Fib:
+	'''iterator that yields numbers in the Fibonacci sequence'''
+
+	def __init__(self, max):      <-- the max value MUST be supplied when an instance is created
+		self.max = max
+	
+	def __iter__(self):           <-- iter(Fib) calls __iter__ method
+		self.a = 0
+		self.b = 1
+		return self
+
+	def __next__(self):           <-- next(Fib) calls __next__ method
+		fib = self.a
+		if fib > self.max:
+			raise StopIteration
+		self.a, self.b = self.b, self.a + self.b
+		return fib                                  <-- Do not 'yield'. Just 'return'
+
+N = Fib(100)
+for n in N:                 <-- for loop internally keeps calling the __next__ method until it receives StopIteration
+  print(n,end=' ')
+
+or 
+
+for n in Fib(1000):         <-- for loop internally keeps calling the __next__ method until it receives StopIteration
+  print(n,end=' ')
+
+Explanation:
+------------
+
+1. To build an iterator from scratch, Fib needs to be a class, not a function.
+
+2. “Calling” Fib(max) is really creating an instance of this class and calling its __init__() method with max. 
+The __init__() method saves the maximum value as an instance variable so other methods can refer to it later.
+
+3. The __iter__() method is called whenever someone calls iter(fib). (As you’ll see in a minute, a for loop will 
+call this automatically, but you can also call it yourself manually.) After performing beginning-of-iteration 
+initialization (in this case, resetting self.a and self.b, our two counters), the __iter__() method can return 
+any object that implements a __next__() method. In this case (and in most cases), __iter__() simply returns self, 
+since this class implements its own __next__() method.
+
+4. The __next__() method is called whenever someone calls next() on an iterator of an instance of a class.
+That will make more sense in a minute.
+
+5. When the __next__() method raises a StopIteration exception, this signals to the caller that the iteration
+is exhausted. Unlike most exceptions, this is not an error; it’s a normal condition that just means that the
+iterator has no more values to generate. If the caller is a for loop, it will notice this StopIteration
+exception and gracefully exit the loop. (In other words, it will swallow the exception.) This little bit of magic
+is actually the key to using iterators in for loops.
+
+6. To spit out the next value, an iterator’s __next__() method simply returns the value. Do not use yield
+here; that’s a bit of syntactic sugar that only applies when you’re using generators. Here you’re creating your
+own iterator from scratch; use return instead.
+
+>>> for n in Fib(1000):
+... print(n, end=' ')
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987
+
+
+There’s a bit of magic involved in for loops. Here’s what happens:
+
+• The for loop calls Fib(1000), as shown. This returns an instance of the Fib class. Call this fib_inst.
+
+• Secretly, and quite cleverly, the for loop calls iter(fib_inst), which returns an iterator object. Call this
+fib_iter. In this case, fib_iter == fib_inst, because the __iter__() method returns self, but the for
+loop doesn’t know (or care) about that.
+
+• To “loop through” the iterator, the for loop calls next(fib_iter), which calls the __next__() method on
+the fib_iter object, which does the next-Fibonacci-number calculations and returns a value. The for loop
+takes this value and assigns it to n, then executes the body of the for loop for that value of n.
+
+• How does the for loop know when to stop? I’m glad you asked! When next(fib_iter) raises a
+StopIteration exception, the for loop will swallow the exception and gracefully exit. (Any other exception
+will pass through and be raised as usual.) And where have you seen a StopIteration exception? In the
+__next__() method, of course!
+
+
+8) COMMON PYTHON LIBRARY MODULES AND THEIR METHODS
+---------------------------------------------------
+
+>>> import itertools
+>>> dir(itertools)        
+['__doc__', '__loader__', '__name__', '__package__', '__spec__', '_grouper', '_tee', '_tee_dataobject', 'accumulate', 'chain', 'combinations', 'combinations_with_replacement', 'compress', 'count', 'cycle', 'dropwhile', 'filterfalse', 'groupby', 'islice', 'permutations', 'product', 'repeat', 'starmap', 'takewhile', 'tee', 'zip_longest']
+>>> import collections
+>>> dir(collections)
+['AsyncIterable', 'AsyncIterator', 'Awaitable', 'ByteString', 'Callable', 'ChainMap', 'Container', 'Coroutine', 'Counter', 'Generator', 'Hashable', 'ItemsView', 'Iterable', 'Iterator', 'KeysView', 'Mapping', 'MappingView', 'MutableMapping', 'MutableSequence', 'MutableSet', 'OrderedDict', 'Sequence', 'Set', 'Sized', 'UserDict', 'UserList', 'UserString', 'ValuesView', '_Link', '_OrderedDictItemsView', '_OrderedDictKeysView', '_OrderedDictValuesView', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', '_chain', '_class_template', '_collections_abc', '_count_elements', '_eq', '_field_template', '_heapq', '_iskeyword', '_itemgetter', '_proxy', '_recursive_repr', '_repeat', '_repr_template', '_starmap', '_sys', 'defaultdict', 'deque', 'namedtuple']
+>>> 
+
+
+
+9) CALCULATING THE PERMUTATION AND COMBINATIONS USING ITERTOOLS
+---------------------------------------------------------------
+
+>>> import itertools
+>>> perms = itertools.permutations([1,2,3,4,5],2)   <-- nPr = n!/r!*(n-r)!
+>>> for p in perms:
+...    print(p)
+... 
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(2, 1)
+(2, 3)
+(2, 4)
+(2, 5)
+(3, 1)
+(3, 2)
+(3, 4)
+(3, 5)
+(4, 1)
+(4, 2)
+(4, 3)
+(4, 5)
+(5, 1)
+(5, 2)
+(5, 3)
+(5, 4)
+>>> perms = itertools.permutations([1,2,3,4,5],5)  <-- Permutation of 5 elements taking all at the same time
+>>> for p in perms:
+...    print(p)
+... 
+(1, 2, 3, 4, 5)
+(1, 2, 3, 5, 4)
+(1, 2, 4, 3, 5)
+(1, 2, 4, 5, 3)
+(1, 2, 5, 3, 4)
+(1, 2, 5, 4, 3)
+(1, 3, 2, 4, 5)
+(1, 3, 2, 5, 4)
+(1, 3, 4, 2, 5)
+(1, 3, 4, 5, 2)
+(1, 3, 5, 2, 4)
+(1, 3, 5, 4, 2)
+(1, 4, 2, 3, 5)
+(1, 4, 2, 5, 3)
+(1, 4, 3, 2, 5)
+(1, 4, 3, 5, 2)
+(1, 4, 5, 2, 3)
+(1, 4, 5, 3, 2)
+(1, 5, 2, 3, 4)
+(1, 5, 2, 4, 3)
+(1, 5, 3, 2, 4)
+(1, 5, 3, 4, 2)
+(1, 5, 4, 2, 3)
+(1, 5, 4, 3, 2)
+(2, 1, 3, 4, 5)
+(2, 1, 3, 5, 4)
+(2, 1, 4, 3, 5)
+(2, 1, 4, 5, 3)
+(2, 1, 5, 3, 4)
+(2, 1, 5, 4, 3)
+(2, 3, 1, 4, 5)
+(2, 3, 1, 5, 4)
+(2, 3, 4, 1, 5)
+(2, 3, 4, 5, 1)
+(2, 3, 5, 1, 4)
+(2, 3, 5, 4, 1)
+(2, 4, 1, 3, 5)
+(2, 4, 1, 5, 3)
+(2, 4, 3, 1, 5)
+(2, 4, 3, 5, 1)
+(2, 4, 5, 1, 3)
+(2, 4, 5, 3, 1)
+(2, 5, 1, 3, 4)
+(2, 5, 1, 4, 3)
+(2, 5, 3, 1, 4)
+(2, 5, 3, 4, 1)
+(2, 5, 4, 1, 3)
+(2, 5, 4, 3, 1)
+(3, 1, 2, 4, 5)
+(3, 1, 2, 5, 4)
+(3, 1, 4, 2, 5)
+(3, 1, 4, 5, 2)
+(3, 1, 5, 2, 4)
+(3, 1, 5, 4, 2)
+(3, 2, 1, 4, 5)
+(3, 2, 1, 5, 4)
+(3, 2, 4, 1, 5)
+(3, 2, 4, 5, 1)
+(3, 2, 5, 1, 4)
+(3, 2, 5, 4, 1)
+(3, 4, 1, 2, 5)
+(3, 4, 1, 5, 2)
+(3, 4, 2, 1, 5)
+(3, 4, 2, 5, 1)
+(3, 4, 5, 1, 2)
+(3, 4, 5, 2, 1)
+(3, 5, 1, 2, 4)
+(3, 5, 1, 4, 2)
+(3, 5, 2, 1, 4)
+(3, 5, 2, 4, 1)
+(3, 5, 4, 1, 2)
+(3, 5, 4, 2, 1)
+(4, 1, 2, 3, 5)
+(4, 1, 2, 5, 3)
+(4, 1, 3, 2, 5)
+(4, 1, 3, 5, 2)
+(4, 1, 5, 2, 3)
+(4, 1, 5, 3, 2)
+(4, 2, 1, 3, 5)
+(4, 2, 1, 5, 3)
+(4, 2, 3, 1, 5)
+(4, 2, 3, 5, 1)
+(4, 2, 5, 1, 3)
+(4, 2, 5, 3, 1)
+(4, 3, 1, 2, 5)
+(4, 3, 1, 5, 2)
+(4, 3, 2, 1, 5)
+(4, 3, 2, 5, 1)
+(4, 3, 5, 1, 2)
+(4, 3, 5, 2, 1)
+(4, 5, 1, 2, 3)
+(4, 5, 1, 3, 2)
+(4, 5, 2, 1, 3)
+(4, 5, 2, 3, 1)
+(4, 5, 3, 1, 2)
+(4, 5, 3, 2, 1)
+(5, 1, 2, 3, 4)
+(5, 1, 2, 4, 3)
+(5, 1, 3, 2, 4)
+(5, 1, 3, 4, 2)
+(5, 1, 4, 2, 3)
+(5, 1, 4, 3, 2)
+(5, 2, 1, 3, 4)
+(5, 2, 1, 4, 3)
+(5, 2, 3, 1, 4)
+(5, 2, 3, 4, 1)
+(5, 2, 4, 1, 3)
+(5, 2, 4, 3, 1)
+(5, 3, 1, 2, 4)
+(5, 3, 1, 4, 2)
+(5, 3, 2, 1, 4)
+(5, 3, 2, 4, 1)
+(5, 3, 4, 1, 2)
+(5, 3, 4, 2, 1)
+(5, 4, 1, 2, 3)
+(5, 4, 1, 3, 2)
+(5, 4, 2, 1, 3)
+(5, 4, 2, 3, 1)
+(5, 4, 3, 1, 2)
+(5, 4, 3, 2, 1)
+>>> 
+>>> combs = itertools.combinations([1,2,3,4,5],2)
+>>> for c in combs:
+...    print(c)
+... 
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(2, 3)
+(2, 4)
+(2, 5)
+(3, 4)
+(3, 5)
+(4, 5)
+>>> 
+>>> combs = itertools.combinations([1,2,3,4,5],5)
+>>> for c in combs:
+...    print(c)
+... 
+(1, 2, 3, 4, 5)
+>>> 
+
+
+
+(10) GROUPING BY LENGTH USING ITERTOOLS
+---------------------------------------
+
+>>> import itertools
+>>> names = ['Alex', 'Anne', 'Chris', 'Dora', 'Ethan', 'John', 'Lizzie', 'Mike', 'Sarah', 'Wesley']
+>>> NAMES = sorted(names,key=len)      <-- If the Iterable is already sorted by length, then use itertools.groupby(iterable,len)
+>>> NAMES
+['Alex', 'Anne', 'Dora', 'John', 'Mike', 'Chris', 'Ethan', 'Sarah', 'Lizzie', 'Wesley']
+>>> groups = itertools.groupby(NAMES,len)
+>>> list(groups)
+[(4, <itertools._grouper object at 0x7f39cf214438>), (5, <itertools._grouper object at 0x7f39c6fcaa58>), (6, <itertools._grouper object at 0x7f39c6fca7b8>)]
+>>>
+>>> groups = itertools.groupby(NAMES,len)
+>>> for name_length, name_iter in groups:
+...    print('Names with {0:d} letters:'.format(name_length))
+...    for name in name_iter:
+...        print(name)
+... 
+Names with 4 letters:
+Alex
+Anne
+Dora
+John
+Mike
+Names with 5 letters:
+Chris
+Ethan
+Sarah
+Names with 6 letters:
+Lizzie
+Wesley
+>>> 
+
+1. The itertools.groupby() function takes a sequence and a key function, and returns an iterator that
+generates pairs. Each pair contains the result of key_function(each item) and another iterator containing
+all the items that shared that key result.
+
+2. Calling the list() function “exhausted” the iterator, i.e. you’ve already generated every item in the iterator
+to make the list. There’s no “reset” button on an iterator; you can’t just start over once you’ve exhausted it. 
+If you want to loop through it again (say, in the upcoming for loop), you need to call itertools.groupby() 
+again to create a new iterator.
+
+3. In this example, given a list of names already sorted by length, itertools.groupby(names, len) will put all
+the 4-letter names in one iterator, all the 5-letter names in another iterator, and so on. The groupby()
+function is completely generic; it could group strings by first letter, numbers by their number of factors, or
+any other key function you can think of.
+
+The itertools.groupby() function only works if the input sequence is already
+sorted by the grouping function. In the example above, you grouped a list of names
+by the len() function. That only worked because the input list was already sorted by
+length.
+
+
+(11) REPLACE CERTAIN CHARACTERS WITH CERTAIN ELSE USING A 'TRANSLATION TABLE'
+-----------------------------------------------------------------------------
+
+>>> translation_table = {ord('A'):ord('G'),ord('M'):ord('U')}  <-- Replace 'A' with 'G' and 'M' with 'U'
+>>> translation_table
+{65: 71, 77: 85}
+>>> 'AMAZON'.translate(translation_table)
+'GUGZON'
+>>> 
+
+
+12) RUNNING SHELL COMMANDS FROM PYTHON 
+--------------------------------------
+
+The subprocess module allows you to run arbitrary shell commands and get the result as a Python string.
+
+>>> import subprocess
+>>>
+>>> eval("subprocess.getoutput('ls')")
+'Doc\nGrammar\nInclude\nLICENSE\nLib\nMac\nMakefile\nMakefile.pre\nMakefile.pre.in\nMisc\nModules\nObjects\nPC\nPCbuild\nParser\nPrograms\nPython\nREADME\nTools\n__pycache__\naclocal.m4\narchive.zip\nbuild\nconfig.guess\nconfig.log\nconfig.status\nconfig.sub\nconfigure\nconfigure.ac\ndecorators.py\ndir.py\nfib.py\nfile.py\nfile1.txt\nfile1.txt.bak\nfile2.txt\nfileops.py\nfileops1.py\ngen.py\ngen1.py\ngen2.py\ngen3.py\ninstall-sh\nitemget.py\niter.py\nlibpython3.5m.a\nname.py\nnames.txt\nnames1.txt\nos.py\nos1.py\nplatform\npybuilddir.txt\npyconfig.h\npyconfig.h.in\npython\npython-config\npython-config.py\npython-gdb.py\nsample.xml\nsetup.py\nshell.py\nsize.py\ntest\ntest.py\nxmlparse.py\nxmlparse1.py'
+>>> 
+
+
+13) Writing Unit Test cases:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here the objective is to write a Unittest code (in APItest.py) whether another 
+Production code (in APIcode.py) generates the correct set of first 10 Fibonacci values.
+
+APItest.py   
+----------
+
+import APIcode      <-- Import the Python code that generates Fibonacci numbers
+import unittest     <-- Import the unittest module which has many useful methods
+
+class FibonacciTest(unittest.TestCase):			<-- Class that tests the main code
+
+    KnownFibSeq = [0,1,1,2,3,5,8,13,21,34,55]   <-- List of known values against which the output
+													values returned from APIcode.py is compared against
+    def test_valid_range(self):					<-- First testcase (checks whether generated Fib sequence is out of range)
+        '''Confirm that the value is in expected range'''
+        Fib = APIcode.First10FibNums(0,1)
+        if max(Fib) > 55 or min(Fib) < 0:
+            self.assertRaises(APIcode.OutOfRangeError,APIcode.First10FibNums,0,1)    <-- Confirm that APIcode.py raises OutOfRangeError exception 
+																						 when values go out of range.
+																						 APIcode.OutOfRangeError = Method inside APIcode.py (type of exception to raise)
+																						 APIcode.First10FibNums = Method inside APIcode.py (when this function is called)
+																						 0,1 = Parameters to the Function First10FibNums (with these parameters)
+    def test_known_values(self):
+        Fib = APIcode.First10FibNums(0,1)
+        self.assertEqual(Fib,self.KnownFibSeq)    <-- If the returned Fib Seq = Known Fib Seq, then assertEqual will PASS this testcase.
+			
+	
+if __name__ == '__main__':
+    unittest.main()			    <-- call the main() function inside this file
+			
+
+			
+APIcode.py
+----------
+
+def First10FibNums(first=0,second=1):
+	number1 = first
+	number2 = second
+	Fib = []
+	Fib.append(number1)
+	Fib.append(number2)
+	while len(Fib) <= 10:
+		number3 = number1 + number2
+		Fib.append(number3)
+		number1 = number2 
+		number2 = number3	
+
+	lowest,highest=Fib[0],Fib[-1]
+	if lowest < 0 or highest > 55:
+		raise OutOfRangeError('One or more elements in the Fib sequence is out of range')
+
+	return Fib
+
+def OutOfRangeError(ValueError):   <-- Type of Exception to raise. Out of Range is a type of ValueError exception
+	pass
+
+
+			
+G:\PYTHON>python APItest.py
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+G:\PYTHON>
+			
+
+14) XML Processing
+~~~~~~~~~~~~~~~~~~
+
+import xml.etree.ElementTree as E
+import re
+
+def xmlProcessor():
+    tree = E.parse('feed.xml')
+    root = tree.getroot()                    <-- root is the first element in the XML tree
+    tag = root.tag                           <-- tag name of the root element
+    NoOfChildren = len(root)                 <-- number of direct children of root element
+    print('root : ',root)
+    print('tag : ',tag)
+    print('root attribute : ',root.attrib)
+    print('Attribute of 4th element of root :',root[4].attrib)
+    for index,child in enumerate(root):
+        print(index,child,child.attrib)
+    print(root.findall('{http://www.w3.org/2005/Atom}entry'))    <-- findall occurances of 'entry' element
+    print(root.findall('{http://www.w3.org/2005/Atom}link'))     <-- findall occurances of 'link' element
+
+if __name__ == '__main__':
+    xmlProcessor()
+
+
+G:\PYTHON>python parsexml.py
+root :  <Element '{http://www.w3.org/2005/Atom}feed' at 0x0000000002D5F318>
+tag :  {http://www.w3.org/2005/Atom}feed
+root attribute :  {'{http://www.w3.org/XML/1998/namespace}lang': 'en'}
+Attribute of 4th element of root : {'type': 'text/html', 'rel': 'alternate', 'href': 'http://diveintomark.org/'}
+0 <Element '{http://www.w3.org/2005/Atom}title' at 0x0000000002D69AE8> {}
+1 <Element '{http://www.w3.org/2005/Atom}subtitle' at 0x0000000002D69B38> {}
+2 <Element '{http://www.w3.org/2005/Atom}id' at 0x0000000002D69C28> {}
+3 <Element '{http://www.w3.org/2005/Atom}updated' at 0x0000000002D69C78> {}
+4 <Element '{http://www.w3.org/2005/Atom}link' at 0x0000000002D69D18> {'type': 'text/html', 'rel': 'alternate', 'href': 'http://diveintomark.org/'}
+5 <Element '{http://www.w3.org/2005/Atom}link' at 0x0000000002D69DB8> {'type': 'application/atom+xml', 'rel': 'self', 'href': 'http://diveintomark.org/feed/'}
+6 <Element '{http://www.w3.org/2005/Atom}entry' at 0x0000000002D69E08> {}
+7 <Element '{http://www.w3.org/2005/Atom}entry' at 0x0000000002DC2368> {}
+8 <Element '{http://www.w3.org/2005/Atom}entry' at 0x0000000002AC6868> {}
+[<Element '{http://www.w3.org/2005/Atom}entry' at 0x0000000002D69E08>, <Element '{http://www.w3.org/2005/Atom}entry' at 0x0000000002DC2368>, <Element '{http://www.w3.org/2005/Atom}entry' at 0x0000000002AC6868>]
+[<Element '{http://www.w3.org/2005/Atom}link' at 0x0000000002D69D18>, <Element '{http://www.w3.org/2005/Atom}link' at 0x0000000002D69DB8>]
+G:\PYTHON>
+	
+
+15) Python Pickle for Saving Data Structures
+--------------------------------------------
+
+Note: Not all data structures can be serialized and "pickle protocol" doesn't guarantee version or cross-platform compatibility.
+      Also, pickle data saved in Python may not be opened or processed in other languages. If serializing data are stored and 
+	  processed in different languages, use JSON method instead.
+
+>>> entry = {}                                                                                         
+>>> entry['title'] = 'Dive into history, 2009 edition'
+>>> entry['article_link'] = 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition'
+>>> entry['comments_link'] = None
+>>> entry['internal_id'] = b'\xDE\xD5\xB4\xF8'
+>>> entry['tags'] = ('diveintopython', 'docbook', 'html')
+>>> entry['published'] = True
+>>> import time
+>>> entry['published_date'] = time.strptime('Fri Mar 27 22:20:42 2009')                                
+>>> entry['published_date']
+time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1)
+>>>
+>>> import pickle
+>>> with open('entry.pickle', 'wb') as f:     <-- the pickle file must be opened in the 'binary' mode
+...     pickle.dump(entry, f)                     the file is saved as Stream object
+... 
+>>>
+>>> with open('entry.pickle', 'rb') as f:    
+...     entry = pickle.load(f)               
+... 
+>>> entry                                    
+{'comments_link': None,
+ 'internal_id': b'\xDE\xD5\xB4\xF8',
+ 'title': 'Dive into history, 2009 edition',
+ 'tags': ('diveintopython', 'docbook', 'html'),
+ 'article_link':
+ 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'published_date': time.struct_time(tm_year=2009, tm_mon=3, tm_mday=27, tm_hour=22, tm_min=20, tm_sec=42, tm_wday=4, tm_yday=86, tm_isdst=-1),
+ 'published': True}
+>>>
+>>> b = pickle.dumps(entry)     <-- If saving to file is not an option, we can save it as Bytes object
+>>> type(b)                     
+<class 'bytes'>
+>>> entry3 = pickle.loads(b)    
+>>> entry3 == entry             
+True
+>>>
+
+
+16) Serializing data using JSON format
+--------------------------------------
+
+RFC 4627 describes how types of data must be encoded in JSON format. Note that JSON format is ASCII unlike the Pickle which used binary format.
+
+>>> basic_entry = {}                                           
+>>> basic_entry['id'] = 256
+>>> basic_entry['title'] = 'Dive into history, 2009 edition'
+>>> basic_entry['tags'] = ('diveintopython', 'docbook', 'html')
+>>> basic_entry['published'] = True
+>>> basic_entry['comments_link'] = None
+>>> import json
+>>> with open('basic.json', mode='w', encoding='utf-8') as f:     <-- JSON uses ASCII format. Hence no 'binary' mode included.
+...     json.dump(basic_entry, f)       
+>>>
+>>> with open('entry.json', 'r', encoding='utf-8') as f:
+...     entry = json.load(f)                              ②
+... 
+>>> entry                                                 ③
+{'comments_link': None,
+ 'internal_id': {'__class__': 'bytes', '__value__': [222, 213, 180, 248]},
+ 'title': 'Dive into history, 2009 edition',
+ 'tags': ['diveintopython', 'docbook', 'html'],
+ 'article_link': 'http://diveintomark.org/archives/2009/03/27/dive-into-history-2009-edition',
+ 'published_date': {'__class__': 'time.asctime', '__value__': 'Fri Mar 27 22:20:42 2009'},
+ 'published': True}
+>>>
+
+
+17) Fetching data over HTTP
+---------------------------
+
+There are many popular libraries which supports HTTP interactions.
+
+1) http.client
+2) urllib.request (built on top of http.client)
+3) http2lib (better than both)
+4) urllib2, urllib3
+5) requests
+
+By far, requests is the most easiest to use and operate.
+http://docs.python-requests.org/en/master/
+
+>>> import requests
+>>> r = requests_get('http://www.google.com')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'requests_get' is not defined
+>>> r = requests.get('http://www.google.com')
+>>> r
+<Response [200]>
+>>> r1.status_code
+200
+>>> type(r)
+<class 'requests.models.Response'>
+>>> dir(r)
+['__attrs__', '__bool__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', 
+'__ge__', '__getattribute__', '__getstate__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__lt__',
+ '__module__', '__ne__', '__new__', '__nonzero__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', 
+ '__setstate__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_content', '_content_consumed', 
+ 'apparent_encoding', 'close', 'connection', 'content', 'cookies', 'elapsed', 'encoding', 'headers', 'history', 
+ 'is_permanent_redirect', 'is_redirect', 'iter_content', 'iter_lines', 'json', 'links', 'ok', 'raise_for_status', 
+ 'raw', 'reason', 'request', 'status_code', 'text', 'url']
+>>>
+>>> r.headers    <-- HTML headers
+{'Server': 'gws', 'Date': 'Sun, 05 Jun 2016 21:44:23 GMT', 'Cache-Control': 'private, max-age=0', 
+'Content-Length': '4441', 'Content-Type': 'text/html; charset=ISO-8859-1', 'Content-Encoding': 'gzip', 
+'X-Frame-Options': 'SAMEORIGIN', 'Expires': '-1', 'Set-Cookie': 'NID=79=hqAeIsT1jVq3C56s-jKcg0tgmcFxZMmags
+Gav5dY0fZGwJugCL6zA3WUtMR1jBV7FUCWEN5FA6RG5DIarw8jSQe6InvmETuLEydYtsDG5bqPYwkrWbaLrluEY9B-mKLSOdJkzZW6FnVxJ_I; 
+expires=Mon, 05-Dec-2016 21:44:23 GMT; path=/; domain=.google.com; HttpOnly', 'X-XSS-Protection': '1; mode=block', 
+'P3P': 'CP="This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info."'}
+>>>
+>>> r.headers['content-type']
+'text/html; charset=ISO-8859-1'
+>>>
+>>> for idx,hdr in enumerate(r.headers):
+...     print(idx,hdr)
+...
+0 Date
+1 Expires
+2 Cache-Control
+3 Content-Type
+4 P3P
+5 Content-Encoding
+6 Server
+7 Content-Length
+8 X-XSS-Protection
+9 X-Frame-Options
+10 Set-Cookie
+>>> r.encoding
+'ISO-8859-1'
+>>>
+>>> for idx,hdr in enumerate(r.headers):
+...     print(idx,hdr,' : ',r.headers[hdr])
+...
+0 Date  :  Sun, 05 Jun 2016 21:44:23 GMT
+1 Expires  :  -1
+2 Cache-Control  :  private, max-age=0
+3 Content-Type  :  text/html; charset=ISO-8859-1
+4 P3P  :  CP="This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info."
+5 Content-Encoding  :  gzip
+6 Server  :  gws
+7 Content-Length  :  4441
+8 X-XSS-Protection  :  1; mode=block
+9 X-Frame-Options  :  SAMEORIGIN
+10 Set-Cookie  :  NID=79=hqAeIsT1jVq3C56s-jKcg0tgmcFxZMmagsGav5dY0fZGwJugCL6zA3WUtMR1jBV7FUCWEN5FA6RG5DIarw8jSQe6InvmETuLEydYtsDG5bqPYwkrWbaLrluEY9B-mKLSOdJkzZW6FnVxJ_I; expires=Mon, 05-Dec-2016 21:44:23 GMT; path=/; domain=.google.com; HttpOnly
+>>>
+>>> r.text  <-- HTML body
+'<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en"><head><meta content="Search the world\'s information, 
+including webpages, images, videos and more. Google has many special features to help you find exactly what you\'re looking for." 
+name="description"><meta content="noodp" name="robots"><meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image"><title>Google</title><script>
+(function(){window.google={kEI:\'N51UV_r0LpbqjwPQk5WQBQ\',kEXPI:
+..
+..
+..
+>>>
+
+
+18) Working with HTTP using httplib2
+------------------------------------
+
+httplib2 is better than urllib/urllib2, since it supports 'If-Modified-Since' and 'If-None-Match' Headers.
+httplib2 uses a user-specified local folder to cache HTTP pages, so it can locally fetch the data if the
+contents have not changed even if you exit the python shell and come back. The other packages such as 
+urllib/urllib2 or requests packages do not implement/include these headers in the HTTP requests.
+
+>>> import httplib2
+>>> h = httplib2.Http('cache')    <-- local directory where HTTP files are cached
+>>> response,content = h.request('http://www.google.com')
+>>> response.status
+200
+>>>
+>>> content
+b'<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en"><head><meta content="Search the world\'s information, 
+including webpages, images, videos and more. Google has many special features to help you find exactly what you\'re looking for." 
+name="description"><meta content="noodp" name="robots"><meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image"><title>Google</title>
+..
+..
+>>> exit()
+G:\PYTHON>python
+Python 3.4.2 (v3.4.2:ab2c023a9432, Oct  6 2014, 22:16:31) [MSC v.1600 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> import httplib2
+>>> h = httplib2.Http('cache')
+>>> response,content = h.request('http://www.google.com')
+>>> len(content)
+10401						<-- 10401 bytes were fetched from local cache
+>>> response.status
+200
+>>> response.fromcache      <-- Note that response was fetched from local cache 
+True					 	    Network Bandwidth was saved
+>>>
+
+
+19) How to spawn different Processes so it can be scheduled on different processors?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import multiprocessing
+import time
+
+def worker(Tsecs):
+    name = multiprocessing.current_process().name    <-- Get the name of the current process
+    print('Starting worker :', name)
+    time.sleep(Tsecs)
+    print('Ending worker :', name)
+
+def my_service(Nsecs):
+    name = multiprocessing.current_process().name
+    print('Starting Service :', name)
+    time.sleep(Nsecs)
+    print('Ending Service :', name)
+
+if __name__ == '__main__':
+
+    worker_1 = multiprocessing.Process(name='worker 1', target=worker, args=(8,))   <-- naming processes is useful in tracking them
+    worker_2 = multiprocessing.Process(name='worker 2', target=worker, args=(5,))   <-- you can also send arguments
+    service = multiprocessing.Process(name='my_service', target=my_service, args=(3,))
+
+    '''Notice the order of starting the different workers 
+       is NOT the order in which they finish'''
+
+    worker_1.start()
+    worker_2.start()
+    service.start()
+	
+G:\PYTHON>python multiprocessing2.py
+Starting worker : worker 1
+Starting Service : my_service
+Starting worker : worker 2
+Ending Service : my_service
+Ending worker : worker 2
+Ending worker : worker 1
+
+G:\PYTHON>	
+
+
+Even with same sleep time givem to all 3 processes, the time they finish is different 
+on each run. This depends on how the processes were scheduled on multicore processors.
+
+worker_1 = multiprocessing.Process(target=worker, args=(5,))   <-- Removing the 'name = worker #' from the Process
+worker_2 = multiprocessing.Process(target=worker, args=(5,))
+service = multiprocessing.Process(target=my_service, args=(5,))
+	
+G:\PYTHON>python multiprocessing2.py    
+Starting Service : Process-3
+Starting worker : Process-2
+Starting worker : Process-1
+Ending Service : Process-3
+Ending worker : Process-2
+Ending worker : Process-1
+
+G:\PYTHON>
+G:\PYTHON>python multiprocessing2.py    <-- Note that order in which they finish. Not the same.
+Starting worker : Process-1                 It depends on the Multiprocessing environment.
+Starting Service : Process-3
+Starting worker : Process-2
+Ending Service : Process-3
+Ending worker : Process-2
+Ending worker : Process-1
+
+G:\PYTHON>
+
+
+20) Working with Class Attributes and Instance Variables:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note: Both Class and Instance are objects. A Class is a Instance generating factory.
+Class contains basic attributes which applies to all instances and sub-classes.
+Classes are always nested inside Module objects; they are attributes of a Module object.
+Classes can be inherited but Modules cannot. 
+
+class Company:
+
+    attr1 = 100
+    attr2 = ['a','b','c','d']
+    attr3 = {'country':'usa', 'city':'san jose'}      <-- start with 2 keys in this dictionary
+
+    def __init__(self,companyName):
+        self.retattr = {}
+        for key in self.attr3:
+            self.retattr[key] = self.attr3[key]       <-- copy 'attr3' dictionary to 'retattr' dictionary
+        self.retattr['company'] = companyName         <-- add the companyName when an Instance is created
+
+    def display(self):
+        for key in self.retattr:
+            print('key: {}, value: {}'.format(key,self.retattr[key]))
+        try: 
+            print('New Attribute added : {}'.format(self.attr4))   <-- print self.attr4 only if set by an Instance
+        except:
+            pass
+
+    def add_attr(self,attrname,attrvalue=''):      <-- Add new Class attributes directly from Instances
+        if attrvalue == '':                            If attribute has both name and value, then treat
+            self.attr4 = attrname                      it like an addition to existing 'attr3' data structure
+        else:                                          If not, create a new attribute 'attr4'
+            self.retattr[attrname] = attrvalue
+
+if __name__ == '__main__':
+    C1 = Company('Ericsson')
+    C1.display()
+    print()
+    C2 = Company('Cisco')
+    C2.display()
+    print()
+    C1.add_attr('numEmployees',115000)      <-- adding to existing 'attr3' attribute
+    C2.add_attr('numEmployees',75000)
+    C1.display()
+    print()
+    C2.display()
+    print()
+    C1.add_attr('CEO')                      <-- creating new 'attr4' attribute
+    C1.display()
+
+
+E:\NAVEEN\PYTHON>python class1.py
+key: company, value: Ericsson
+key: city, value: san jose
+key: country, value: usa
+
+key: company, value: Cisco
+key: city, value: san jose
+key: country, value: usa
+
+key: company, value: Ericsson
+key: numEmployees, value: 115000
+key: city, value: san jose
+key: country, value: usa
+
+key: company, value: Cisco
+key: numEmployees, value: 75000
+key: city, value: san jose
+key: country, value: usa
+key: company, value: Ericsson
+key: numEmployees, value: 115000
+key: city, value: san jose
+key: country, value: usa
+
+New Attribute added : CEO
+
+E:\NAVEEN\PYTHON>
+
+
+21) How to implement Global variables using Singleton class?
+------------------------------------------------------------
+
+A singleton class is one from which can have only one instance object created from it.
+This is generally used where some information cache or global variables needs to be
+stored in one class object and can be shared by all instances of another class object.
+
+class Global_Cache:
+  ''' 
+    This class stores values that are 
+    generated and updated by its instances
+    onto a dictionary called 'cache'
+    Note that this 'cache' is available to
+    all the instances created from this class
+    The cache is implemented as a dictionary.
+  '''
+  cache = {}      
+  def __init__(self):
+    self.__dict__ = self.cache            
+
+	
+class add_to_cache(Global_Cache):           
+  ''' 
+     This class now updates and shares all its
+     attributes among its various instances
+  '''
+  def __init__(self,**kwargs):
+    Global_Cache.__init__(self)          
+    self.cache.update(kwargs)        
+
+  def __str__(self):
+    return str(self.cache)
+
+	
+class delete_from_cache(Global_Cache):       
+  ''' 
+     This class now updates and shares all its
+     attributes among its various instances
+  '''
+  def __init__(self,key):
+    Global_Cache.__init__(self)          
+    self.cache.pop(key)            
+
+  def __str__(self):
+    return str(self.cache)
+	
+	
+if __name__ == '__main__':
+  x = add_to_cache(website_visited = 'www.cnn.com')
+  print('Singleton x view of cache : {}'.format(x))
+  y = add_to_cache(date_last_visited = 'June 11, 2016')
+  print('Singleton y view of cache : {}'.format(y))
+  print('Singleton x view of cache : {}'.format(x))
+  z = add_to_cache(date_last_visited = 'June 21, 2016')
+  print('Singleton z view of cache : {}'.format(z))
+  print('Singleton x view of cache : {}'.format(x))
+  y = delete_from_cache('date_last_visited')
+  print('Singleton y view of cache : {}'.format(y))
+  print('Singleton x view of cache : {}'.format(x))
+
+  
+E:\NAVEEN\PYTHON>python Singleton.py
+Singleton x view of cache : {'website_visited': 'www.cnn.com'}
+Singleton y view of cache : {'date_last_visited': 'June 11, 2016', 'website_visited': 'www.cnn.com'}
+Singleton x view of cache : {'date_last_visited': 'June 11, 2016', 'website_visited': 'www.cnn.com'}
+Singleton z view of cache : {'date_last_visited': 'June 21, 2016', 'website_visited': 'www.cnn.com'}
+Singleton x view of cache : {'date_last_visited': 'June 21, 2016', 'website_visited': 'www.cnn.com'}
+Singleton y view of cache : {'website_visited': 'www.cnn.com'}
+Singleton x view of cache : {'website_visited': 'www.cnn.com'}
+
+E:\NAVEEN\PYTHON>
+
+
+22) Breaking a complex project into more manageable pieces
+----------------------------------------------------------
+
+Lets take building a car as an example. Instead of creating multiple constructors 
+for car, model, type etc., we will divide the work among Director, CarBodyBuilder,
+and CarSupplier. The product being built is in the Car()
+
+Director       : Instructs the CarSupplier to create a new car with model, tires and engine type needed.
+CarSupplier    : Constructs the car by calling its parent CarBodyBuilder to construct the car body first            
+                 and then itself adds specified parts such as model type, tires and engine.
+CarBodyBuilder : Has methods to build the Car Body and setting model,tires,engine to be filled in
+                 later by the CarSupplier.
+
+Note: CarBodyBuilder and CarSupplier doesn't have any methods that return anything.
+      Only the Director has methods to return the car object to the final user.
+				 
+class Car():
+    """Product"""
+    def __init__(self):
+        self.model = None
+        self.tires = None
+        self.engine = None
+        
+    def __str__(self):
+        return '{} | {} | {}'.format(self.model, self.tires, self.engine)
+		
+		
+class Director():                  
+    """Director"""
+    def __init__(self, builder):
+        self._builder = builder 
+        
+    def construct_car(self):              # Director specifies to create a car 
+        self._builder.create_new_car()    # with the correct model, tires and engine
+        self._builder.add_model()
+        self._builder.add_tires()
+        self._builder.add_engine()
+        
+    def get_car(self):                    # When user requests get_car(), this returns car object
+        return self._builder.car
+ 
+ 
+class CarBodyBuilder():
+    """Abstract Builder"""
+    def __init__(self):
+        self.car = None 
+        
+    def create_new_car(self):             # Builds only the Car body; however the CarSupplier 
+        self.car = Car()                  # (child of CarBodyBuilder) uses/calls this method
+
+		
+class CarSupplier(CarBodyBuilder):
+    """Concrete Builder --> provides parts and tools to work on the parts """
+    
+    def add_model(self):
+        self.car.model = "Skylark"        # Adds requested Model type, tires, and engine
+
+    def add_tires(self):
+        self.car.tires = "Regular tires"
+
+    def add_engine(self):    
+        self.car.engine = "Turbo engine"
+
+
+builder = CarSupplier()
+director = Director(builder)
+director.construct_car()
+car = director.get_car()
+print(car)
+
+
+E:\NAVEEN\PYTHON>python carBuilder.py
+Skylark | Regular tires | Turbo engine
+
+E:\NAVEEN\PYTHON>
+
+
+23) Clone an object for Prototyping
+-----------------------------------
+
+In this example, lets clone all features of a 'baseCar'
+and prototype into a new 'luxuryCar' which can be updated
+and experimented.
+
+import copy
+
+class Prototype:
+    
+    def __init__(self):
+        self._objects = {}                          # Create a Dictionary with key = name of baseCar
+                                                    # and value = baseCar object
+    def register_object(self, name, obj):
+        """Register an object"""
+        self._objects[name] = obj
+        
+    def unregister_object(self, name):
+        """Unregister an object"""
+        del self._objects[name]
+        
+    def clone(self, name, **attr):                     # We will clone all baseCar attributes and return the object
+        """Clone a registered object and update its attributes"""
+        obj = copy.deepcopy(self._objects.get(name))   # dict.get(key) gives the value. Here value is the baseCar object
+        obj.__dict__.update(attr)                      # copy.deepcopy(baseCar) will copy all attritubes of baseCar and
+        return obj                                     # returns another object with identical copy
+        
+class Car:
+    def __init__(self):
+        self.name = "Generic"                          # assign features of a baseCar model
+        self.color = "White"
+        self.options = "Deluxe"
+        
+    def __str__(self):
+        return '{} | {} | {}'.format(self.name, self.color, self.options)
+
+		
+if __name_ == '__main__':
+        
+    simpleCar = Car()
+    prototype = Prototype()
+    prototype.register_object('baseCar',simpleCar)
+    
+    luxuryCar = prototype.clone('baseCar')
+    print(luxuryCar)
+    luxuryCar.name = 'Audi'
+    luxuryCar.color = 'Crimson Red'
+    luxuryCar.options = 'Premium Entertainment'
+    print(luxuryCar)
+
+	
+E:\NAVEEN\PYTHON>python prototype.py
+Generic | White | Deluxe
+Audi | Crimson Red | Premium Entertainment
+
+E:\NAVEEN\PYTHON>
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+24. DECORATOR Functions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python makes implementing Decorator very straightforward due to its built in language features.
+Our challenge here is to add additional features to an existing object dynamically without using
+subclassing. Here's our scenario. We start with a function simply displaying a Hello World! message,
+and then we'd like to make the message look fancier by decorating it with additional tags,
+such as blink, as you can see here.
+
+Functions are also objects in Python, and we can simply add additional features to these functions
+using this built in decorator feature in Python. Patterns such as adapter, composite, and strategy
+are related to the decorator pattern.
+
+from functools import wraps
+
+def make_blink(function):
+   '''Make a decorator function'''
+
+   # This makes the decorator transparent in terms of its name and docstring
+   @wraps(function)
+
+   # Define the inner function
+   def decorator():
+
+      # Grab the return value of the function being decorated
+      ret = function()
+
+      # Add new functionality to the function being decorated
+      return '<blink>' + ret + '</blink>'
+
+   # Return the decorator function now
+   return decorator
+
+
+# Apply the decorator here
+@make_blink                      <-- This line causes a function call to make_blink()
+def hello_world():                   every time a call to function hello_world() is made
+   '''Original Function '''
+
+   return 'Hello, World!'
+
+
+if __name__ == '__main__':
+
+  # Check the result of decorating
+  print(hello_world())
+
+  # Check if the function name is still the same name as the function being decorated
+  print(hello_world.__name__)
+
+  # Check if the docstring is still the same as that of the function being decorated
+  print(hello_world.__doc__)
+
+
+eussjlts0602 [15:24] [enavsre/Desktop/Python-3.5.1] -> ./python decorator.py
+<blink>Hello, World!</blink>
+hello_world
+Original Function
+eussjlts0602 [15:24] [enavsre/Desktop/Python-3.5.1] ->
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+25. PROXY CLASSES WHO CREATE MORE IMPORTANT OBJECTS BASED ON AVAILAIBILITY
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Proxy becomes handy when creating an object that is very resource intensive. The problem
+we need to solve here is to postpone our object creation as long as possible, due to the
+resource intensive nature of the object we're creating. Therefore, there is a need for a
+placeholder which will in turn create the object if its creation is absolutely necessary.
+
+import time
+
+class CEO:
+   '''This class defines methods to keep CEO busy or available'''
+
+   def busy(self):
+      print('CEO is busy with Customer meetings')
+
+   def arrangeMeeting(self):
+      print('CEO is available to meet you now')
+
+
+class Secretary:
+   '''This class tracks how busy CEO is and make appointments on his/her behalf'''
+
+   def __init__(self):
+      '''Define the "relatively less resource intensive" to act as proxy/middleman'''
+
+      self.CEObusy = 'No'
+      self.CEOWhoIsTracked = None
+
+   def make_appts(self):
+      '''Check the current CEO state and make appointments'''
+
+      print('*** Secretary is checking if CEO is available ***')
+      if self.CEObusy == 'No':
+
+         # If CEO is available, then create the CEO object
+         self.CEOWhoIsTracked = CEO()
+         time.sleep(5)
+
+         # Make an appointment now
+         self.CEOWhoIsTracked.arrangeMeeting()
+
+      else:
+         # If CEO is busy, then wait for 5 secs
+         time.sleep(5)
+         self.CEOWhoIsTracked.busy()
+         print('CEO is busy right now. Check back later.')
+
+
+if __name__ == '__main__':
+
+   # Create Secretary object
+   S = Secretary()
+
+   # Ask Secretary to make an appointment
+   S.make_appts()
+
+   # Update the CEO status to Busy
+   S.CEObusy = 'Yes'
+
+
+
+eussjlts0602 [16:13] [enavsre/Desktop/Python-3.5.1] -> ./python proxy.py
+*** Secretary is checking if CEO is available ***
+CEO is available to meet you now
+*** Secretary is checking if CEO is available ***
+CEO is busy with Customer meetings
+CEO is busy right now. Check back later.
+eussjlts0602 [16:13] [enavsre/Desktop/Python-3.5.1] ->
+
+
+~~~~~~~~~~~~~~~~~~~~
+26. ADAPTER CLASSES
+~~~~~~~~~~~~~~~~~~~~
+
+Adapter converts the interface of a class into another one a client is expecting. This time
+our problem is that the interfaces are incompatible between a client and a server. In our
+scenario, we have Korean and British objects which have different method names for speaking.
+Instead, the client would like to use a uniform interface that is the speak method.
+
+In the following example, we are going to create a GenericAdapter (sort of HLTAPI) that will
+call the appropriate connect methods depending on the type of object being connected to.
+We will create one general 'connect' method which will call appropriate connect methods
+within each chassis object (Ixia or Spirent)
+
+import time
+
+class Ixia:
+
+   '''This class connect to Ixia'''
+
+   def __init__(self,ipaddress):
+      self.name = 'Ixia'
+      self.connected = 'No'
+      self.ixiaIP = ipaddress
+
+   def connect_via_ssh(self):
+
+      '''Implements method to SSH to ixia'''
+
+      if self.connected == 'No':
+         print('Attempting to SSH to ixia ip address : {}'.format(self.ixiaIP))
+         time.sleep(2)
+         print('Connection successful')
+         self.connected = 'Yes'
+      else:
+         print('Already connected to Ixia')
+         print('Using Existing Session Handler')
+
+
+class Spirent:
+
+   '''This class connect to Spirent'''
+
+   def __init__(self,ipaddress):
+      self.name = 'Spirent'
+      self.connected = 'No'
+      self.spirentIP = ipaddress
+
+   def connect_via_telnet(self):
+
+      '''Implements method to Telnet to Sprirent'''
+
+      if self.connected == 'No':
+         print('Attempting to Telnet to ip address : {}'.format(self.spirentIP))
+         time.sleep(2)
+         print('Connection successful')
+         self.connected = 'Yes'
+      else:
+         print('Already connected to Spirent')
+         print('Using Existing Session Handler')
+
+
+class GenericAdapter:
+
+   '''Implement an Adapter class that implements connect_generic() method
+      which works for either ixia or spirent class objects'''
+
+   def __init__(self,chassisObj,**kwargs):
+      '''Change the name of the method'''
+
+      self.chassis = chassisObj
+      self.__dict__.update(kwargs)
+
+   def __getattr__(self,attr):
+      '''Return the rest of the attributes'''
+      return getattr(self.chassis,attr)
+
+
+if __name__ == '__main__':
+
+   chassisList = []
+   ixiaObj = Ixia('10.1.1.1')
+   spirentObj = Spirent('20.1.1.1')
+
+   # Create a mapping between generic 'Connect' to 'connect_via_X'
+   # If ixiaObj.Connect() is called, then map it to ixiaObj.connect_via_ssh
+   # If spirentObj.Connect() is called, then map it to spirentObj.connect_via_telnet
+  
+   chassisList.append(GenericAdapter(ixiaObj, Connect=ixiaObj.connect_via_ssh))
+   chassisList.append(GenericAdapter(spirentObj, Connect=spirentObj.connect_via_telnet))
+
+   for chassis in chassisList:
+      print('Connected to {} using {} method'.format(chassis.name,chassis.Connect.__name__))
+
+
+
+eussjlts0602 [17:26] [enavsre/Desktop/Python-3.5.1] -> ./python adapter.py
+Connected to Ixia using connect_via_ssh method
+Connected to Spirent using connect_via_telnet method
+eussjlts0602 [17:26] [enavsre/Desktop/Python-3.5.1] -> 
+
+
+~~~~~~~~~~~~~~
+27. COMPONENTS
+~~~~~~~~~~~~~~
+
+The composite design pattern maintains a tree data structure to represent part-whole relationships. 
+Here we like to build a recursive tree data structure so that an element of the tree can have its 
+own sub-elements. An example of this problem is creating menu and submenu items. The submenu items 
+can have their own sub-submenu items. So our coding challenge is to display menu and submenu items 
+using this composite design pattern.
+
+class Component(object):
+   '''Abstract class'''
+
+   def __init__(self,*args,**kwargs):
+      pass
+
+   def component_function(self):
+      pass
+
+class Child(Component):                        <-- Implements a single item/node with no children
+   '''Concrete class'''
+
+   def __init__(self,*args,**kwargs):          <-- kwargs are not used in this example
+      Component.__init__(self,*args,**kwargs)
+      self.name = args[0]
+
+   def component_function(self):
+      print('{}'.format(self.name))         
+
+class Composite(Component):                    <-- Implements a item/node with one or more children
+   '''Concrete class and maintains the Tree recursive structure'''
+
+   def __init__(self,*args,**kwargs):
+      Component.__init__(self,*args,**kwargs)
+      self.name = args[0]                      <-- args[0] always contain the name of called function
+      self.children = []                       <-- Number of children is maintained in a list
+
+   def append_child(self,child):
+      self.children.append(child)              <-- Children are added to this list if this method is called
+
+   def remove_child(self,child):                
+      self.children.remove(child)
+
+   def component_function(self):              <-- Prints the name of every child for which this is parent of
+      print('{}'.format(self.name))
+
+      for child in self.children:
+         child.component_function()
+
+
+if __name__ == '__main__':
+  
+   # Create a submenu1 which has children
+   sub1 = Composite('submenu1')
+   sub1child1 = Child('submenu1child1')   
+   sub1child2 = Child('submenu1child2')
+   sub1.append_child(sub1child1)
+   sub1.append_child(sub1child2)
+
+   # Create a submenu2 which has NO children
+   sub2 = Child('submenu2')
+
+   # Create a Top level menu and add 'submenu1' and 'submenu2'
+   top_menu = Composite('TopMenu')
+   top_menu.append_child(sub1)
+   top_menu.append_child(sub2)
+   
+   # Print the recursive Tree structure
+   top_menu.component_function()
+
+   
+E:\NAVEEN\PYTHON>python Composite.py
+TopMenu
+submenu1
+submenu1child1
+submenu1child2
+submenu2
+
+E:\NAVEEN\PYTHON>
+
+   
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+28. BRIDGE CLASS TO COMBINE DIFFERENT VERSIONS OF API CLASSES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The bridge pattern helps untangle an unnecessary complicated class hierarchy, especially when 
+implementation specific classes are mixed together with implementation-indendent classes.
+
+class Insert32bitTCAMentry:
+   '''Implementation specific'''
+
+   def insert_entry(b,m,r):
+      print('Inserting 32-bits {} with {} in region {}'.format(b,m,r))
+
+class Insert64bitTCAMentry:
+   '''Implementation specific'''
+
+   def insert_entry(b,m,r):
+      print('Inserting 64-bits {} with {} in region {}'.format(b,m,r))
+
+class InsertToTCAM:
+   '''Implementation independent'''
+
+   def __init__(self,bits,mask,region,API):
+      self.bits = bits
+      self.mask = mask
+      self.region = region
+      self.API = API
+
+   def insert_entry(self):
+      self.API.insert_entry(self.bits, self.mask, self.region)
+
+if __name__ == '__main__':
+   
+   entry1 = InsertToTCAM('0xFE80','000F',2,Insert32bitTCAMentry)   
+   entry1.insert_entry()
+
+   entry2 = InsertToTCAM('0x3001','FFFF',64,Insert64bitTCAMentry)  
+   entry2.insert_entry()
+
+
+E:\NAVEEN\PYTHON>python Composite.py
+Inserting 32-bits 0xFE80 with 000F in region 2
+Inserting 64-bits 0x3001 with FFFF in region 64
+
+E:\NAVEEN\PYTHON>
+   
+
+FROM PYTHON ALGORITHMS AND DATA STRUCTURES BOOK
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Implementing an Unordered Linked List
+=========================================
+
+# Independent Node class
+
+class Node:
+  def __init__(self, data):
+    self.data = data         # 'self.data' holds the data in the Node created
+    self.next = None         # Here 'self.next' will be pointing to another Node Object;
+                             # NOT to the value held in the Next Node. VERY IMP !!
+                             # In other words, 'self.next' will always hold Node objects
+  def get_data(self):
+    return self.data
+
+  def set_data(self, newData):
+    self.data = newData
+
+  def get_next(self):
+    return self.next
+
+  def set_next(self, newNext):
+    self.next = newNext
+
+
+# Actual LinkedList class
+
+class LinkedList:
+  def __init__(self):
+    self.head = None         # Here 'None' is treated like an object (Node object)
+                             # 'head' is Not pointing to any object to begin with.
+  
+  def is_empty(self):
+    return self.head == None
+
+  def add_item(self, item):
+    N = Node(item)           # Create a New Node
+    N.set_next(self.head)    # New 'Node' will point to whatever the 'head' was pointing to.
+    self.head = N            # Update the 'head' to point to this new 'Node'
+                             # Note that 'head' holds a reference to the 'Node' object created
+
+  def size(self):
+    current = self.head      # 'current' points to the Node object held in self.head
+    count = 0                # If the list is empty, the self.head == None; otherwise points to a valid Node
+    while  current != None:  # If 'current' is pointing to a valid node, then continue
+      count += 1
+      current = current.get_next()
+    return count
+
+  def search(self,item):
+    current = self.head      # For Traversals, remember that self.head is NEVER MODIFIED !!
+    item_position = 1        # If it gets re-assigned, you would lose reference to the beginning of the list
+    while current != None:
+      if current.get_data() == item:
+        return item_position
+      else:
+        item_position += 1
+        current = current.get_next()
+    return -1
+
+  def remove(self, item):
+    current = self.head
+    previous = None
+    found = False
+    while current != None and found == False:    # Keep looking until the item is found
+      if current.get_data() == item:
+        found = True
+      else:
+        previous = current
+        current = current.get_next()
+
+    if previous == None:                         # If item found is the First one in the list,
+      self.head = current.get_next()             # then update the self.head
+    else:
+      previous.set_next(current.get_next())      # else, update the previous.next using set_next() method
+
+  def get_list(self):
+    current = self.head
+    full_list = []
+    while  current != None:
+      full_list.append(current.get_data())
+      current = current.get_next()
+    return full_list
+
+	
+LL = LinkedList()
+LL.add_item('Naveen')
+LL.add_item('Praveen')
+LL.add_item('Geetha')
+LL.add_item('Shanta')
+print('List size now : {}'.format(LL.size()))
+print(LL.get_list())
+LL.remove('Naveen')
+print('List size now : {}'.format(LL.size()))
+print(LL.get_list())
+LL.remove('Shanta')
+print('List size now : {}'.format(LL.size()))
+print(LL.get_list())
+
+
+E:\NAVEEN\PYTHON>python linkedlist.py
+List size now : 4
+['Shanta', 'Geetha', 'Praveen', 'Naveen']
+List size now : 3
+['Shanta', 'Geetha', 'Praveen']
+List size now : 2
+['Geetha', 'Praveen']
+
+E:\NAVEEN\PYTHON>
+
+
+2) To convert from String to List, just say 'list(str)'. For example:
+
+>>> a
+'naveen'
+>>> list(a)
+['n', 'a', 'v', 'e', 'e', 'n']
+>>> b
+'hello naveen'
+>>> list(b)
+['h', 'e', 'l', 'l', 'o', ' ', 'n', 'a', 'v', 'e', 'e', 'n']
+>>>
+
+
+3) To search for an item in a list sequencially, use a list comprehension. For example:
+
+>>> cities = ['mumbai','delhi','chennai','calcutta','mumbai']
+>>> [city  for city in cities  if city == 'mumbai']
+['mumbai', 'mumbai']
+>>>
+>>> [(index,city)  for index, city in enumerate(cities)  if city == 'mumbai']
+[(0, 'mumbai'), (4, 'mumbai')]
+>>>
+
+Note that the 'for' loop DO NOT stop when the first item is found.
+If proceeds to find all such items in the list. This may not be 
+desirable in some cases if the list is very large. Complexity is O(n).
+
+
+4) BINARY SEARCH INSIDE A LIST (IF THE LIST IS ORDERED)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The complexity of Binary search is O(log n). Binary search is very effective
+only when the list is ordered priorly. If the list is large, sorting is a very
+time expensive operation. Note that this is NOT a BST (Binary Search Tree)
+
+def binary_search(seq, item):
+  midpoint = int(len(seq) / 2)
+  print('midpoint element is : {}'.format(seq[midpoint]))
+  if seq[midpoint] == item:
+    print('Item found')
+    return True
+  elif seq[midpoint] < item:
+    newseq = seq[midpoint+1::]	  # Search for the upper half of the list by calling
+    binary_search(newseq, item)   # binary_search with newseq = seq[midpoint+1::]
+  elif seq[midpoint] > item:      # Search for the lower half of the list by call
+    newseq = seq[0:midpoint]      # binary_search with newseq = seq[0:midpoint]
+    binary_search(newseq, item)
+  else:
+    return False
+	
+>>> seq = range(1000000)
+>>> item = 1
+>>> print(binary_search(seq, item))
+midpoint element is : 500000
+midpoint element is : 250000
+midpoint element is : 125000
+midpoint element is : 62500
+midpoint element is : 31250
+midpoint element is : 15625
+midpoint element is : 7812
+midpoint element is : 3906
+midpoint element is : 1953
+midpoint element is : 976
+midpoint element is : 488
+midpoint element is : 244
+midpoint element is : 122
+midpoint element is : 61
+midpoint element is : 30
+midpoint element is : 15
+midpoint element is : 7
+midpoint element is : 3
+midpoint element is : 1
+Item found
+None
+>>>
+>>> seq = range(1000000)
+>>> item = 999999
+>>> print(binary_search(seq, item))
+midpoint element is : 500000
+midpoint element is : 750000
+midpoint element is : 875000
+midpoint element is : 937500
+midpoint element is : 968750
+midpoint element is : 984375
+midpoint element is : 992188
+midpoint element is : 996094
+midpoint element is : 998047
+midpoint element is : 999024
+midpoint element is : 999512
+midpoint element is : 999756
+midpoint element is : 999878
+midpoint element is : 999939
+midpoint element is : 999970
+midpoint element is : 999985
+midpoint element is : 999993
+midpoint element is : 999997
+midpoint element is : 999999
+Item found
+None
+>>>
+
+Note: A hash table lookup is every faster than binary search. 
+A hash search is always considered of complexity O(1) because
+the item we are looking for is given to a hash function which
+tell us the exact location where the item is stored.
+
+
+5) BINARY TREES IMPLEMENTATION:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A binary tree has no more than 2 child nodes. A left node and a right node.
+Note that a binary tree is considered 'balanced' when there the Tree height
+is same on both left and right sides (and at all levels).
+
+class BinaryTree:
+
+  def __init__(self, root):
+    self.key = root
+    self.left_child = None
+    self.right_child = None
+
+  def insert_left(self, newnode):            # Insert 'newnode' as the left child to 'self' node
+    if self.left_child == None:              # The 'self' changes depending on the object being operated on.
+      self.left_child = BinaryTree(newnode)   
+    else:
+      tNode = BinaryTree(newnode)            # If 'self' already has a left child, then push it down as 
+      tNode.left_child = self.left_child     # the left child of the 'newnode' being inserted
+      self.left_child = tNode
+
+  def insert_right(self, newnode):
+    if self.right_child == None:
+      self.right_child = BinaryTree(newnode)
+    else:  
+      tNode = BinaryTree(newnode)
+      tNode.right_child = self.right_child
+      self.right_child = tNode
+
+  def get_left_child(self):
+    return self.left_child
+
+  def get_right_child(self):
+    return self.right_child
+
+  def set_root_val(self, obj):
+    self.key = obj
+
+  def get_root_val(self):
+    return self.key
+
+
+
+Node1 = BinaryTree('Animal')
+Node1.insert_left('Vertibrates')
+Node1.insert_right('Invertibrates')
+
+print(Node1.get_root_val())
+print(Node1.get_left_child())
+print(Node1.get_left_child().get_root_val())
+print(Node1.get_right_child())
+print(Node1.get_right_child().get_root_val())
+
+Left_Node1  = Node1.get_left_child()
+Right_Node1 = Node1.get_right_child()
+Left_Node1.insert_left('Mammals')
+Left_Node1.insert_right('Birds')
+Right_Node1.insert_left('Arthropoda')
+Right_Node1.insert_right('Echinodermata')
+
+print(Left_Node1.get_root_val())
+print(Left_Node1.get_left_child().get_root_val())
+print(Left_Node1.get_right_child().get_root_val())
+
+print(Right_Node1.get_root_val())
+print(Right_Node1.get_left_child().get_root_val())
+print(Right_Node1.get_right_child().get_root_val())
+
+E:\NAVEEN\PYTHON>python binarytree.py
+Animal
+<__main__.BinaryTree object at 0x0000000002CE24E0>
+Vertibrates
+<__main__.BinaryTree object at 0x0000000002CE2518>
+Invertibrates
+Vertibrates
+Mammals
+Birds
+Invertibrates
+Arthropoda
+Echinodermata
+
+E:\NAVEEN\PYTHON>
+
+
+6) BINARY TREE TRAVERSALS
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are 3 different ways to traverse the Binary Tree.
+	- preorder
+	- inorder
+	- postorder
+
+def preorder(tree):
+  if tree:
+	print(tree.get_root_val())
+	preorder(tree.get_left_child())
+	preorder(tree.get_right_child())
+
+def postorder(tree):
+  if tree != None:
+	postorder(tree.get_left_child())
+	postorder(tree.get_right_child())
+	print(tree.get_root_val())
+
+def inorder(tree):
+  if tree != None:
+	inorder(tree.get_left_child())
+	print(tree.get_root_val())
+	inorder(tree.get_right_child())
+	
+
+7) BINARY SEARCH TREES (BST)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A binary search tree relies on the property that keys that are less than the parent are found in
+the left subtree, and keys that are greater than the parent are found in the right subtree. We
+will call this the bst property.
+
+class BinarySearchTree:
+  def __init__(self):
+	self.root = None
+	self.size = 0
+
+  def length(self):
+	return self.size
+
+  def __len__(self):
+	return self.size
+
+  def __iter__(self):
+	return self.root.__iter__()
+
+	
+# Completed TreeNode class
+
+class TreeNode:
+  def __init__(self, key, val, left = None, right = None, parent = None):
+	self.key = key
+	self.payload = val
+	self.left_child = left
+	self.right_child = right
+	self.parent = parent
+
+  def has_left_child(self):
+	return self.left_child
+
+  def has_right_child(self):
+	return self.right_child
+
+  def is_left_child(self):
+	return self.parent and self.parent.left_child == self
+
+  def is_right_child(self):
+	return self.parent and self.parent.right_child == self
+
+  def is_root(self):
+	return not self.parent
+  
+  def is_leaf(self):
+	return not (self.right_child or self.left_child)
+
+  def has_any_children(self):
+	return self.right_child or self.left_child
+
+  def has_both_children(self):
+	return self.right_child and self.left_child
+
+  def replace_node_data(self, key, value, lc, rc):
+	self.key = key
+	self.payload = value
+	self.left_child = lc
+	self.right_child = rc
+	if self.has_left_child():
+	  self.left_child.parent = self
+	if self.has_right_child():
+	  self.right_child.parent = self
+	  
+
+Here is the simple Algorithm to insert or put a new node to the Binary Search Tree:
+
+• Starting at the root of the tree, search the binary tree comparing the new key to the key in
+  the current node. If the new key is less than the current node, search the left subtree. If
+  the new key is greater than the current node, search the right subtree.
+
+• When there is no left (or right) child to search, we have found the position in the tree
+  where the new node should be installed.
+
+• To add a node to the tree, create a new TreeNode object and insert the object at the point
+  discovered in the previous step.	  
+  
+def put(self, key, val):
+  if self.root:
+	self._put(key, val, self.root)
+  else:
+	self.root = TreeNode(key, val)
+	self.size = self.size + 1
+
+  def _put(self, key, val, current_node):
+	if key < current_node.key:
+	  if current_node.has_left_child():
+		self._put(key, val, current_node.left_child)
+	  else:
+	    current_node.left_child = TreeNode(key, val, parent=current_node)
+	else:
+	  if current_node.has_right_child():  
+	    self._put(key, val, current_node.right_child)
+	  else:
+		current_node.right_child = TreeNode(key, val, parent=current_node)
+		
+		
+With the put method defined, we can easily overload the [] operator for assignment by having
+the __setitem__ method call the put method. This allows us to write Python statements like
+my_zip_tree['Plymouth'] = 55446, just like a Python dictionary.
+
+  def __setitem__(self, k, v):
+	self.put(k, v)		
+	
+... Continued on Pages 219 onwards in "Python Solving with Algorithms and Data Structures" Book PDF	...
+
+
+8) CHECK IF A WORD IS PALINDROME OR NOT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+from collections import deque
+import time
+
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution(object):
+  def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        Q = deque()
+        while head.next is not None:
+            Q.append(head.val)
+            head = head.next
+        Q.append(head.val)
+        while len(Q) >= 2:
+            if Q[0] == Q[-1]:
+              Q.pop()
+              Q.popleft()
+            else:
+              return False
+        return True
+
+Head = ListNode('K')
+Element1 = ListNode('A')
+Head.next = Element1
+Element2 = ListNode('Y')
+Element1.next = Element2
+Element3 = ListNode('A')
+Element2.next = Element3
+Element4 = ListNode('K')
+Element3.next = Element4
+Element5 = ListNode('S')
+Element4.next = Element5
+
+S = Solution()
+print(S.isPalindrome(Head))
+
+Element4.next = None
+print(S.isPalindrome(Head))
+
+
+>>> S = Solution()
+>>> print(S.isPalindrome(Head))
+False
+>>>
+>>> Element4.next = None
+>>> print(S.isPalindrome(Head))
+True
+>>>
+
+
+9) Design a Music Player class which stores songs and band names. 
+   Write methods to play songs and return the most played song.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class MusicPlayer:
+  def __init__(self):
+    self.D = {}
+	
+  def add_song(self, name, band):
+    self.D[name] = [band, 0]
+  
+  def play_song(self, name):
+    if name in self.D:
+      #play(name)
+      self.D[name][1] += 1
+    else:
+      return 0
+  
+  def most_played(self):
+    highest_count = 0
+    most_played_song = ''
+    for song in self.D:
+      if self.D[song][1] > highest_count:
+        highest_count = self.D[song][1]
+        most_played_song = song
+    return most_played_song
+
+   
+>>> M = MusicPlayer()
+>>> M.add_song('katy','Universal')
+>>> M.add_song('taylor','MGM')
+>>> M.add_song('gaga','Illumination')
+>>> M.play_song('katy')
+>>> M.play_song('taylor')
+>>> M.play_song('gaga')
+>>> M.play_song('taylor')
+>>> M.play_song('gaga')
+>>> M.play_song('gaga')
+>>> print('Most played song: {}'.format(M.most_played()))
+Most played song: gaga
+>>>
+
+10) Unittest example
+~~~~~~~~~~~~~~~~~~~~
+
+import re
+import unittest2 as unittest
+
+def find_substring(string, substring):                    # Code to be Tested
+  if len(re.findall(substring, string, re.I)) == 0:
+    print('No substrings found')
+    return False
+  else:
+    return True
+
+	
+class Test(unittest.TestCase):                            # Testcases to test the above code
+
+  def setUp(self):                                        # setUp() called before any testcase is run
+    print('Setting up test parameters')
+
+  def debug(self):                                        # debug() can be called to debug a certain testcase
+    print('Correct Assertion Tested')
+
+  def tearDown(self):                                     # tearDown() called when testcase is complete (passed or failed)
+    print('Tearing down testcase now')
+
+  def test_substrings_positive(self):                     # Test positive testcases
+    #self.skipTest('test_substrings_positive')            # skipTest() can be used when a Testcase needs to be skipped
+    string1 = 'Naveen is Happy'
+    string2 = 'Happy is a verb'
+    string3 = 'Pursuit of Happyness'
+    substring = 'Happy'
+    self.assertTrue(find_substring(string1, substring), msg = 'TC1')  # assertTrue(expr, <msg=None>) will pass if 'expr' evaluates to True
+    self.assertTrue(find_substring(string2, substring), msg = 'TC2')  # If the 'expr' evaluates to False, an AssertionError is raised and this
+    self.assertTrue(find_substring(string3, substring), msg = 'TC3')  # testcase fails. You can enable an optional 'msg' string for debugging.
+
+	
+  def test_substrings_negative(self):                     # Test negative testcases
+    string1 = 'Naveen is Happy'         
+    string2 = 'Happy is a verb'
+    substring = 'Cloud'
+    self.assertFalse(find_substring(string1, substring), msg = self.debug())  # assertFalse() will pass if 'expr' evaluates to False.
+    self.assertFalse(find_substring(string2, substring), msg = self.debug())  # If 'expr' evaluates to True, an AssertionError is raised and TC fails.
+    self.assertFalse(find_substring(string3, substring), msg = self.debug())  # The 'msg' can be used as a callback for a 'debug()' method when needed.
+	
+if __name__ == '__main__':
+  unittest.main()
+
+  
+E:\NAVEEN\PYTHON>python ut.py -v
+test_substrings_negative (__main__.Test) ... Setting up test parameters
+No substrings found
+Correct Assertion Tested
+No substrings found
+Correct Assertion Tested
+Tearing down testcase now
+ok
+test_substrings_positive (__main__.Test) ... Setting up test parameters
+Tearing down testcase now
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.006s
+
+OK
+
+E:\NAVEEN\PYTHON>
+  
+
+11) Implement a LRU algorithm:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+from collections import deque
+
+class LRU_queue:
+
+  def __init__(self, size):
+    self.Q = deque(maxlen=size)    # Set the max size of the deque
+	
+  def add_item(self, item):
+    self.Q.append(item)
+    return self.Q
+	
+  def get_item(self, item):
+    # Remove item from its current location
+    # and append to the front of the Q
+    if item in self.Q:
+      self.Q.remove(item)
+      self.Q.append(item)
+    return self.Q
+
+pageTable = LRU_queue(5)
+print(pageTable.add_item('Page1'))
+print(pageTable.add_item('Page2'))
+print(pageTable.add_item('Page3'))
+print(pageTable.add_item('Page4'))
+print(pageTable.add_item('Page5'))   # Max len of deque() is reached here
+print(pageTable.get_item('Page3'))   # get_item() will move Page3 to the front of the deque()
+print(pageTable.get_item('Page4'))   # get_item() will move Page4 to the front of the deque() now
+print(pageTable.add_item('Page6'))   # add_item() now will remove the oldest item in the back of the deque()
+                                     # and appends the inserted item to the front of the deque()
+
+>>> pageTable = LRU_queue(5)
+>>> print(pageTable.add_item('Page1'))
+deque(['Page1'], maxlen=5)
+>>> print(pageTable.add_item('Page2'))
+deque(['Page1', 'Page2'], maxlen=5)
+>>> print(pageTable.add_item('Page3'))
+deque(['Page1', 'Page2', 'Page3'], maxlen=5)
+>>> print(pageTable.add_item('Page4'))
+deque(['Page1', 'Page2', 'Page3', 'Page4'], maxlen=5)
+>>> print(pageTable.add_item('Page5'))
+deque(['Page1', 'Page2', 'Page3', 'Page4', 'Page5'], maxlen=5)
+>>> print(pageTable.get_item('Page3'))
+deque(['Page1', 'Page2', 'Page4', 'Page5', 'Page3'], maxlen=5)   # Page3 is now moved to the front of the deque()
+>>> print(pageTable.get_item('Page4'))
+deque(['Page1', 'Page2', 'Page5', 'Page3', 'Page4'], maxlen=5)   # Page3 is now moved to the front of the deque()
+>>> print(pageTable.add_item('Page6'))
+deque(['Page2', 'Page5', 'Page3', 'Page4', 'Page6'], maxlen=5)   # Page1 is removed from back and Page6 is inserted to the front
+>>>
+>>>
+
+
+12) IMPLEMENT A HASH TABLE
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hash Table stores mapping of keys to its data values.
+In this implementation, we are using a separate list for keys and data values.
+The size of the keys and data are same, which makes it easy to store key and data
+in the same location on its corresponding list.
+
+The Logic for putting new key,data mapping to the HashTable, following algorithm is used.
+
+1) Calculate a new_hash() by inputting the key. The hash_value is used as list index in keyslots
+2) If there is no key at that indexed location in keyslots, go ahead and insert the key and data 
+   into same indexed positions in their corresponding lists (keyslots and dataslots)
+3) If there is a key present and it is the SAME as the calculated hash, then just update the 
+   corresponding index position in the dataslots list.
+4) If there is a key present and it is DIFFERENT than the calculated hash, then perform a rehash()
+   until a valid empty keyslot index position is found.   
+5) Repeat 2,3,4 for the new_hash(). If slot is empty or has a DIFFERENT key, keep looking for new slot.
+   If empty slot is available, insert the key and data to corresponding slots.
+   If slot already has the SAME key, just update the dataslots index position. 
+    
+
+class HashTable:
+
+  def __init__(self, size):
+    self.numslots = size
+    self.keyslots  = [None] * self.numslots   # Initialize the keyslots and dataslots lists  
+    self.dataslots = [None] * self.numslots   # with 'None' in all slots/positions in the list
+
+  def new_hash(self, key, size):
+    return key % size
+	
+  def rehash(self, old_hash, size):
+    return (old_hash)+1 % size
+	
+  def __getitem__(self, key):
+    return self.get(key)
+	
+  def __setitem__(self, key, data):
+    self.put(key, data)
+	
+  def put(self, key, data):
+  
+    slot_num = self.new_hash(key, self.numslots)
+    print('slot num = {}'.format(slot_num))    
+    if self.keyslots[slot_num] == None:         # If slot is empty
+      self.keyslots[slot_num] = key
+      self.dataslots[slot_num] = data
+    elif self.keyslots[slot_num] == key:        # If slot has the same key
+      self.dataslots[slot_num] = data
+    elif self.keyslots[slot_num] != key:        # If slot has a different key
+      next_slot_num = self.rehash(slot_num, self.numslots)
+      print('new slot num = {}'.format(next_slot_num))
+      while self.keyslots[next_slot_num] != None and self.keyslots[next_slot_num] != key:
+        next_slot_num = self.rehash(next_slot_num, self.numslots)  # Keep looking until empty slot or slot
+      if self.keyslots[next_slot_num] == None:                     # with same key is found
+        self.keyslots[next_slot_num] = key
+        self.dataslots[next_slot_num] = data
+      else:
+        self.dataslot[next_slot_num] = data
+		
+  def get(self, key):
+  
+    start_slot = self.new_hash(key, self.numslots)
+    Found = False
+    Stop = False
+    position = start_slot
+    while self.keyslots[position] != None and not Found and not Stop:
+      if self.keyslots[position] == key:
+        Found = True
+        return self.dataslots[position]
+      else:
+        position = self.rehash(position, self.numslots)
+        if position == start_slot:                        # This is needed just in case rehash() has exhausted
+          Stop = True                                     # all possible hash values and it repeats
+
+
+h = HashTable(11)
+h[54]="cat"
+h[26]="dog"
+h[93]="lion"
+h[17]="tiger"
+h[77]="bird"
+h[31]="cow"
+h[44]="goat"
+h[55]="pig"
+
+>>> h = HashTable(11)
+>>> h[54]="cat"
+slot num = 10
+>>> h[26]="dog"
+slot num = 4
+>>> h[93]="lion"
+slot num = 5
+>>> h[17]="tiger"
+slot num = 6
+>>> h[77]="bird"
+slot num = 0
+>>> h[31]="cow"
+slot num = 9
+>>> h[44]="goat"
+slot num = 0
+new slot num = 1
+>>> h[55]="pig"
+slot num = 0
+new slot num = 1
+>>>
+>>> h.keyslots
+[77, 44, 55, None, 26, 93, 17, None, None, 31, 54]
+>>> h.dataslots
+['bird', 'goat', 'pig', None, 'dog', 'lion', 'tiger', None, None, 'cow', 'cat']
+>>> print(h[17])
+tiger
+>>> print(h[77])
+bird
+>>> h[77] = 'duck'
+slot num = 0
+>>> h.keyslots
+[77, 44, 55, None, 26, 93, 17, None, None, 31, 54]
+>>> h.dataslots
+['duck', 'goat', 'pig', None, 'dog', 'lion', 'tiger', None, None, 'cow', 'cat']
+>>>  
+
+
+13) CHECKING CODE COVERAGE
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Do 'pip install coverage' and then:
+
+E:\NAVEEN\PYTHON>coverage run hashtable.py
+slot num = 10
+slot num = 4
+slot num = 5
+slot num = 6
+slot num = 0
+slot num = 9
+slot num = 0
+new slot num = 1
+slot num = 0
+new slot num = 1
+
+E:\NAVEEN\PYTHON>coverage report -m
+Name           Stmts   Miss  Cover   Missing
+--------------------------------------------
+hashtable.py      51     14    73%   11, 21, 31, 33-44
+
+E:\NAVEEN\PYTHON>
+E:\NAVEEN\PYTHON>coverage html  
+
+E:\NAVEEN\PYTHON>
+
+The 'coverage html' generates an html file file:///E:/NAVEEN/PYTHON/htmlcov/index.html
+
+
+
+14) MERGE SORT IMPLEMENTATION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+def merge_sort(alist):
+
+  print('Splitting list now : {}'.format(alist))
+  if len(alist) > 1:
+    midpoint = len(alist) // 2
+    left_half = alist[:midpoint]
+    right_half = alist[midpoint:]
+    print('left_half = {}'.format(left_half))
+    print('right_half = {}'.format(right_half))
+    print()
+    merge_sort(left_half)
+    merge_sort(right_half)
+
+    i,j,k = (0,0,0)
+
+    while i < len(left_half) and j < len(right_half): 
+      if left_half[i] < right_half[j]:
+        alist[k] = left_half[i]
+        i += 1
+      else:
+        alist[k] = right_half[j]
+        j += 1
+      k += 1
+
+    while i < len(left_half):
+      alist[k] = left_half[i]
+      i += 1
+      k += 1
+	  
+    while j < len(right_half):
+      alist[k] = right_half[j]
+      j += 1
+      k += 1
+	  
+  print('Merging list now : {}'.format(alist))
+  print()        
+
+nums = [34,55,66,77,23,45,11,78,43,56,54]       
+merge_sort(nums)
+
+>>> nums = [34,55,66,77,23,45,11,78,43,56,54]
+>>> merge_sort(nums)
+Splitting list now : [34, 55, 66, 77, 23, 45, 11, 78, 43, 56, 54]
+left_half = [34, 55, 66, 77, 23]
+right_half = [45, 11, 78, 43, 56, 54]
+Splitting list now : [34, 55, 66, 77, 23]
+left_half = [34, 55]
+right_half = [66, 77, 23]
+Splitting list now : [34, 55]
+left_half = [34]
+right_half = [55]
+Splitting list now : [34]
+Merging list now: [34]
+
+Splitting list now : [55]
+Merging list now: [55]
+
+Merging list now: [34, 55]
+
+Splitting list now : [66, 77, 23]
+left_half = [66]
+right_half = [77, 23]
+Splitting list now : [66]
+Merging list now: [66]
+
+Splitting list now : [77, 23]
+left_half = [77]
+right_half = [23]
+Splitting list now : [77]
+Merging list now: [77]
+
+Splitting list now : [23]
+Merging list now: [23]
+
+Merging list now: [23, 77]
+
+Merging list now: [23, 66, 77]
+
+Merging list now: [23, 34, 55, 66, 77]
+
+Splitting list now : [45, 11, 78, 43, 56, 54]
+left_half = [45, 11, 78]
+right_half = [43, 56, 54]
+Splitting list now : [45, 11, 78]
+left_half = [45]
+right_half = [11, 78]
+Splitting list now : [45]
+Merging list now: [45]
+
+Splitting list now : [11, 78]
+left_half = [11]
+right_half = [78]
+Splitting list now : [11]
+Merging list now: [11]
+
+Splitting list now : [78]
+Merging list now: [78]
+
+Merging list now: [11, 78]
+
+Merging list now: [11, 45, 78]
+
+Splitting list now : [43, 56, 54]
+left_half = [43]
+right_half = [56, 54]
+Splitting list now : [43]
+Merging list now: [43]
+
+Splitting list now : [56, 54]
+left_half = [56]
+right_half = [54]
+Splitting list now : [56]
+Merging list now: [56]
+
+Splitting list now : [54]
+Merging list now: [54]
+
+Merging list now: [54, 56]
+
+Merging list now: [43, 54, 56]
+
+Merging list now: [11, 43, 45, 54, 56, 78]
+
+Merging list now: [11, 23, 34, 43, 45, 54, 55, 56, 66, 77, 78]
+
+>>>	

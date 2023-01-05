@@ -1,0 +1,1375 @@
+
+2.1) Using Multiple delimiters with 'regexp' module
+---------------------------------------------------
+
+>>> values = ['naveen','latha','surya','nyla']
+>>> delimiters = [':',',','-','>']
+>>> zip(values,delimiters)
+<zip object at 0x0000000002AC61C8>
+>>> for v,d in zip(values,delimiters):
+...    print(v,d)
+...
+naveen :
+latha ,
+surya -
+nyla >
+>>> ''.join(v+d for v,d in zip(values,delimiters))
+'naveen:latha,surya-nyla>'
+>>>
+
+
+2.3) Matching Strings using Wildcard patterns
+---------------------------------------------
+
+>>> import fnmatch               <-- works only for text search
+>>> fnmatch('foo.txt','*.txt')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'module' object is not callable
+>>> fnmatch.fnmatch('foo.txt','*.txt')
+True
+>>> fnmatch.fnmatch('foo.txt','?oo.txt')
+True
+>>> fnmatch.fnmatch('Dat45.csv','Dat[0-9]*')
+True
+>>>
+
+
+3.3) Formatting Numbers for output
+----------------------------------
+
+>>> x = 1234.56789
+>>> format(x,'0.2f')
+'1234.57'
+>>> format(x,'>10.2f')
+'   1234.57'
+>>> format(x,'<10.2f')
+'1234.57   '
+>>> format(x,'^10.2f')
+' 1234.57  '
+>>> format(x,'0,.2f')
+'1,234.57'
+>>> format(x,'e')
+'1.234568e+03'
+>>> format(x,'0.2E')
+'1.23E+03'
+>>>
+
+
+3.4) Substituting one given number of occurances
+------------------------------------------------
+
+>>> p = '0x3450x45'
+>>> re.sub('0x','',p)
+'34545'
+>>> re.sub('0x','',p,count=1)   <-- substitute only the first 0x 
+'3450x45'
+>>>
+
+
+3.9) Numpy for large number calculations
+----------------------------------------
+
+Numpy is 100 times faster than the standard Python Math module.
+Use this when dealing with large Numerical arrays.
+
+>>> import numpy as np
+>>> x = np.array([1,2,3,4])
+>>> y = np.array([5,6,7,8])
+>>> x * 2
+array([2, 4, 6, 8])
+>>> y + 10
+array([15, 16, 17, 18])
+>>> x + y
+array([ 6,  8, 10, 12])
+>>> x * y
+array([ 5, 12, 21, 32])
+>>> np.sqrt(x)
+array([ 1.        ,  1.41421356,  1.73205081,  2.        ])
+>>> np.sqrt(x+y)
+array([ 2.44948974,  2.82842712,  3.16227766,  3.46410162])
+>>> grid = np.zeros(shape=(4,3), dtype=float)
+>>> grid
+array([[ 0.,  0.,  0.],
+       [ 0.,  0.,  0.],
+       [ 0.,  0.,  0.],
+       [ 0.,  0.,  0.]])
+>>>
+>>> m = np.matrix([[1,2,-3],[5,3,4],[0,-1,-5]])
+>>> m
+matrix([[ 1,  2, -3],
+        [ 5,  3,  4],
+        [ 0, -1, -5]])
+>>> m.T
+matrix([[ 1,  5,  0],
+        [ 2,  3, -1],
+        [-3,  4, -5]])
+>>> m.I
+matrix([[-0.2037037 ,  0.24074074,  0.31481481],
+        [ 0.46296296, -0.09259259, -0.35185185],
+        [-0.09259259,  0.01851852, -0.12962963]])
+>>>
+
+
+3.11) Picking items in Random
+-----------------------------
+
+>>> import random
+>>> values = [1,2,3,4,5]
+>>> random.choice(values)     <-- choice() method may repeat what ever was previously chosen
+4                                 It is stateless. Each call is different
+>>> random.choice(values)
+1
+>>> random.choice(values)
+4
+>>> random.choice(values)
+4
+>>> random.choice(values)
+2
+>>> random.sample(values,2)   <-- sample() method will NOT repeat whatever was previously selected
+[2, 4]                            That is, selected items are removed from further consideration
+>>> random.sample(values,2)
+[2, 3]
+>>> random.sample(values,2)
+[4, 3]
+>>> random.sample(values,2)  
+[5, 1]
+>>> random.sample(values,2)   <-- This looks like a Bug to me
+[5, 1]
+>>> random.sample(values,2)
+[1, 5]
+>>> random.sample(values,2)
+[5, 2]
+>>> random.sample(values,2)
+[2, 4]
+>>> random.sample(values,2)
+[3, 2]
+>>> random.sample(values,2)
+[3, 2]
+>>> random.sample(values,2)
+[4, 1]
+>>> random.shuffle(values)    <-- Shuffling items in place
+>>> values
+[1, 3, 5, 2, 4]
+>>> random.shuffle(values)
+>>> values
+[5, 4, 2, 3, 1]
+>>> random.shuffle(values)
+>>> values
+[3, 4, 2, 1, 5]
+>>> random.shuffle(values)
+>>> values
+[5, 3, 2, 1, 4]
+>>>
+>>> random.random()          <-- Random floating number between 0 and 1
+0.5572248131179707
+>>> random.random()
+0.8353780874667218
+>>>
+
+
+4.1) Manually Consuming an Iterator
+-----------------------------------
+
+There are 2 easy methods. One is using 'for' loop and the other is using 'while' loop
+Note that the 'for' loop calls the next() method iteratively and catches the 'StopIteration'
+exception. However, a 'while' loop needs to implement its own.
+
+with open('/etc/passwd') as f:
+    try:
+        while True:
+            line = next(f)
+            print(line, end='')
+    except StopIteration:
+        pass
+		
+with open('/etc/passwd') as f:
+    for line in iter(f.readline,''):
+        print(line, end='')	
+		
+
+4.4) Implementing the Iteration Protocol using Class (V.IMP)		
+------------------------------------------------------------
+
+Lets take the 'depth-first' example for our code below.
+
+class Node:
+    def __init__(self,nodeName):
+        self.nodeName = nodeName    <-- Local Variables nodeName and children
+        self.children = []              One is a string , the other is a list
+
+    def add_child(self,child):
+        self.children.append(child)
+
+    def __iter__(self):            <-- the __iter__ method should return an Iterable object
+        return iter(self.children)
+
+    def __repr__(self):               <-- this gets called when print(ch) is executed
+        return 'Node {}'.format(self.nodeName)
+
+    def depth_first(self):
+        yield self
+        for c in self:
+            yield from c.depth_first()  <-- Notice the 'yield from' recursion
+
+if __name__ == '__main__':
+    root    = Node(0)
+    child1  = Node(1)
+    child2  = Node(2)
+    root.add_child(child1)
+    root.add_child(child2)
+    child1.add_child(Node(3))
+    child1.add_child(Node(4))
+    child2.add_child(Node(5))
+
+    for ch in root.depth_first():
+        print(ch)
+
+
+E:\NAVEEN\PYTHON>python depthfirst.py
+Node 0
+Node 1
+Node 3
+Node 4
+Node 2
+Node 5
+
+E:\NAVEEN\PYTHON>		
+
+
+4.7) Taking a slice of an Iterator
+----------------------------------
+
+Iterators and generators can’t normally be sliced, because no information is known about
+their length (and they don’t implement indexing). The result of islice() is an iterator
+that produces the desired slice items, but it does this by consuming and discarding all
+of the items up to the starting slice index. Further items are then produced by the islice
+object until the ending index has been reached.
+
+>>> import itertools
+>>> def count(n):
+...    while n<100:
+...       yield n
+...       n += 1
+... 
+>>> 
+>>> c = count(0)              
+>>> for N in itertools.islice(c,10,20):   <-- Give me a slice from 10 to 20
+...     print(N)
+... 
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+>>> next(c)      <-- Note that iterator has already reached 19. You cannot wind it back.
+20
+>>> next(c)
+21
+>>> 
+
+
+4.8) Ignore the first part of the results from an Iterator:
+-----------------------------------------------------------
+
+Ignore all the lines starting with '#' inside a text file.
+The itertools.dropwhile provides this capability.
+'dropwhile' takes 2 arguments: 
+	- A Function (in this case a lambda function)
+	- An Iterable (in this case the file handler)
+
+As long as the supplied Function returns True, the values coming
+from the Iterator are discarded. 
+
+>>> from itertools import dropwhile
+>>> with open('file1.txt','r') as fh:
+...     for line in dropwhile(lambda line: line.startswith("#"), fh):
+...         print(line)
+... 
+Hello Naveen
+What a wonderful day this is
+Enjoy while the Sunshine lasts
+>>> 
+
+
+4.10) Using Enumerate to the print the line number read from a File
+-------------------------------------------------------------------
+
+>>> with open('file1.txt','r') as fh:
+...     for lnum, line in enumerate(fh.readlines()):
+...         print(lnum,line)
+... 
+0 # These are some comment lines
+1 # that should be ignore while 
+2 # reading this file
+3 #
+4 Hello Naveen
+5 What a wonderful day this is
+6 Enjoy while the Sunshine lasts
+>>> 
+
+
+4.11) Iterating over multiple sequences simulteneously
+------------------------------------------------------
+
+>>> a = ['name','age','city']
+>>> b = ['red','green','blue']
+>>> c = [100,200,300]
+>>> for x in zip(a,b,c):
+...   print(x)
+... 
+('name', 'red', 100)
+('age', 'green', 200)
+('city', 'blue', 300)
+>>> 
+>>> c = [100,200,300,400,500]    <-- zip works until shortest sequence is exhausted
+>>> for x in zip(a,b,c):
+...   print(x)
+... 
+('name', 'red', 100)
+('age', 'green', 200)
+('city', 'blue', 300)            <-- Increasing the number of elements in 'c' has no effect
+>>>      
+>>> import itertools
+>>> for x in itertools.zip_longest(a,b,c):    <-- Use 'zip_longest' if zip needs to work until
+...   print(x)                                    the longest sequence is exhausted
+... 
+('name', 'red', 100)
+('age', 'green', 200)
+('city', 'blue', 300)
+(None, None, 400)
+(None, None, 500)
+>>> 
+
+
+4.12) Iterating on items in seperate containers
+-----------------------------------------------
+
+Problem:
+
+You need to perform the same operation on many objects, but the objects are contained
+in different containers, and you’d like to avoid nested loops without losing the readability
+of your code. 
+
+Solution:
+
+The itertools.chain() method can be used to simplify this task. It takes a list of
+iterables as input, and returns an iterator that effectively masks the fact that you’re really
+acting on multiple containers. To illustrate, consider this example:
+
+>>> from itertools import chain
+>>> a = [1, 2, 3, 4]
+>>> b = ['x', 'y', 'z']
+>>> for x in itertools.chain(a, b):
+... print(x)
+...
+1
+2
+3
+4
+x
+y
+z
+>>>
+>>> a
+['name', 'age', 'city']
+>>> b
+['red', 'green', 'blue']
+>>> c
+[100, 200, 300, 400, 500]
+>>> 
+>>> for x in itertools.chain(a,b,c):
+...   print(x)
+... 
+name
+age
+city
+red
+green
+blue
+100
+200
+300
+400
+500
+>>> 
+
+
+This solution is much more elegant than using two separate loops, as in the following:
+for item in a:
+ # Process item
+ ...
+for item in b:
+ # Process item
+ ...
+for item in c:
+ # Process item
+ ... 
+ 
+---------------------------------------------------------
+4.13) CREATING DATA PROCESSING PIPELINES USING GENERATORS
+---------------------------------------------------------
+
+The objective is as follows:
+
+1) Search for all the '*.gz' files in a given directory
+2) Open each of the '*.gz' file and find README.txt file
+3) If README.txt exists, read the contents of the file
+4) Collect all such '*.gz' files with README files and get their file statistics.
+
+import os
+import fnmatch
+import re
+import tarfile
+import itertools
+
+def gen_find(filepat,topdir):
+  '''
+     Find all filenames in the directory which
+     match the given file pattern
+  '''
+
+  for path,dirlist,filelist in os.walk(topdir):
+    for file in fnmatch.filter(filelist,filepat):      <-- You can also use 'glob.glob' method instead of 'fnmatch'
+      yield os.path.join(path,file)                    <-- 'yield' will move the code to next stage of Processing Pipeline
+
+def gen_searchReadme(filenames):
+   '''
+      Open a sequence of filenames one at a time
+      and yield a file object for next stage of
+      pipeline processing
+   '''
+
+   for filename in filenames:
+     if filename.endswith('.gz'):
+       tarfh = tarfile.open(filename,'r:gz')           <-- tarfile module can open *.gz files
+       for file_inside in tarfh.getnames():
+         if re.search('README.txt',file_inside):
+           fobj = tarfh.extractfile(file_inside)       <-- tarfile give 'extractfile' method which 
+           contents = fobj.read()                          returns an io.BufferedReader object
+       tarfh.close()                                       One can read 'n' bytes or all bytes at a time
+       yield filename                                  <-- 'yield' will move the code to next stage of Processing Pipeline
+
+def gen_reportStats(gzip_files):
+   '''
+      Search for the Text pattern inside the file
+   '''
+   for gzip_file in gzip_files:
+     print(gzip_file)
+     print(os.stat(gzip_file))   <-- This function takes the name of a file, and returns a 10-member tuple with the following contents:
+                                    (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime)
+
+
+if __name__ == '__main__':
+
+   search_dir = '/archive/build-images/REL_163'
+   deployment_files = gen_find('EVR-DEPLOY*.gz',search_dir)   <-- 'gen_find' returns an iter object which is referenced by 'deployment_files'
+   gzipped_files = gen_searchReadme(deployment_files)         <-- 'gen_searchReadme' consumes 'deployment_files' iter object and returns another 
+                                                                   iter object which is referenced by 'gzipped_files'
+   gen_reportStats(gzipped_files)                             <-- 'gen_reportStats' consumes 'gzipped_files' iter object which prints the stats
+                                                                   NOTE that way in which one iter is passed to another creating a Data processing Pipeline
+
+																   
+eussjlts0602 [19:08] [enavsre/Desktop/Python-3.5.1] -> ./python pipeline.py
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.1.tar.gz
+os.stat_result(st_mode=33188, st_ino=823082, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78918, st_atime=1463473609, st_mtime=1463473609, st_ctime=1463473609)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.2.tar.gz
+os.stat_result(st_mode=33188, st_ino=659931, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=79990, st_atime=1463486790, st_mtime=1463486790, st_ctime=1463486790)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.3.tar.gz
+os.stat_result(st_mode=33188, st_ino=481512, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78467, st_atime=1463784249, st_mtime=1463784249, st_ctime=1463784249)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.4.tar.gz
+os.stat_result(st_mode=33188, st_ino=597984, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78828, st_atime=1464126179, st_mtime=1464126179, st_ctime=1464126179)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.5.tar.gz
+os.stat_result(st_mode=33188, st_ino=661432, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78424, st_atime=1464137706, st_mtime=1464137706, st_ctime=1464137706)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.6.tar.gz
+os.stat_result(st_mode=33188, st_ino=679997, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=79990, st_atime=1464159577, st_mtime=1464159577, st_ctime=1464159577)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.7.tar.gz
+os.stat_result(st_mode=33188, st_ino=750086, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78929, st_atime=1464180927, st_mtime=1464180927, st_ctime=1464180927)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.8.tar.gz
+os.stat_result(st_mode=33188, st_ino=711628, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78906, st_atime=1464245849, st_mtime=1464245849, st_ctime=1464245849)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.9.tar.gz
+os.stat_result(st_mode=33188, st_ino=470102, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=79991, st_atime=1464418644, st_mtime=1464418644, st_ctime=1464418644)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.10.tar.gz
+os.stat_result(st_mode=33188, st_ino=724630, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78831, st_atime=1464440644, st_mtime=1464440644, st_ctime=1464440644)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.11.tar.gz
+os.stat_result(st_mode=33188, st_ino=340300, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=78416, st_atime=1464483377, st_mtime=1464483377, st_ctime=1464483377)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.12.tar.gz
+os.stat_result(st_mode=33188, st_ino=495254, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46053, st_atime=1464526889, st_mtime=1464526889, st_ctime=1464526889)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.13.tar.gz
+os.stat_result(st_mode=33188, st_ino=239621, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46557, st_atime=1464548145, st_mtime=1464548145, st_ctime=1464548145)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.14.tar.gz
+os.stat_result(st_mode=33188, st_ino=862319, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46556, st_atime=1464569714, st_mtime=1464569714, st_ctime=1464569714)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.15.tar.gz
+os.stat_result(st_mode=33188, st_ino=364743, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46550, st_atime=1464736398, st_mtime=1464736398, st_ctime=1464736398)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.16.tar.gz
+os.stat_result(st_mode=33188, st_ino=46721, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46432, st_atime=1464742522, st_mtime=1464742522, st_ctime=1464742522)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.17.tar.gz
+os.stat_result(st_mode=33188, st_ino=533300, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46080, st_atime=1464752781, st_mtime=1464752781, st_ctime=1464752781)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.18.tar.gz
+os.stat_result(st_mode=33188, st_ino=607770, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46438, st_atime=1464829536, st_mtime=1464829536, st_ctime=1464829536)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.19.tar.gz
+os.stat_result(st_mode=33188, st_ino=880574, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46438, st_atime=1464872524, st_mtime=1464872524, st_ctime=1464872524)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.20.tar.gz
+os.stat_result(st_mode=33188, st_ino=421193, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46259, st_atime=1464893849, st_mtime=1464893849, st_ctime=1464893849)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.21.tar.gz
+os.stat_result(st_mode=33188, st_ino=31436, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46082, st_atime=1464916018, st_mtime=1464916018, st_ctime=1464916018)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.22.tar.gz
+os.stat_result(st_mode=33188, st_ino=794383, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46617, st_atime=1465003211, st_mtime=1465003211, st_ctime=1465003211)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.23.tar.gz
+os.stat_result(st_mode=33188, st_ino=878824, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46293, st_atime=1465066500, st_mtime=1465066500, st_ctime=1465066500)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.24.tar.gz
+os.stat_result(st_mode=33188, st_ino=900568, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46623, st_atime=1465089131, st_mtime=1465089131, st_ctime=1465089131)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.25.tar.gz
+os.stat_result(st_mode=33188, st_ino=797306, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46057, st_atime=1465131555, st_mtime=1465131555, st_ctime=1465131555)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.26.tar.gz
+os.stat_result(st_mode=33188, st_ino=674185, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46438, st_atime=1465174618, st_mtime=1465174618, st_ctime=1465174618)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.27.tar.gz
+os.stat_result(st_mode=33188, st_ino=247961, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46323, st_atime=1465217830, st_mtime=1465217830, st_ctime=1465217830)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.28.tar.gz
+os.stat_result(st_mode=33188, st_ino=120934, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46302, st_atime=1465239945, st_mtime=1465239945, st_ctime=1465239945)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.29.tar.gz
+os.stat_result(st_mode=33188, st_ino=287549, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46618, st_atime=1465261301, st_mtime=1465261301, st_ctime=1465261301)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.30.tar.gz
+os.stat_result(st_mode=33188, st_ino=725481, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46435, st_atime=1465304150, st_mtime=1465304150, st_ctime=1465304150)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.31.tar.gz
+os.stat_result(st_mode=33188, st_ino=852772, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46612, st_atime=1465326849, st_mtime=1465326849, st_ctime=1465326850)
+/archive/build-images/REL_163/EVR-DEPLOY-16.3.1.0.32.tar.gz
+os.stat_result(st_mode=33188, st_ino=85484, st_dev=47, st_nlink=1, st_uid=141071, st_gid=21791, st_size=46059, st_atime=1465347720, st_mtime=1465347720, st_ctime=1465347720)
+eussjlts0602 [19:08] [enavsre/Desktop/Python-3.5.1] ->
+   
+
+HOW TO IMPLEMENT A LEAST RECENTLY USED (LRU) ALGORITHM
+------------------------------------------------------
+
+class LRUCache:
+
+    def __init__(self, size=None):
+        self.size = size
+	self.data = {}
+	self.user = []
+
+    def __getitem__(self, item):
+	try:
+	    value = self.data[item]
+	    if self.size:
+		# bring used item to front
+		self.used.remove(item)
+		self.used.append(item)
+	except KeyError:
+	    value = self.fetch(item)
+	    if self.size:
+		if len(self.data) >= self.size:
+		    del self.data[self.used.pop(0)]
+		self.user.append(item)
+	    self.data[item] = value
+	return value
+
+    def fetch(self, item):
+	raise NotImplementedError
+	
+
+4.15) MERGE 2 FILES TOGETHER (ONE LINE AT TIME)
+-----------------------------------------------
+
+Merge 2 sorted sequences into one sequence.
+
+>>> a = ['cat','dog','horse']            <-- already sorted by alphabetical order
+>>> b = ['giraffe','lion','zebra']
+>>> list(heapq.merge(a,b))               <-- heapq.merge() merges both sequences in alphabetical order
+['cat', 'dog', 'giraffe', 'horse', 'lion', 'zebra']
+>>>
+>>> a.sort(key=len)                      <-- sort 'a' and 'b' based on key length
+>>> b.sort(key=len)
+>>> a
+['cat', 'dog', 'horse']
+>>> b
+['lion', 'zebra', 'giraffe']
+>>> list(heapq.merge(a,b,key=len))       <--- call 'heapq.merge()' with 'key=len' attribute to sort by length
+['cat', 'dog', 'lion', 'horse', 'zebra', 'giraffe']
+>>> 
+
+NOTE: You can substitute 'a' and 'b' with 'file1' and 'file2' to merge contents of both files into one file.
+
+
+6.1) READING CSV FILES 
+----------------------
+
+import csv
+
+with open('stocks.xml','r') as fh:
+  f_csv = csv.reader(fh)               <-- csv.reader(fh) returns an an Iterator
+  headers = next(f_csv)                    The next() method can be used 
+  for row in f_csv:
+    print(row[0],row[1])               <-- However, the row elements needs to be accessed 
+                                           by index numbers, which is not easily readable	
+
+
+eussjlts0602 [12:35] [enavsre/Desktop/Python-3.5.1] -> ./python stocks.py
+AA 39.48
+AIG 71.38
+AXP 62.58
+BA 98.31
+C 53.08
+CAT 78.29
+eussjlts0602 [12:35] [enavsre/Desktop/Python-3.5.1] -> 
+
+
+To access each row element by the Column Header, either the 'named tuple' can be used
+or the csv.DictReader() can be used. 
+
+import csv
+
+with open('stocks.xml','r') as f:
+  f_csv = csv.DictReader(f)                 <-- Returns an Iterator as earlier
+  for row in f_csv:
+    print(row['Symbol'],row['Price'])       <-- However, row elements can be accessed by Column Header
+
+eussjlts0602 [12:33] [enavsre/Desktop/Python-3.5.1] -> ./python stocks.py
+AA 39.48
+AIG 71.38
+AXP 62.58
+BA 98.31
+C 53.08
+CAT 78.29
+eussjlts0602 [12:33] [enavsre/Desktop/Python-3.5.1] -> 	
+
+
+6.2) READING AND WRITING JSON DATA
+----------------------------------
+
+Note: The json.dumps() and json.loads() works mostly with Python Objects such as
+      lists, tuples, dictionaries. If class instances needs to be serialized, then
+	  one has to write a separate code.
+	  
+>>> 
+>>> import json
+>>> data = {
+...    'name'
+...  : 'ACME'
+... ,
+...    'shares'
+...  : 100,
+...    'price'
+...  : 542.23
+... }
+>>> print(json.dumps(data,indent=4))
+{
+    "name": "ACME",
+    "price": 542.23,
+    "shares": 100
+}
+>>> print(json.dumps(data,sort_keys=True))
+{"name": "ACME", "price": 542.23, "shares": 100}
+>>>
+>>> json_str = json.dumps(data)
+>>> json_str
+'{"name": "ACME", "price": 542.23, "shares": 100}'
+>>> type(json_str)
+<class 'str'>
+>>> dir(json_str)
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+>>>  
+>>> PyObj = json.loads(json_str)
+>>> PyObj
+{'name': 'ACME', 'price': 542.23, 'shares': 100}
+>>> PyObj
+{'name': 'ACME', 'price': 542.23, 'shares': 100}
+>>> data
+{'name': 'ACME', 'price': 542.23, 'shares': 100}
+>>> type(data)
+<class 'dict'>
+>>> PyObj.name
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'dict' object has no attribute 'name'
+>>> PyObj['name']
+'ACME'
+>>> PyObj['price']
+542.23
+>>> PyObj['shares']
+100
+>>> 
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+6.3) RSS FEED FROM CNN
+~~~~~~~~~~~~~~~~~~~~~~
+
+from xml.etree.ElementTree import parse
+from urllib.request import urlopen           <-- Note urlopen() method is inside urllib.request
+
+url = urlopen('http://rss.cnn.com/rss/cnn_topstories.rss')    <-- Remember this RSS URL !!
+document = parse(url)                            <-- parse() is a wonderful method YOU MUST KNOW
+
+for item in document.iterfind('channel/item'):   <-- iterfind() is a way to iteratively find the required element
+    print(item.findtext('title'))
+    print(item.findtext('pubDate'))
+    print(item.findtext('link'))
+    print()
+
+Notes:
+------   
+The xml.etree.ElementTree.parse() function parses the entire XML document into
+a  document  object.  From  there,  you  use  methods  such  as  find(),  iterfind()
+, and findtext() to search for specific XML elements. The arguments to these functions are
+the names of a specific tag, such as 'channel/item' or 'title'
+
+   
+The actual XML feed from CNN is below:
+--------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="http://rss.cnn.com/assets/rss.xsl"?>
+  <rss xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+      <title>CNN.com - Top Stories</title>
+      <link>http://www.cnn.com/index.html?eref=rss_topstories</link>
+      <description>CNN.com delivers up-to-the-minute news and information on the latest top stories, weather, entertainment, politics and more.</description>
+      <language>en-US</language>
+      <copyright>Copyright 2016 Cable News Network LP, LLLP.</copyright>
+      <pubDate>Thu, 09 Jun 2016 14:51:43 EDT</pubDate>
+      <ttl>10</ttl>
+      <item>
+        <title>&apos;I don&apos;t think there&apos;s ever been someone so qualified,&apos; President says</title>
+        <guid>http://www.cnn.com/2016/06/09/politics/president-barack-obama-endorses-hillary-clinton-in-video/index.html</guid>
+        <link>http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0C20A160C0A60C0A90Cpolitics0Cpresident0Ebarack0Eobama0Eendorses0Ehillary0Eclinton0Ein0Evideo0Cindex0Bhtml0Deref0Frss0Itopstories</link>
+        <description>President Barack Obama endorsed Democratic presumptive presidential nominee Hillary Clinton in a web video Thursday. &lt;Br&gt;&lt;Br&gt;&lt;a href=&quot;http://podcast.cnn.com&quot; rel=&quot;nofollow&quot;&gt;&lt;img src=&quot;http://podcasts.cnn.net/cnnpodcasts/feeds/images/300-ac360.jpg&quot;&gt;&lt;/a&gt;</description>
+        <pubDate>Thu, 09 Jun 2016 14:42:41 EDT</pubDate>
+        <media:thumbnail height="51" width="90" url="http://i2.cdn.turner.com/cnn/dam/assets/160609141432-obama-hillary-clinton-endorsement-00000000-top-tease.jpg"/>
+        <media:content height="51" width="90" medium="image" type="image/jpeg" url="http://i2.cdn.turner.com/cnn/dam/assets/160609141432-obama-hillary-clinton-endorsement-00000000-top-tease.jpg"/>
+      </item>
+      <item>
+        <title>Watch: Obama&apos;s endorsement</title>
+        <guid>http://www.cnn.com/video/data/2.0/video/politics/2016/06/09/obama-hillary-clinton-endorsement.cnn.html</guid>
+        <link>http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0Cvideo0Cdata0C20B0A0Cvideo0Cpolitics0C20A160C0A60C0A90Cobama0Ehillary0Eclinton0Eendorsement0Bcnn0Bhtml0Deref0Frss0Itopstories</link>
+        <description>President Obama announced that he is supporting Hillary Clinton in the 2016 election via a taped recording posted to HillaryClinton.com.</description>
+        <pubDate>Thu, 09 Jun 2016 14:30:14 EDT</pubDate>
+        <media:thumbnail height="51" width="90" url="http://i2.cdn.turner.com/cnn/dam/assets/160609141432-obama-hillary-clinton-endorsement-00000000-top-tease.jpg"/>
+        <media:content height="51" width="90" medium="image" type="image/jpeg" url="http://i2.cdn.turner.com/cnn/dam/assets/160609141432-obama-hillary-clinton-endorsement-00000000-top-tease.jpg"/>
+      </item>
+      <item>
+        <title>Clinton&apos;s VP search begins</title>
+        <guid>http://www.cnn.com/2016/06/08/politics/hillary-clinton-vice-president/index.html</guid>
+        <link>http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0C20A160C0A60C0A80Cpolitics0Chillary0Eclinton0Evice0Epresident0Cindex0Bhtml0Deref0Frss0Itopstories</link>
+        <description>Hillary Clinton said Wednesday she&apos;ll consider &quot;the most qualified people&quot; for the Democratic vice presidential nomination -- which would include women. &lt;br&gt;&lt;Br&gt;Sponsored:&lt;br&gt; &lt;b&gt;Drivers With No Tickets In 3 Years Read This&lt;/b&gt; &lt;br&gt; &lt;a href=&quot;http://www.dailyconsumerlife.com/articles/auto/?t202id=5141&amp;t202kw=&quot; target=&quot;_blank&quot;&gt;Do NOT pay your next car insurance bill until you try this.&lt;/a&gt; &lt;Br&gt;&lt;Br&gt;</description>
+        <pubDate>Thu, 09 Jun 2016 08:57:33 EDT</pubDate>
+        <media:thumbnail height="51" width="90" url="http://i2.cdn.turner.com/cnn/dam/assets/160608061857-hillary-clinton-victory-june-7-brooklyn-top-tease.jpg"/>
+        <media:content height="51" width="90" medium="image" type="image/jpeg" url="http://i2.cdn.turner.com/cnn/dam/assets/160608061857-hillary-clinton-victory-june-7-brooklyn-top-tease.jpg"/>
+      </item>
+      <item>
+        <title>Do Trump&apos;s tweets hint at VP search?</title>
+        <guid>http://www.cnn.com/2016/06/09/politics/jeff-sessions-donald-trump-vp-tweet/index.html</guid>
+        <link>http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0C20A160C0A60C0A90Cpolitics0Cjeff0Esessions0Edonald0Etrump0Evp0Etweet0Cindex0Bhtml0Deref0Frss0Itopstories</link>
+        <description>Donald Trump took to twitter Wednesday night and with the push of a button, perhaps shed some light on his VP choice -- just as his advisers hoped he wouldn&apos;t do. </description>
+        <pubDate>Thu, 09 Jun 2016 14:30:37 EDT</pubDate>
+        <media:thumbnail height="51" width="90" url="http://i2.cdn.turner.com/cnn/dam/assets/160608212103-donald-trump-june-7-top-tease.jpg"/>
+        <media:content height="51" width="90" medium="image" type="image/jpeg" url="http://i2.cdn.turner.com/cnn/dam/assets/160608212103-donald-trump-june-7-top-tease.jpg"/>
+      </item>
+    </channel>
+  </rss>
+</xml>
+
+
+eussjlts0602 [11:56] [enavsre/Desktop/Python-3.5.1] -> ./python parse.py
+'I don't think there's ever been someone so qualified,' President says
+Thu, 09 Jun 2016 14:42:41 EDT
+http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0C20A160C0A60C0A90Cpolitics0Cpresident0Ebarack0Eobama0Eendorses0Ehillary0Eclinton0Ein0Evideo0Cindex0Bhtml0Deref0Frss0Itopstories
+
+Watch: Obama's endorsement
+Thu, 09 Jun 2016 14:30:14 EDT
+http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0Cvideo0Cdata0C20B0A0Cvideo0Cpolitics0C20A160C0A60C0A90Cobama0Ehillary0Eclinton0Eendorsement0Bcnn0Bhtml0Deref0Frss0Itopstories
+
+Clinton's VP search begins
+Thu, 09 Jun 2016 08:57:33 EDT
+http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0C20A160C0A60C0A80Cpolitics0Chillary0Eclinton0Evice0Epresident0Cindex0Bhtml0Deref0Frss0Itopstories
+
+Do Trump's tweets hint at VP search?
+Thu, 09 Jun 2016 14:30:37 EDT
+http://rss.cnn.com/r/0ae4531c32/0L0Scnn0Bcom0C20A160C0A60C0A90Cpolitics0Cjeff0Esessions0Edonald0Etrump0Evp0Etweet0Cindex0Bhtml0Deref0Frss0Itopstories
+
+eussjlts0602 [11:56] [enavsre/Desktop/Python-3.5.1] ->
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6.3 RSS FEED FROM PYTHON.ORG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+from xml.etree.ElementTree import parse
+from urllib.request import urlopen
+
+url = urlopen('https://www.python.org/dev/peps/peps.rss/')
+data = parse(url)
+
+for item in data.iterfind('channel/item'):
+    print(item.findtext('title'))
+    print(item.findtext('pubDate'))
+    print(item.findtext('link'))
+    print()
+
+
+The XML feed from Python.org is below:
+--------------------------------------
+   
+<?xml version="1.0" encoding="utf-8"?>
+  <rss version="2.0">
+    <channel>
+      <title>Newest Python PEPs</title>
+      <link>http://www.python.org/dev/peps</link>
+      <description>Newest Python Enhancement Proposals (PEPs) - Information on new language features, and some meta-information like release procedure and schedules</description>
+      <lastBuildDate>Thu, 09 Jun 2016 19:00:02 GMT</lastBuildDate>
+      <generator>PyRSS2Gen-1.0.0</generator>
+      <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+      <item>
+        <title>PEP 520: Ordered Class Definition Namespace</title>
+        <link>http://www.python.org/dev/peps/pep-0520</link>
+        <description>Author: Eric Snow &lt;ericsnowcurrently@gmail.com&gt;</description>
+        <guid isPermaLink="true">http://www.python.org/dev/peps/pep-0520</guid>
+        <pubDate>Tue, 07 Jun 2016 00:00:00 GMT</pubDate>
+      </item>
+      <item>
+        <title>PEP 519: Adding a file system path protocol</title>
+        <link>http://www.python.org/dev/peps/pep-0519</link>
+        <description>Author: Brett Cannon &lt;brett@python.org&gt;,</description>
+        <guid isPermaLink="true">http://www.python.org/dev/peps/pep-0519</guid>
+        <pubDate>Wed, 11 May 2016 00:00:00 GMT</pubDate>
+      </item>
+      <item>
+        <title>PEP 518: Specifying Minimum Build System Requirements for Python Projects</title>
+        <link>http://www.python.org/dev/peps/pep-0518</link>
+        <description>Author: Brett Cannon &lt;brett@python.org&gt;,</description>
+        <guid isPermaLink="true">http://www.python.org/dev/peps/pep-0518</guid>
+        <pubDate>Tue, 10 May 2016 00:00:00 GMT</pubDate>
+      </item>
+    </channel>
+  </rss>
+</xml>
+   
+eussjlts0602 [12:00] [enavsre/Desktop/Python-3.5.1] -> ./python parse.py
+PEP 520: Ordered Class Definition Namespace
+Tue, 07 Jun 2016 00:00:00 GMT
+http://www.python.org/dev/peps/pep-0520
+
+PEP 519: Adding a file system path protocol
+Wed, 11 May 2016 00:00:00 GMT
+http://www.python.org/dev/peps/pep-0519
+
+PEP 518: Specifying Minimum Build System Requirements for Python Projects
+Tue, 10 May 2016 00:00:00 GMT
+http://www.python.org/dev/peps/pep-0518
+
+eussjlts0602 [12:00] [enavsre/Desktop/Python-3.5.1] ->
+
+
+6.5) CONVERTING FROM DICTIONARY TO XML
+--------------------------------------
+
+from xml.etree.ElementTree import Element    <-- Element module
+from xml.etree.ElementTree import tostring   <-- tostring module
+
+def dict_to_xml(rootTag,dictionary):
+
+    root_element = Element(rootTag)          <-- create new element as 'root_element'
+    for key,value in dictionary.items():         by calling the Element()
+        child_element      = Element(key)
+        child_element.text = str(value)
+        root_element.append(child_element)   <-- Append the child_element to root_element
+    return root_element
+
+D = {'name':'ERIC','shares':1000,'price':12.50}
+XML = dict_to_xml('Stock',D)                      <-- returns root_element as byte object
+print(tostring(XML))                              <-- convert byte object to string
+XML.set('id',"1234")                              <-- Add a new attribute to root_element
+print(tostring(XML))
+
+
+OUTPUT:
+-------
+
+eussjlts0602 [12:34] [enavsre/Desktop/Python-3.5.1] -> ./python dtox.py
+b'<Stock><price>12.5</price><shares>1000</shares><name>ERIC</name></Stock>'
+b'<Stock id="1234"><name>ERIC</name><shares>1000</shares><price>12.5</price></Stock>'
+eussjlts0602 [12:34] [enavsre/Desktop/Python-3.5.1] ->
+
+
+6.6) MODIFYING XML
+==================
+
+>>> from xml.etree.ElementTree import parse,Element
+>>> xmldoc = parse('rss.xml')
+>>> root = xmldoc.getroot()
+>>> children = root.getchildren()
+>>> dir(root)
+['__class__', '__copy__', '__deepcopy__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getstate__', '__gt__', '__hash__', '__init__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setitem__', '__setstate__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'extend', 'find', 'findall', 'findtext', 'get', 'getchildren', 'getiterator', 'insert', 'items', 'iter', 'iterfind', 'itertext', 'keys', 'makeelement', 'remove', 'set']
+>>> dir(children)
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+>>>
+>>> for item in root.iterfind('channel/item'):
+...   print(item.findtext('title'))
+...   print(item.findtext('description'))
+...
+Steve Holden: Python for Data Analysis
+Hog! Dhana Kaayogo
+Vasudev Ram: The Python Data model (for v2 and v3)
+Jaake Apni Bhains Charaaweh
+Python Diary: Been playing around with Object Databases
+Go, Graze the cattle
+>>>
+>>> def listElements(root):
+...   for child in iter(root):
+...     print("Element {} has Text : {}".format(child,child.text))
+...     listElements(child)
+...
+>>>
+>>> listElements(root)
+Element <Element 'channel' at 0x7f4607b2d278> has Text :
+   
+Element <Element 'title' at 0x7f46002ba728> has Text : Planet Python
+Element <Element 'link' at 0x7f46002ba8b8> has Text : http://planet.python.org/
+Element <Element 'language' at 0x7f46002ba868> has Text : en
+Element <Element 'description' at 0x7f46002ba818> has Text : Planet Python - http://planet.python.org/
+Element <Element 'item' at 0x7f46002ba7c8> has Text :
+     
+Element <Element 'title' at 0x7f46002ba778> has Text : Steve Holden: Python for Data Analysis
+Element <Element 'guid' at 0x7f46002ba4a8> has Text : http://holdenweb.blogspot.com/1-data-analysis.html
+Element <Element 'link' at 0x7f46002ba688> has Text : http://holdenweb.blogspot.com/2-data-analysis.html
+Element <Element 'description' at 0x7f46002ba6d8> has Text : Hog! Dhana Kaayogo
+Element <Element 'pubDate' at 0x7f46002ba5e8> has Text : Mon, 19 Nov 2012 02:13:51 +0000
+Element <Element 'item' at 0x7f46002ba598> has Text :
+     
+Element <Element 'title' at 0x7f46002ba548> has Text : Vasudev Ram: The Python Data model (for v2 and v3)
+Element <Element 'guid' at 0x7f46002ba4f8> has Text : http://jugad2.blogspot.com/3-data-model.html
+Element <Element 'link' at 0x7f46002ba278> has Text : http://jugad2.blogspot.com/4-data-model.html
+Element <Element 'description' at 0x7f46002ba408> has Text : Jaake Apni Bhains Charaawoh
+Element <Element 'pubDate' at 0x7f46002ba3b8> has Text : Sun, 18 Nov 2012 22:06:47 +0000
+Element <Element 'item' at 0x7f46002ba318> has Text :
+     
+Element <Element 'title' at 0x7f46002ba2c8> has Text : Python Diary: Been playing around with Object Databases
+Element <Element 'guid' at 0x7f46002ba228> has Text : http://www.pythondiary.com/5-object-databases.html
+Element <Element 'link' at 0x7f46002ba1d8> has Text : http://www.pythondiary.com/6-object-databases.html
+Element <Element 'description' at 0x7f46002ba138> has Text : Go, Graze the cattle
+Element <Element 'pubDate' at 0x7f46002ba188> has Text : Sun, 18 Nov 2012 20:40:29 +0000
+>>>
+
+Remove the Element that has 'Python Diary' as text value
+--------------------------------------------------------
+
+The implementation here is in a depth-first pattern.
+
+>>> def removeElement(root,pattern):
+...   parent = root
+...   for child in iter(root):               <-- iter() can be used to iterate
+...     if re.search(pattern,child.text):    <-- If child.text has that pattern
+...       print('Pattern Found')
+...       parent.remove(child)               <-- Remove that child
+...       break
+...     else:
+...       parent = child                     <-- Reassign current child as Parent
+...       print('Moving to next level')
+...       removeElement(child,pattern)       <-- Call this function with child as parent
+...
+>>> removeElement(root,'Python Diary') 
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Moving to next level
+Pattern Found           <-- Code took a break at this point
+>>>
+>>> def listElements(root):
+...   for child in iter(root):
+...     print("Element {} has Text : {}".format(child,child.text))
+...     listElements(child)
+...
+>>> listElements(root)
+Element <Element 'channel' at 0x7f4607b2d278> has Text :
+   
+Element <Element 'title' at 0x7f46002ba728> has Text : Planet Python
+Element <Element 'link' at 0x7f46002ba8b8> has Text : http://planet.python.org/
+Element <Element 'language' at 0x7f46002ba868> has Text : en
+Element <Element 'description' at 0x7f46002ba818> has Text : Planet Python - http://planet.python.org/
+Element <Element 'item' at 0x7f46002ba7c8> has Text :
+     
+Element <Element 'title' at 0x7f46002ba778> has Text : Steve Holden: Python for Data Analysis
+Element <Element 'guid' at 0x7f46002ba4a8> has Text : http://holdenweb.blogspot.com/1-data-analysis.html
+Element <Element 'link' at 0x7f46002ba688> has Text : http://holdenweb.blogspot.com/2-data-analysis.html
+Element <Element 'description' at 0x7f46002ba6d8> has Text : Dhana Kaayi Hogo
+Element <Element 'pubDate' at 0x7f46002ba5e8> has Text : Mon, 19 Nov 2012 02:13:51 +0000
+Element <Element 'item' at 0x7f46002ba598> has Text :
+     
+Element <Element 'title' at 0x7f46002ba548> has Text : Vasudev Ram: The Python Data model (for v2 and v3)
+Element <Element 'guid' at 0x7f46002ba4f8> has Text : http://jugad2.blogspot.com/3-data-model.html
+Element <Element 'link' at 0x7f46002ba278> has Text : http://jugad2.blogspot.com/4-data-model.html
+Element <Element 'description' at 0x7f46002ba408> has Text : Jaake Apni Bhains Charaawoh
+Element <Element 'pubDate' at 0x7f46002ba3b8> has Text : Sun, 18 Nov 2012 22:06:47 +0000
+Element <Element 'item' at 0x7f46002ba318> has Text :
+     
+Element <Element 'guid' at 0x7f46002ba228> has Text : http://www.pythondiary.com/5-object-databases.html
+Element <Element 'link' at 0x7f46002ba1d8> has Text : http://www.pythondiary.com/6-object-databases.html
+Element <Element 'description' at 0x7f46002ba138> has Text : Go, Graze the cattle
+Element <Element 'pubDate' at 0x7f46002ba188> has Text : Sun, 18 Nov 2012 20:40:29 +0000
+>>>
+
+Write back the changes to a NEW xml file 'newrss.xml'
+-----------------------------------------------------
+
+>>> xmldoc
+<xml.etree.ElementTree.ElementTree object at 0x7f4607b2bd68>
+>>> root
+<Element 'rss' at 0x7f46002a28b8>
+>>> dir(xmldoc)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_root', '_setroot', 'find', 'findall', 'findtext', 'getiterator', 'getroot', 'iter', 'iterfind', 'parse', 'write', 'write_c14n']
+>>>
+>>> xmldoc.write('newrss.xml',xml_declaration=True)        <-- changes done to 'root' is written to new file
+                                                               xmldoc is an ElementTree Object and not referring
+                                                               to any xml file. Hence can be re-used for writing
+                                                               to another file. Note this !
+
+Contents of 'newrss.xml' file:
+
+<?xml version='1.0' encoding='us-ascii'?>
+<rss version="2.0">
+  <channel>
+    <title>Planet Python</title>
+    <link>http://planet.python.org/</link>
+    <language>en</language>
+    <description>Planet Python - http://planet.python.org/</description>
+    <item>
+      <title>Steve Holden: Python for Data Analysis</title>
+        <guid>http://holdenweb.blogspot.com/1-data-analysis.html</guid>
+        <link>http://holdenweb.blogspot.com/2-data-analysis.html</link>
+        <description>Dhana Kaayi Hogo</description>
+        <pubDate>Mon, 19 Nov 2012 02:13:51 +0000</pubDate>
+    </item>
+    <item>
+      <title>Vasudev Ram: The Python Data model (for v2 and v3)</title>
+      <guid>http://jugad2.blogspot.com/3-data-model.html</guid>
+      <link>http://jugad2.blogspot.com/4-data-model.html</link>
+      <description>Jaake Apni Bhains Charaawoh</description>
+      <pubDate>Sun, 18 Nov 2012 22:06:47 +0000</pubDate>
+      </item>
+    <item>                                            <-- <title> is missing from this <item>
+      <guid>http://www.pythondiary.com/5-object-databases.html</guid> 
+      <link>http://www.pythondiary.com/6-object-databases.html</link>
+      <description>Go, Graze the cattle</description>
+      <pubDate>Sun, 18 Nov 2012 20:40:29 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Remove the <element> which has 'Python Diary' as text value and
+insert it with a new Element with another text value
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+>>> xmldoc = parse('rss.xml')
+>>> root = xmldoc.getroot()
+>>>      
+... def listElements(root):
+...   for child in iter(root):
+...     print("Element {} has Text : {}".format(child,child.text))
+...     listElements(child)
+...
+>>> listElements(root)
+Element <Element 'channel' at 0x7f45ff45c7c8> has Text :
+   
+Element <Element 'title' at 0x7f45ff45c818> has Text : Planet Python
+Element <Element 'link' at 0x7f45ff45c868> has Text : http://planet.python.org/
+Element <Element 'language' at 0x7f45ff45c908> has Text : en
+Element <Element 'description' at 0x7f45ff45c958> has Text : Planet Python - http://planet.python.org/
+Element <Element 'item' at 0x7f45ff45c9a8> has Text :
+     
+Element <Element 'title' at 0x7f45ff45c9f8> has Text : Steve Holden: Python for Data Analysis
+Element <Element 'guid' at 0x7f45ff45ca48> has Text : http://holdenweb.blogspot.com/1-data-analysis.html
+Element <Element 'link' at 0x7f45ff45ca98> has Text : http://holdenweb.blogspot.com/2-data-analysis.html
+Element <Element 'description' at 0x7f45ff45cae8> has Text : Dhana Kaayi Hogo
+Element <Element 'pubDate' at 0x7f45ff45cb38> has Text : Mon, 19 Nov 2012 02:13:51 +0000
+Element <Element 'item' at 0x7f45ff45cbd8> has Text :
+     
+Element <Element 'title' at 0x7f45ff45cc28> has Text : Vasudev Ram: The Python Data model (for v2 and v3)
+Element <Element 'guid' at 0x7f45ff45cc78> has Text : http://jugad2.blogspot.com/3-data-model.html
+Element <Element 'link' at 0x7f45ff45ccc8> has Text : http://jugad2.blogspot.com/4-data-model.html
+Element <Element 'description' at 0x7f45ff45cd18> has Text : Jaake Apni Bhains Charaawoh
+Element <Element 'pubDate' at 0x7f45ff45cdb8> has Text : Sun, 18 Nov 2012 22:06:47 +0000
+Element <Element 'item' at 0x7f45ff45ce58> has Text :
+     
+Element <Element 'title' at 0x7f45ff45cea8> has Text : Python Diary: Been playing around with Object Databases
+Element <Element 'guid' at 0x7f45ff45cef8> has Text : http://www.pythondiary.com/5-object-databases.html
+Element <Element 'link' at 0x7f45ff45cf48> has Text : http://www.pythondiary.com/6-object-databases.html
+Element <Element 'description' at 0x7f45ff45cf98> has Text : Go, Graze the cattle
+Element <Element 'pubDate' at 0x7f45ff45f048> has Text : Sun, 18 Nov 2012 20:40:29 +0000
+>>>
+>>>
+>>> insertElement(root,'Python Diary','titleX','This is a dummy title inserted')
+>>>      
+... def listElements(root):
+...   for child in iter(root):
+...     print("Element {} has Text : {}".format(child,child.text))
+...     listElements(child)
+...
+>>> listElements(root)
+Element <Element 'channel' at 0x7f45ff45c7c8> has Text :
+   
+Element <Element 'title' at 0x7f45ff45c818> has Text : Planet Python
+Element <Element 'link' at 0x7f45ff45c868> has Text : http://planet.python.org/
+Element <Element 'language' at 0x7f45ff45c908> has Text : en
+Element <Element 'description' at 0x7f45ff45c958> has Text : Planet Python - http://planet.python.org/
+Element <Element 'item' at 0x7f45ff45c9a8> has Text :
+     
+Element <Element 'title' at 0x7f45ff45c9f8> has Text : Steve Holden: Python for Data Analysis
+Element <Element 'guid' at 0x7f45ff45ca48> has Text : http://holdenweb.blogspot.com/1-data-analysis.html
+Element <Element 'link' at 0x7f45ff45ca98> has Text : http://holdenweb.blogspot.com/2-data-analysis.html
+Element <Element 'description' at 0x7f45ff45cae8> has Text : Dhana Kaayi Hogo
+Element <Element 'pubDate' at 0x7f45ff45cb38> has Text : Mon, 19 Nov 2012 02:13:51 +0000
+Element <Element 'item' at 0x7f45ff45cbd8> has Text :
+     
+Element <Element 'title' at 0x7f45ff45cc28> has Text : Vasudev Ram: The Python Data model (for v2 and v3)
+Element <Element 'guid' at 0x7f45ff45cc78> has Text : http://jugad2.blogspot.com/3-data-model.html
+Element <Element 'link' at 0x7f45ff45ccc8> has Text : http://jugad2.blogspot.com/4-data-model.html
+Element <Element 'description' at 0x7f45ff45cd18> has Text : Jaake Apni Bhains Charaawoh
+Element <Element 'pubDate' at 0x7f45ff45cdb8> has Text : Sun, 18 Nov 2012 22:06:47 +0000
+Element <Element 'item' at 0x7f45ff45ce58> has Text :
+     
+Element <Element 'titleX' at 0x7f45ff45f138> has Text : This is a dummy title inserted                     <-- New Element inserted
+Element <Element 'guid' at 0x7f45ff45cef8> has Text : http://www.pythondiary.com/5-object-databases.html
+Element <Element 'link' at 0x7f45ff45cf48> has Text : http://www.pythondiary.com/6-object-databases.html
+Element <Element 'description' at 0x7f45ff45cf98> has Text : Go, Graze the cattle
+Element <Element 'pubDate' at 0x7f45ff45f048> has Text : Sun, 18 Nov 2012 20:40:29 +0000
+>>>
+
+
+
+Lets remove the following item (TBD: try this yourself):
+--------------------------------------------------------
+
+    <item>
+      <title>Python Diary: Been playing around with Object Databases</title>
+      <guid>http://www.pythondiary.com/5-object-databases.html</guid>
+      <link>http://www.pythondiary.com/6-object-databases.html</link>
+      <description>Go, Graze the cattle</description>
+      <pubDate>Sun, 18 Nov 2012 20:40:29 +0000</pubDate>
+    </item>
+
+And add this new item (TBD: Try this yourself):
+-----------------------------------------------
+   
+    <item>
+      <title>Python in Space: The entire Universe is a Python Library</title>
+      <guid>http://www.pythoninspace.com/galaxy/milkyway.html</guid>
+      <link>http://www.pythoninspace.com/galaxy/andromeda.html</link>
+      <description>Who dares to venture near the Python Core?</description>
+      <pubDate>Sun, 18 Nov 2500 11:22:33 +1200</pubDate>
+    </item>
+   
+   
+Note: Nothing interesting in the cookbook from 6.7 to 7.90   
+
+
+7.10)  CARRYING STATE IN THE CALLBACK FUNCTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this example, we create tempMonitor function which reads current temperature using readTemp()
+and if the result is more than 80, it will call another callback function triggerAlarm() which prints a message.
+
+def tempMonitor(func,*args,callback):
+   result = func(*args)
+   if result > 80:
+      callback(result)
+
+def readTemp(t0,t1):
+   return (t1-t0)*10
+
+def triggerAlarm(Temp):
+   print('Sending Level-1 alarm to Operations team : Temperature {}'.format(Temp))
+
+tempMonitor(readTemp,10,90,callback=triggerAlarm)
+
+eussjlts0602 [12:11] [enavsre/Desktop/Python-3.5.1] -> ./python callback.py
+Sending Level-1 alarm to Operations team : Temperature 800
+eussjlts0602 [12:11] [enavsre/Desktop/Python-3.5.1] ->
+
+
+The problem above is triggerAlarm() doesn't keep track of how many times it was called.
+The solution is to implement the callback function as a class method instead of function.
+Now, that callback class object can store a variable to keep track of number of times called.
+
+
+def tempMonitor(func,*args,callback):
+   result = func(*args)
+   if result > 80:
+      callback(result)
+
+def readTemp(t0,t1):
+   return (t1-t0)*10
+
+class triggerAlarm:
+   def __init__(self):
+      self.sequence = 0
+
+   def ResultHandler(self,Temp):
+      self.sequence += 1
+      print('[{}] Sending Level-1 alarm to Operations team : Temperature {}'.format(self.sequence,Temp))
+
+if __name__ == '__main__':
+
+   CBfunc = triggerAlarm()                                    <-- Create a callback class object
+   tempMonitor(readTemp,10,50,callback=CBfunc.ResultHandler)  <-- Invoke the ResultHandler() inside callback object
+   tempMonitor(readTemp,10,60,callback=CBfunc.ResultHandler)  <-- This keeps track of self.sequence as an instance variable
+   tempMonitor(readTemp,10,70,callback=CBfunc.ResultHandler)
+
+
+eussjlts0602 [12:29] [enavsre/Desktop/Python-3.5.1] -> ./python callback.py
+[1] Sending Level-1 alarm to Operations team : Temperature 400
+[2] Sending Level-1 alarm to Operations team : Temperature 500
+[3] Sending Level-1 alarm to Operations team : Temperature 600
+eussjlts0602 [12:29] [enavsre/Desktop/Python-3.5.1] ->
+
+
+8.3) HOW IS 'WITH' STATEMENT IMPLEMENTED?
+-----------------------------------------
+
+In order to make an object compatible with the with statement, you need to implement
+__enter__() and __exit__() methods. For example, consider the following class,
+which provides a network connection:
+
+from socket import socket, AF_INET, SOCK_STREAM
+
+class LazyConnection:
+
+  def __init__(self, address, family=AF_INET, type=SOCK_STREAM):
+    self.address = address
+    self.family = AF_INET
+    self.type = SOCK_STREAM
+    self.sock = None
+   
+  def __enter__(self):
+    if self.sock is not None:
+      raise RuntimeError('Already connected')
+    self.sock = socket(self.family, self.type)
+    self.sock.connect(self.address)
+    return self.sock
+   
+  def __exit__(self, exc_ty, exc_val, tb):
+    self.sock.close()
+    self.sock = None
+
+ 
+When the with statement is first encountered, the __enter__() method is triggered.
+The return value of __enter__() (if any) is placed into the variable indicated with
+the as qualifier. Afterward, the statements in the body of the with statement execute.
+Finally, the __exit__() method is triggered to clean up.
+
+This control flow happens regardless of what happens in the body of the with statement,
+including if there are exceptions. In fact, the three arguments to the __exit__() method
+contain the exception type, value, and traceback for pending exceptions (if any). The
+__exit__() method can choose to use the exception information in some way or to
+ignore it by doing nothing and returning None as a result. If __exit__() returns True,
+the exception is cleared as if nothing happened and the program continues executing
+statements immediately after the with block.
+
+
+8.6) MANAGING GETTER AND SETTERS USING PROPERTY ATTRIBUTES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A simple way to customize access to an attribute is to define it as a “property.” For
+example, this code defines a property that adds simple type checking to an attribute:
+Note that Properties should only be used in cases where you actually need to perform
+extra processing on attribute access.
+
+class Person:
+
+ def __init__(self, first_name):
+   self.first_name = first_name
+
+   # Getter function
+   @property
+   def first_name(self):
+     return self._first_name
+
+   # Setter function
+   @first_name.setter
+   def first_name(self, value):
+     if not isinstance(value, str):
+       raise TypeError('Expected a string')
+     self._first_name = value
+ 
+   # Deleter function (optional)
+   @first_name.deleter
+   def first_name(self):
+     raise AttributeError("Can't delete attribute")
+   
+   
+In the preceding code, there are three related methods, all of which must have the same
+name. The first method is a getter function, and establishes first_name as being a
+property. The other two methods attach optional setter and deleter functions to the
+first_name property. It’s important to stress that the @first_name.setter and
+@first_name.deleter decorators won’t be defined unless first_name was already established
+as a property using @property.
+
+A critical feature of a property is that it looks like a normal attribute, but access
+automatically triggers the getter, setter, and deleter methods. For example:
+
+>>> a = Person('Guido')
+>>> a.first_name # Calls the getter          <-- Getter accessed as instance variable.
+'Guido'                                          Notice the lack of ()
+>>>
+>>> a.first_name = 42 # Calls the setter
+Traceback (most recent call last):
+ File "<stdin>", line 1, in <module>
+ File "prop.py", line 14, in first_name
+ raise TypeError('Expected a string')
+TypeError: Expected a string
+>>>
+>>>del a.first_name
+Traceback (most recent call last):
+ File "<stdin>", line 1, in <module>
+AttributeError: can't delete attribute
+>>>
+
+When implementing a property, the underlying data (if any) still needs to be stored
+somewhere. Thus, in the get and set methods, you see direct manipulation of a
+_first_name attribute, which is where the actual data lives. In addition, you may ask
+why the __init__() method sets self.first_name instead of self._first_name. In
+this example, the entire point of the property is to apply type checking when setting an
+attribute. Thus, chances are you would also want such checking to take place during
+initialization. By setting self.first_name, the set operation uses the setter method (as
+opposed to bypassing it by accessing self._first_name).
+
+
+8.7. Calling a Method on a Parent Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Problem:
+You want to invoke a method in a parent class in place of a method that has been
+overridden in a subclass.
+
+Solution:
+To call a method in a parent (or superclass), use the super() function. For example:
+
+class A:
+  def spam(self):
+  print('A.spam')
+
+class B(A):               <-- This is a subclass, NOT an instance/object of class(A)
+  def spam(self):
+  print('B.spam')
+  super().spam() # Call parent spam()

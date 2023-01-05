@@ -1,0 +1,5403 @@
+﻿
+
+CHECK THIS OUT FOR “FUNCTIONAL PROGRAMMING IN PYTHON”
+
+https://docs.python.org/2/howto/functional.html
+http://ua.pycon.org/static/talks/kachayev/#/
+http://scipy-lectures.github.io/advanced/advanced_python/
+http://docs.python-guide.org/en/latest/intro/learning/
+https://docs.python.org/2/tutorial/index.html
+http://www.toptal.com/python/top-10-mistakes-that-python-programmers-make
+http://www.bogotobogo.com/python/python_fncs_map_filter_reduce.php
+
+WRITE A PYTHON GAME for ‘WHEEL OF FORTUNE’
+READ THE CODE FROM OTHER DEVELOPERS, SUCH AS, COLLECTIONS.
+FROM IDLE MENU -> OPEN MODULE -> COLLECTIONS
+
+monitor a server and check for activity logs 
+monitor a system for network resources, cpu, memory
+screen scraping for http 
+
+2009
+
+    David Beazley: Inside the Python GIL
+        Video: youtube [01:01:03]
+        Misc resources
+
+2010
+
+    Brandon Rhodes: The Mighty Dictionary (PyCon Atlanta)
+        Video: youtube [00:30:50]/pyvideo
+        Slides
+    David Beazley: Understanding the Python GIL (PyCon US)
+        Video: youtube [00:46:10]/pyvideo
+        Misc resources
+
+2011
+
+    Raymond Hettinger: API Design: Lessons Learned (PyCon US)
+        PyCon presentation
+        Video: youtube [01:17:34]/pyvideo
+
+2012
+
+    Brandon Rhodes: Python Design Patterns 1 (PyCon US)
+        Video: youtube [01:07:50]/pyvideo
+        Slides
+    Erik Rose: Parsing Horrible Things with Python (PyCon US)
+        PyCon presentation
+        Video: youtube [00:30:31]/pyvideo
+    Jack Diederich: Stop Writing Classes (PyCon US)
+        PyCon presentation
+        Video: youtube [00:27:30]/pyvideo
+    Ned Batchelder: Pragmatic Unicode, or, How do I stop the pain? (PyCon US)
+        PyCon presentation
+        Video: youtube [00:36:21]/pyvideo
+        Slides with text/Just the slides
+    Peter Inglesby: Discovering Descriptors (EuroPython)
+        EuroPython presentation
+        Video: youtube [00:37:51]
+        Code
+    Raymond Hettinger: The Art of Subclassing (PyCon US)
+        PyCon presentation
+        Video: youtube [00:39:48]/pyvideo
+    David Schachter: How to Speed up a Python Program 114,000 times (SF Python Usergroup)
+        Presentation
+        Slides
+        Video: youtube [00:59:11]
+
+2013
+
+    David Beazley: Python 3 Metaprogramming (PyCon US)
+        PyCon presentation
+        Video: youtube [03:24:00]/pyvideo
+        Misc resources
+    Jessica McKellar: The Future of Python - A Choose Your Own Adventure
+        Video youtube [00:35:33]/pyvideo
+        Slides
+    Kenneth Reitz: Python for Humans (PyCon US)
+        Video: youtube [00:31:43]/pyvideo
+        Slides
+    Ned Batchelder: Loop like a native: while, for, iterators, generators (PyCon US)
+        PyCon presentation
+        Video: youtube [00:29:15]/pyvideo
+        Slides with text/Just the slides
+    Raymond Hettinger: Python's Class Development Toolkit (PyCon US)
+        PyCon presentation
+        Video: youtube [00:45:56]/pyvideo
+        Slides
+    Raymond Hettinger: Transforming Code into Beautiful, Idiomatic Python (PyCon US)
+        PyCon presentation
+        Video: youtube [00:48:51]/pyvideo
+        Slides
+
+2014
+
+    Alex Gaynor: Fast Python, Slow Python (PyCon US)
+        PyCon presentation
+        Video: youtube [00:36:11]/pyvideo
+        Slides
+    A. Jesse Jiryu Davis: What Is Async, How Does It Work, And When Should I Use It? (PyCon US)
+        PyCon presentation
+        Video: youtube [00:46:50]/pyvideo
+        Slides
+    Benjamin Peterson: Garbage Collection in Python (PyCon US)
+        PyCon presentation
+        Video: youtube [00:26:57]/pyvideo
+        Slides
+    Brandon Rhodes: All Your Ducks In A Row: Data Structures in the Standard Library and Beyond (PyCon US)
+        PyCon presentation
+        Video: youtube [00:37:41]/pyvideo
+        Slides
+    Brandon Rhodes: The Clean Architecture (PyOhio)
+        Video: youtube [00:49:54]/pyvideo
+        Slides
+    Christine Spang: Subprocess to FFI: Memory, Performance, and Why You Shouldn't Shell (PyCon US)
+        PyCon presentation
+        Video: youtube [00:35:13]/pyvideo
+        Slides
+    David Beazley: Generators: The Final Frontier (PyCon US)
+        PyCon presentation
+        Video: youtube [02:55:36]/pyvideo
+        Slides
+    Erik Rose: Designing Poetic APIs (PyCon US)
+        PyCon presentation
+        Video: youtube [00:48:08]/pyvideo/vod
+        Slides
+    Guido van Rossum: Tulip: Async I/O for Python 3 (PyCon US)
+        PyCon presentation
+        Video: youtube [01:10:38]
+    Mike Müller: Faster Python Programs through Optimization (PyCon US)
+        PyCon presentation
+        Video: youtube [02:59:54]/pyvideo
+        Slides
+    Ned Batchelder: Getting Started Testing (PyCon US)
+        PyCon presentation
+        Video: youtube [00:42:44]/pyvideo
+        Slides
+    S Anand: Faster data processing in Python (PyCon IN)
+        PyCon presentation
+        Video: youtube [00:55:08]
+        iPython Notebook
+
+2015
+
+    Raymond Hettinger: Beyond PEP 8 -- Best practices for beautiful intelligible code (PyCon US)
+        PyCon presentation
+        Video: youtube [00:52:05]
+
+    David Beazley: Python Concurrency From the Ground Up: LIVE! (PyCon US)
+        Video: youtube [00:46:50]
+    Raymond Hettinger: Super considered super! (PyCon US)
+        Video: youtube [00:46:52]
+    Ned Batchelder: Facts and Myths about Python names and values (PyCon US)
+        PyCon presentation
+        Video: youtube [00:25:20]/pyvideo
+        Slides and new article/Original article
+
+
+
+--------------------------------
+Class calls -vs- Function calls
+--------------------------------
+
+import collections, glob, gzip, re, pprint
+counter = collections.Counter()  
+for filename in glob.glob(‘/Data/logs/*.gz’):
+   for line in gzip.open(filename,'rb'):         <-- always open the gzip file in 'binary' mode
+      mo = re.search(‘GET (.*) HTTP’, line)
+      if mo is not None:
+         url = mo.group(1)
+         counter[url] += 1
+
+result = counter.most_common(20)
+pprint.pprint(result)
+
+
+
+‘.’ means a namespace lookup. The lookup can be a function/method lookup or class lookup.
+For e.g.: collections.Counter() is a class lookup; gzip.open is a function/method lookup.
+
+group(1) is the first group that is matched by ‘re’.
+
+
+(1) Checking data type:
+
+>>> type(3/4.)
+<type 'float'>
+>>> type(3/4)
+<type 'int'>
+>>> type('hello')
+<type 'str'>
+>>> 
+
+
+>>> bin(10)
+'0b1010'
+>>>
+>>> bin(16)
+'0b10000'
+>>> 
+>>> hex(16)
+'0x10'
+>>> 
+>>> oct(47)
+'057'
+>>> 
+
+2) Classes and Instances
+
+>>> class Computer:
+	'A number compute machine'    # assign to __doc__
+	def __init__(self, kind, owner):
+		self.kind = kind
+		self.owner = owner
+	def show(self):
+		print '%s is owned by %s' % (self.kind, self.owner)
+
+		
+>>> c = Computer('Mac','Naveen')
+>>> Computer
+<class __main__.Computer at 0x102ef0d50>
+>>> c
+<__main__.Computer instance at 0x102e59950>
+>>> 
+>>> d = Computer('Windows','Latha')
+>>> d
+<__main__.Computer instance at 0x102e51290>
+>>> c is d
+False
+>>> 
+>>> c.kind
+'Mac'
+>>> c.owner
+'Naveen'
+>>> 
+>>> c.show()   <— no argument sent. The ‘.’ sends the ’self’ argument to the function
+Mac is owned by Naveen
+>>> d.show()
+Windows is owned by Latha
+>>> 
+>>> c.color
+
+Traceback (most recent call last):
+  File "<pyshell#62>", line 1, in <module>
+    c.color
+AttributeError: Computer instance has no attribute 'color'
+>>> 
+
+
+3) There are 4 Quoting Characters in Python
+
+>>> print 'hello'
+hello
+>>> print "hello"
+hello
+>>> print '''hello'''
+hello
+>>> print """hello"""
+hello
+>>> 
+>>> print '''She said, "Hello Raymond!"'''
+She said, "Hello Raymond!"
+>>> print 'She said, "Hello Raymond!"'
+She said, "Hello Raymond!"
+>>> 
+
+Note: the rule for using any of these quotes is - look inside the string you are trying to write and find out the Quoting character already in use. Next, use some other quoting character for enclosing the string.
+
+
+Wikipedia contribution
+GitHub - upload your own code
+
+
+4) Escape Characters, Unicode, String Manipulation
+
+
+>>> print 'C:\\My Documents and Settings\Naveen\bio.txt'
+C:\My Documents and Settings\Naveen_io.txt
+>>> 
+>>> print 'C:\\\\My Documents and Settings\\Naveen\\bio.txt'
+C:\\My Documents and Settings\Naveen\bio.txt
+>>> 
+>>> print r'C:\\My Documents and Settings\Naveen\bio.txt'   <— the ‘r’ means ‘raw’
+C:\\My Documents and Settings\Naveen\bio.txt
+>>> 
+>>> print u'\N{snowman}\N{umbrella}'
+☃☂
+>>> print u'TheNaveenWay\u2122'
+TheNaveenWay™
+>>> 
+>>> help(str.capitalize)   <— Getting Help
+Help on method_descriptor:
+
+capitalize(...)
+    S.capitalize() -> string
+    
+    Return a copy of the string S with only its first character
+    capitalized.
+
+>>> 
+>>> s = 'tale of 2 cities'
+>>> s.split()
+['tale', 'of', '2', 'cities']
+>>> s.split('e')
+['tal', ' of 2 citi', 's']
+>>> 
+>>> type(s.split())
+<type 'list'>
+>>> 
+>>> ''.join(t)
+'taleof2cities'
+>>> '<-->'.join(t)
+'tale<-->of<-->2<-->cities'
+>>>
+
+# Strings are IMMUTABLE == READ-ONLY == UNCHANGEABLE
+# All string methods return NEW strings, leaving the old unchanged
+
+>>> s = 'the tale of two cities'
+>>> print s.ljust(50)
+the tale of two cities                            
+>>> print s.rjust(50)
+                            the tale of two cities
+>>> print s.center(50)
+              the tale of two cities              
+>>> print s.center(50,"=")
+==============the tale of two cities==============
+>>>       
+>>> s = '   the   quick     brown   fox     '
+>>> s.strip()
+'the   quick     brown   fox'
+>>> s.lstrip()
+'the   quick     brown   fox     '
+>>> s.rstrip()
+'   the   quick     brown   fox'
+>>> 
+
+# Python doesn’t have Variables
+# Instead, it has names which refer to Objects
+# x = 10        ‘x’: (refcnt, type, value10)
+
+>>> s = 'the tale of 2 cities'
+>>> 
+>>> s[0]
+'t'
+>>> s[-1]
+'s'
+>>> s[1:2]
+'h'
+>>> s[0:2]
+'th'
+>>> s[0:3]
+'the'
+>>> 
+>>> # slices use half open intervals
+>>> # s[i:j] includes i and excludes j
+>>> 
+>>> 23 - 17
+6
+>>> s[0:3]
+'the'
+>>> s[3:8]
+' tale'
+>>> s[0:3] + s[3:8] == s[0:8]
+True
+>>> 
+
+# Slice invariant
+# s[i:j] + s[j:k] == s[i:k]       (j-i) + (k-j) = k-i
+
+
+>>> s[-2]
+'e'
+>>> s[-6]
+'c'
+>>> s[6:len(s)]
+'le of 2 cities'
+>>> s[-6:len(s)]
+'cities'
+>>> s[-6:]
+'cities'
+>>> s[len(s)-6:len(s)]
+'cities'
+>>> 
+>>> s = 'download.html'
+>>> s[-5:]
+'.html'
+>>> s[:-5]
+'download'
+>>> 
+>>> s.endswith('.html')
+True
+>>> s.endswith('.xml')
+False
+>>> s.startswith('down')
+True
+>>> 
+
+
+5) File operations:
+
+with open('/Users/Naveen/Desktop/notes/raisin_team.csv') as f:
+	for line in f:
+		line = line.rstrip()
+		lname, fname, title, email, phone = line.split(',')
+		print fname, phone
+
+
+>>> 
+Raymond 559-555-1212
+Mary 559-555-2300
+Harold 559-555-2318
+Martin 559-555-2348
+David 559-555-2379
+Luis 559-555-2301
+Fritz 559-555-2333
+Esmerela 559-555-2397
+Marilyn 559-555-6565
+Blair 559-555-6513
+Gertrude 559-555-6700
+>>> 
+
+
+import csv
+with open('/Users/Naveen/Desktop/notes/raisin_team.csv') as f:
+              for row in csv.reader(f):
+                      print row
+                      lname, fname, title, email, phone = row
+                      print fname, phone
+
+>>>
+['Hettinger', 'Raymond', 'VP Raisin Smushing', 'raymond@example.com', '559-555-1212']
+Raymond 559-555-1212
+['Thomas', 'Mary', 'Sr. Associate Raisin Design', 'mary@example.com', '559-555-2300']
+Mary 559-555-2300
+['Davis', 'Harold', 'Chief Raisin Picker', 'harold@example.com', '559-555-2318']
+Harold 559-555-2318
+['Masterson', 'Martin', 'Asst Raisin Smusher', 'martin@example.com', '559-555-2348']
+Martin 559-555-2348
+['Jones', 'David', 'Grape Ager', 'david@example.com', '559-555-2379']
+David 559-555-2379
+['Zapata', 'Luis', 'VP Grape Sales', 'luis@example.com', '559-555-2301']
+Luis 559-555-2301
+['Gunter', 'Fritz', 'Grape Smusher', 'fritz@example.com', '559-555-2333']
+Fritz 559-555-2333
+['Pichon', 'Esmerela', 'Head Raisin Counter', 'esmerelda@example.com', '559-555-2397']
+Esmerela 559-555-2397
+['Blain', 'Marilyn', 'Raisin Packager', 'marilyn@example.com', '559-555-6565']
+Marilyn 559-555-6565
+['Marks', 'Blair', 'VP Investor Relations', 'blair@example.com', '559-555-6513']
+Blair 559-555-6513
+['Schmidt', 'Gertrude', 'VP Business Development', 'gertrude@example.com', '559-555-6700']
+Gertrude 559-555-6700
+>>>
+
+import csv
+with open('/Users/Naveen/Desktop/notes/raisin_team.csv') as f:
+              for lname, fname, title, email, phone in csv.reader(f):
+                      print fname, phone
+
+
+>>> 
+Raymond 559-555-1212
+Mary 559-555-2300
+Harold 559-555-2318
+Martin 559-555-2348
+David 559-555-2379
+Luis 559-555-2301
+Fritz 559-555-2333
+Esmerela 559-555-2397
+Marilyn 559-555-6565
+Blair 559-555-6513
+Gertrude 559-555-6700
+>>> 
+
+
+6) Different Types of Data available these days:
+
+English Text
+HTML
+Column oriented Text
+CSV
+XML
+JSON
+
+
+Parsing HTML data:
+
+>>> with open('/Users/Naveen/Desktop/notes/stocks.txt') as f:
+	data = f.read()
+	print len(data)
+
+	
+162
+
+>>> f
+<closed file '/Users/Naveen/Desktop/notes/stocks.txt', mode 'r' at 0x103fffe40>
+>>> type(data)
+<type 'str'>
+>>> import urllib
+>>> u = urllib.urlopen('http://www.perl.org')
+>>> u
+<addinfourl at 4361470464 whose fp = <socket._fileobject object at 0x104441d50>>
+>>> type(u)
+<type 'instance'>
+>>> dir(u)
+['__doc__', '__init__', '__iter__', '__module__', '__repr__', 'close', 'code', 'fileno', 'fp', 'getcode', 'geturl', 'headers', 'info', 'next', 'read', 'readline', 'readlines', 'url']
+>>> u.getcode()
+200
+>>> u.geturl()
+'http://www.perl.org'
+>>> u.headers
+<httplib.HTTPMessage instance at 0x103f6cb00>
+>>> dir(u.headers)
+['__contains__', '__delitem__', '__doc__', '__getitem__', '__init__', '__iter__', '__len__', '__module__', '__setitem__', '__str__', 'addcontinue', 'addheader', 'dict', 'encodingheader', 'fp', 'get', 'getaddr', 'getaddrlist', 'getallmatchingheaders', 'getdate', 'getdate_tz', 'getencoding', 'getfirstmatchingheader', 'getheader', 'getheaders', 'getmaintype', 'getparam', 'getparamnames', 'getplist', 'getrawheader', 'getsubtype', 'gettype', 'has_key', 'headers', 'iscomment', 'isheader', 'islast', 'items', 'keys', 'maintype', 'parseplist', 'parsetype', 'plist', 'plisttext', 'readheaders', 'rewindbody', 'seekable', 'setdefault', 'startofbody', 'startofheaders', 'status', 'subtype', 'type', 'typeheader', 'unixfrom', 'values']
+>>> 
+>>> msg = u.headers
+>>> msg.headers
+['Server: Combust/Plack (Perl)\r\n', 'Vary: Accept-Encoding\r\n', 'Content-Type: text/html; charset=utf-8\r\n', 'P3P: CP="There\'s no P3P policy. Learn why here: http://www.w3.org/P3P/"\r\n', 'Date: Tue, 24 Jun 2014 17:09:13 GMT\r\n', 'X-Varnish: 2178236788 2178236466\r\n', 'X-Served-By: varnish2.develooper.com\r\n', 'X-Cache: HIT\r\n', 'X-Cache-Hits: 6\r\n', 'X-Proxy: proxy1\r\n', 'Last-Modified: Tue, 24 Jun 2014 17:08:54 GMT\r\n', 'Age: 20\r\n', 'Connection: close\r\n']
+>>> 
+>>> page = u.read()
+>>> type(page)
+<type 'str'>
+>>> print page[:400]
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>The Perl Programming Language - www.perl.org</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+    <link rel="shortcut icon" href="http://st.pimg.net/perlweb/f
+>>> len(page)
+15806
+>>> 
+>>> d = {'Naveen Sreeramachandra': 'red#brick', 'Latha Naveen': 'blue#cobalt'}
+>>> urllib.urlencode(d)
+'Naveen+Sreeramachandra=red%23brick&Latha+Naveen=blue%23cobalt'
+>>> 
+
+
+Note: Everytime a Python main Script is run (without being Imported), the __name__ variable holds the value ‘__main__’
+If the Python main Script is Imported using ‘import’ command, then the __name__ variable holds the value ‘__<NameOfTheScript>__’
+
+
+
+Create a vCard and a QR code:
+
+''' A true story of Python amazement.
+    Featuring:  wikipedia, google, rest, grape, business cards, checkerboards
+
+'''
+
+import csv
+import urllib
+
+vcard_template = '''BEGIN:VCARD
+VERSION:2.1
+N:%s;%s
+FN:%s %s
+ORG:Raisins R Us, Inc.
+TITLE:%s
+TEL;WORK;VOICE:%s
+ADR;WORK:;;100 Flat Grape Dr;Fresno;CA;95555;United States of America
+EMAIL;PREF;INTERNET:%s
+REV:20140623T195243Z
+END:VCARD
+'''
+
+website = 'http://vcard.raisins.example.com/'
+
+# REST API for QR Codes
+# https://developers.google.com/chart/infographics/docs/qr_codes?hl=fr-FR
+
+root_url = 'https://chart.googleapis.com/chart?'
+
+with open(‘/Users/Naveen/Desktop/notes/raisin_team.csv') as f:
+    for lname, fname, title, email, phone in csv.reader(f):
+
+        # Make the vcard
+        vcard = vcard_template % (lname, fname, fname, lname, title, phone, email)
+
+        # Write the vcard to a VCF file
+        filename = '%s_%s.vcf' % (fname, lname)
+        with open(filename, 'w') as vfile:
+            vfile.write(vcard)
+
+        # Create a link to the vcard
+        link = website + filename
+
+        # Use REST API to create a QR code
+        query = {'cht': 'qr', 'chs': '300x300', 'chl': link}
+        url = root_url + urllib.urlencode(query)
+        u = urllib.urlopen(url)
+        image = u.read()
+
+        # Write the QR code to a PNG file
+        filename = '%s_%s.png' % (fname, lname)
+        with open(filename, 'wb') as ifile:
+            ifile.write(image)
+
+
+Tip: Get your personal card with a QR code that points to your personal webpage.
+
+
+
+LISTS, DICTIONARIES, SETS
+
+>>> # lists , dict , sets
+>>> 
+>>> d = dict()           # call the constructor by name
+>>> d = {}               # dict literal notation
+>>> 
+d
+>>> d = dict([('Naveen','Blue'), ('Latha','Pink')])         # dict(list-of-tuples)
+>>> d
+{'Latha': 'Pink', 'Naveen': 'Blue'}
+>>> 
+>>> 
+>>> # DICTS are unordered collections -- the insertion order is not remembered
+>>> # internally, they are higher ordered and optimized for fast lookup
+>>> 
+>>> d = {}
+>>> d['naveen'] = 'red'
+>>> d['latha'] = 'blue'
+>>> d['nyla'] = 'pink'          # the square brackets and the equal sign are ONE operator
+>>> 
+>>> # Dict stores key -> value pairs
+>>> # Dicts are optimized for key->value searches, and NOT for value->key lookups
+>>> 
+>>> d.items()
+[('nyla', 'pink'), ('latha', 'blue'), ('naveen', 'red')]
+>>> 
+>>> 'naveen' in d
+True
+>>> 'matthew' in d
+False
+>>> 'naveen' not in d
+False
+>>> len(d)
+3
+>>> d.items()
+[('nyla', 'pink'), ('latha', 'blue'), ('naveen', 'blue')]
+>>> d['latha'] = 'green'
+>>> d.keys()
+['nyla', 'latha', 'naveen']
+>>> d.values()
+['pink', 'green', 'blue']
+>>> 
+>>> 
+>>> from fractions import Fraction
+>>> Fraction(2,3)
+Fraction(2, 3)
+>>> Fraction(2,3) + Fraction(1,3)
+Fraction(1, 1)
+>>> 
+>>> from decimal import Decimal
+>>> Decimal('1.1') + Decimal('2.2') == Decimal('3.3')
+True
+>>> 
+>>> map(ord,'Naveen')
+[78, 97, 118, 101, 101, 110]
+>>> 
+>>> 
+>>> map(ord,'Naveen'.encode('utf-16be'))
+[0, 78, 0, 97, 0, 118, 0, 101, 0, 101, 0, 110]
+>>> map(ord,'Naveen'.encode('utf-16le'))
+[78, 0, 97, 0, 118, 0, 101, 0, 101, 0, 110, 0]
+>>> map(ord,'Naveen'.encode('utf-8'))
+[78, 97, 118, 101, 101, 110]
+>>> map(ord,'Naveen'.encode('utf-32'))
+[255, 254, 0, 0, 78, 0, 0, 0, 97, 0, 0, 0, 118, 0, 0, 0, 101, 0, 0, 0, 101, 0, 0, 0, 110, 0, 0, 0]
+>>> map(ord,'Naveen'.encode('ascii'))
+[78, 97, 118, 101, 101, 110]
+>>> 
+
+
+Python Internals:
+
+>>> # The Top level functions, operators, and keyword in Python are as dumb as dirt.
+>>> # Usually, all they know is someone else to do the actual work.
+>>> 
+>>> # The objects in Python are smart. They do all the work.
+>>> 
+>>> # The linkage is a standardize API linking a shortcut to a method.
+>>>
+>>> d = {'naveen':'blue','latha':'red'}
+>>> d.__getitem__('naveen')
+'blue'
+>>> d['naveen']
+'blue'
+>>>
+>>> 
+>>> d.__len__()
+2
+>>> d.__str__()
+"{'latha': 'red', 'naveen': 'blue'}"
+>>> d
+{'latha': 'red', 'naveen': 'blue'}
+>>> 
+>>> s = 'hello'
+>>> len(s)
+5
+>>> s.__len__()
+5
+>>> dir(s)
+['__add__', '__class__', '__contains__', '__delattr__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getslice__', '__gt__', '__hash__', '__init__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '_formatter_field_name_split', '_formatter_parser', 'capitalize', 'center', 'count', 'decode', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'index', 'isalnum', 'isalpha', 'isdigit', 'islower', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+>>> 
+
+
+
+How to help kids in their Learning?
+
+Give some info and possibility that the next job can be done.
+Give the answer and ask the same Q by inverting it?
+
+
+SETS eliminates any duplicates in a list
+
+>>> 
+>>> dir(list)
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+>>> 
+>>> dir(tuple)
+['__add__', '__class__', '__contains__', '__delattr__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getslice__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'count', 'index']
+>>> 
+>>> set(dir(list)) - set(dir(tuple))
+set(['sort', 'insert', '__reversed__', '__delslice__', 'reverse', 'extend', '__delitem__', '__setslice__', 'remove', '__setitem__', '__iadd__', 'pop', 'append', '__imul__'])
+>>> 
+>>> sorted(set(dir(list)) - set(dir(tuple)))
+['__delitem__', '__delslice__', '__iadd__', '__imul__', '__reversed__', '__setitem__', '__setslice__', 'append', 'extend', 'insert', 'pop', 'remove', 'reverse', 'sort']
+>>> 
+>>> dir(list) - dir(tuple)
+
+Traceback (most recent call last):
+  File "<pyshell#365>", line 1, in <module>
+    dir(list) - dir(tuple)
+TypeError: unsupported operand type(s) for -: 'list' and 'list'
+>>>
+>>> dir
+<built-in function dir>
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__']
+>>> __name__
+'__main__'
+>>> __package__
+>>> __doc__
+>>> __builtins__
+<module '__builtin__' (built-in)>
+>>> 
+>>> x = 10
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'x']
+>>> type(x)
+<type 'int'>
+>>> def square():
+	return 1
+
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'square', 'x']
+>>> type(square)
+<type 'function'>
+>>> 
+>>> import math
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'math', 'square', 'x']
+
+Note: The entire ‘math’ module is available as ‘math’ object.
+
+>>> type(math)
+<type 'module'>
+>>> dir(math)
+['__doc__', '__file__', '__name__', '__package__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'hypot', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'trunc']
+>>> 
+>>> # Assigning words in Python
+>>> # = , def , class , import
+>>> 
+>>> class Furniture():
+	
+KeyboardInterrupt
+>>> 
+>>> math.cos(3.0)
+-0.9899924966004454
+>>> 
+>>> math.cos(3.0) * math.pi * math.sqrt(2.0) + math.sin(3.5 * math.pi * math.sqrt(5.0))
+-4.917599438449414
+>>> 
+>>> ================================ RESTART ================================
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__']
+>>> from math import cos, sin, sqrt, pi
+>>> cos(3.0 * pi * sqrt(2.0)) + sin(3.5 *pi * sqrt(5.0))
+0.20408596376438537
+>>> 
+>>> ================================ RESTART ================================
+>>> 
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__']
+>>> from math import *
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'ceil', 'copysign', 'cos', 'cosh', 'degrees', 'e', 'erf', 'erfc', 'exp', 'expm1', 'fabs', 'factorial', 'floor', 'fmod', 'frexp', 'fsum', 'gamma', 'hypot', 'isinf', 'isnan', 'ldexp', 'lgamma', 'log', 'log10', 'log1p', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', 'trunc']
+>>> 
+
+Note: All the methods inside the ‘math’ module is available in our namespace. 
+      This is not the same as ‘import math’ shown above.
+
+
+>>> ================================ RESTART ================================
+>>> 
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__']
+>>> import os
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__', 'os']
+>>> type(os)
+<type 'module'>
+>>> dir(os)
+['EX_CANTCREAT', 'EX_CONFIG', 'EX_DATAERR', 'EX_IOERR', 'EX_NOHOST', 'EX_NOINPUT', 'EX_NOPERM', 'EX_NOUSER', 'EX_OK', 'EX_OSERR', 'EX_OSFILE', 'EX_PROTOCOL', 'EX_SOFTWARE', 'EX_TEMPFAIL', 'EX_UNAVAILABLE', 'EX_USAGE', 'F_OK', 'NGROUPS_MAX', 'O_APPEND', 'O_ASYNC', 'O_CREAT', 'O_DIRECTORY', 'O_DSYNC', 'O_EXCL', 'O_EXLOCK', 'O_NDELAY', 'O_NOCTTY', 'O_NOFOLLOW', 'O_NONBLOCK', 'O_RDONLY', 'O_RDWR', 'O_SHLOCK', 'O_SYNC', 'O_TRUNC', 'O_WRONLY', 'P_NOWAIT', 'P_NOWAITO', 'P_WAIT', 'R_OK', 'SEEK_CUR', 'SEEK_END', 'SEEK_SET', 'TMP_MAX', 'UserDict', 'WCONTINUED', 'WCOREDUMP', 'WEXITSTATUS', 'WIFCONTINUED', 'WIFEXITED', 'WIFSIGNALED', 'WIFSTOPPED', 'WNOHANG', 'WSTOPSIG', 'WTERMSIG', 'WUNTRACED', 'W_OK', 'X_OK', '_Environ', '__all__', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '_copy_reg', '_execvpe', '_exists', '_exit', '_get_exports_list', '_make_stat_result', '_make_statvfs_result', '_pickle_stat_result', '_pickle_statvfs_result', '_spawnvef', 'abort', 'access', 'altsep', 'chdir', 'chflags', 'chmod', 'chown', 'chroot', 'close', 'closerange', 'confstr', 'confstr_names', 'ctermid', 'curdir', 'defpath', 'devnull', 'dup', 'dup2', 'environ', 'errno', 'error', 'execl', 'execle', 'execlp', 'execlpe', 'execv', 'execve', 'execvp', 'execvpe', 'extsep', 'fchdir', 'fchmod', 'fchown', 'fdopen', 'fork', 'forkpty', 'fpathconf', 'fstat', 'fstatvfs', 'fsync', 'ftruncate', 'getcwd', 'getcwdu', 'getegid', 'getenv', 'geteuid', 'getgid', 'getgroups', 'getloadavg', 'getlogin', 'getpgid', 'getpgrp', 'getpid', 'getppid', 'getsid', 'getuid', 'initgroups', 'isatty', 'kill', 'killpg', 'lchflags', 'lchmod', 'lchown', 'linesep', 'link', 'listdir', 'lseek', 'lstat', 'major', 'makedev', 'makedirs', 'minor', 'mkdir', 'mkfifo', 'mknod', 'name', 'nice', 'open', 'openpty', 'pardir', 'path', 'pathconf', 'pathconf_names', 'pathsep', 'pipe', 'popen', 'popen2', 'popen3', 'popen4', 'putenv', 'read', 'readlink', 'remove', 'removedirs', 'rename', 'renames', 'rmdir', 'sep', 'setegid', 'seteuid', 'setgid', 'setgroups', 'setpgid', 'setpgrp', 'setregid', 'setreuid', 'setsid', 'setuid', 'spawnl', 'spawnle', 'spawnlp', 'spawnlpe', 'spawnv', 'spawnve', 'spawnvp', 'spawnvpe', 'stat', 'stat_float_times', 'stat_result', 'statvfs', 'statvfs_result', 'strerror', 'symlink', 'sys', 'sysconf', 'sysconf_names', 'system', 'tcgetpgrp', 'tcsetpgrp', 'tempnam', 'times', 'tmpfile', 'tmpnam', 'ttyname', 'umask', 'uname', 'unlink', 'unsetenv', 'urandom', 'utime', 'wait', 'wait3', 'wait4', 'waitpid', 'walk', 'write']
+>>> 
+>>> from os import *
+>>> dir()
+['EX_CANTCREAT', 'EX_CONFIG', 'EX_DATAERR', 'EX_IOERR', 'EX_NOHOST', 'EX_NOINPUT', 'EX_NOPERM', 'EX_NOUSER', 'EX_OK', 'EX_OSERR', 'EX_OSFILE', 'EX_PROTOCOL', 'EX_SOFTWARE', 'EX_TEMPFAIL', 'EX_UNAVAILABLE', 'EX_USAGE', 'F_OK', 'NGROUPS_MAX', 'O_APPEND', 'O_ASYNC', 'O_CREAT', 'O_DIRECTORY', 'O_DSYNC', 'O_EXCL', 'O_EXLOCK', 'O_NDELAY', 'O_NOCTTY', 'O_NOFOLLOW', 'O_NONBLOCK', 'O_RDONLY', 'O_RDWR', 'O_SHLOCK', 'O_SYNC', 'O_TRUNC', 'O_WRONLY', 'R_OK', 'SEEK_CUR', 'SEEK_END', 'SEEK_SET', 'TMP_MAX', 'WCONTINUED', 'WCOREDUMP', 'WEXITSTATUS', 'WIFCONTINUED', 'WIFEXITED', 'WIFSIGNALED', 'WIFSTOPPED', 'WNOHANG', 'WSTOPSIG', 'WTERMSIG', 'WUNTRACED', 'W_OK', 'X_OK', '__builtins__', '__doc__', '__name__', '__package__', 'abort', 'access', 'altsep', 'chdir', 'chflags', 'chmod', 'chown', 'chroot', 'close', 'closerange', 'confstr', 'confstr_names', 'ctermid', 'curdir', 'defpath', 'devnull', 'dup', 'dup2', 'environ', 'error', 'execl', 'execle', 'execlp', 'execlpe', 'execv', 'execve', 'execvp', 'execvpe', 'extsep', 'fchdir', 'fchmod', 'fchown', 'fdopen', 'fork', 'forkpty', 'fpathconf', 'fstat', 'fstatvfs', 'fsync', 'ftruncate', 'getcwd', 'getcwdu', 'getegid', 'getenv', 'geteuid', 'getgid', 'getgroups', 'getloadavg', 'getlogin', 'getpgid', 'getpgrp', 'getpid', 'getppid', 'getsid', 'getuid', 'initgroups', 'isatty', 'kill', 'killpg', 'lchflags', 'lchmod', 'lchown', 'linesep', 'link', 'listdir', 'lseek', 'lstat', 'major', 'makedev', 'makedirs', 'minor', 'mkdir', 'mkfifo', 'mknod', 'name', 'nice', 'open', 'openpty', 'os', 'pardir', 'path', 'pathconf', 'pathconf_names', 'pathsep', 'pipe', 'popen', 'popen2', 'popen3', 'popen4', 'putenv', 'read', 'readlink', 'remove', 'removedirs', 'rename', 'renames', 'rmdir', 'sep', 'setegid', 'seteuid', 'setgid', 'setgroups', 'setpgid', 'setpgrp', 'setregid', 'setreuid', 'setsid', 'setuid', 'spawnl', 'spawnle', 'spawnlp', 'spawnlpe', 'spawnv', 'spawnve', 'spawnvp', 'spawnvpe', 'stat', 'stat_float_times', 'stat_result', 'statvfs', 'statvfs_result', 'strerror', 'symlink', 'sysconf', 'sysconf_names', 'system', 'tcgetpgrp', 'tcsetpgrp', 'tempnam', 'times', 'tmpfile', 'tmpnam', 'ttyname', 'umask', 'uname', 'unlink', 'unsetenv', 'urandom', 'utime', 'wait', 'wait3', 'wait4', 'waitpid', 'walk', 'write']
+>>> 
+
+
+
+CLASSES
+
+class Dog:
+        'A simple class'
+        
+d = Dog()
+e = Dog()
+
+d.name = 'Fido'        # unique info goes into class variables
+e.name = 'Buddy'
+Dog.kind = 'canine'   # shared info goes into class variables
+
+
+>>> d.name
+'Fido'
+>>> e.name
+'Buddy'
+>>> d.kind
+'canine'
+>>> e.kind
+'canine'
+>>> 
+>>> 
+>>> # Object == Instance :   data + link to a class
+>>> # Class == Type:         named collections of shared data and functions
+>>> 
+>>> # Objects / Instances know exactly 2 things:
+>>> # 1) data ->   __dict__
+>>> # 2) class ->   __class__
+>>> 
+>>> d.__dict__
+{'name': 'Fido'}
+>>> d.__class__
+<class __main__.Dog at 0x1004832c0>
+>>> 
+>>> e.__dict__
+{'name': 'Buddy'}
+>>> e.__class__
+<class __main__.Dog at 0x1004832c0>
+>>> 
+>>> Dog.__dict__
+{'__module__': '__main__', '__doc__': 'A simple class', 'kind': 'canine'}
+>>>
+>>> Dog.__name__
+'Dog'
+>>> Dog.__bases__
+()
+>>> 
+
+
+dir(<>) = Searches for all names and methods in current namespace, and then its parent namespace and so on.
+
+
+>>> c.__dict__.keys()
+['name']
+>>> c.__class__.__dict__.keys()
+['__module__', '__doc__', 'kind', 'show']
+>>> c.__class__.__bases__[0].__dict__.keys()
+['status', 'initialize', '__module__', '__doc__', 'kind']
+>>> 
+>>> c.__dict__.keys() + c.__class__.__dict__.keys() + c.__class__.__bases__[0].__dict__.keys()
+['name', '__module__', '__doc__', 'kind', 'show', 'status', 'initialize', '__module__', '__doc__', 'kind']
+>>> set(c.__dict__.keys() + c.__class__.__dict__.keys() + c.__class__.__bases__[0].__dict__.keys())
+set(['status', '__module__', 'name', 'show', 'kind', 'initialize', '__doc__'])
+>>> sorted(set(c.__dict__.keys() + c.__class__.__dict__.keys() + c.__class__.__bases__[0].__dict__.keys()))
+['__doc__', '__module__', 'initialize', 'kind', 'name', 'show', 'status']
+>>> dir(c)
+['__doc__', '__module__', 'initialize', 'kind', 'name', 'show', 'status']
+>>> 
+
+
+
+ITERABLES:
+
+
+>>> for x in s:
+	print x.upper()
+
+	
+H
+E
+L
+L
+O
+>>> 
+
+The following is what Python does internally. 
+It iterates until it hits the IndexError exception.
+
+>>> i = 0
+>>> while True:
+	try:
+		c=s[i]
+	except IndexError:
+		break
+	print c.upper()
+	i += 1
+
+	
+H
+E
+L
+L
+O
+>>> 
+
+
+
+>>> 
+>>> def cube(x):
+	'Return a value times itself 3 times'
+	return x * x * x
+
+>>> cube(2)
+8
+>>> cube(20)
+8000
+>>> cube(200)
+8000000
+>>> cube(2000)
+8000000000
+>>> cube(123456789)
+1881676371789154860897069L
+>>> 
+>>> 
+>>> type(cube)
+<type 'function'>
+>>> cube.__class__
+<type 'function'>
+>>> dir(cube)
+['__call__', '__class__', '__closure__', '__code__', '__defaults__', '__delattr__', '__dict__', '__doc__', '__format__', '__get__', '__getattribute__', '__globals__', '__hash__', '__init__', '__module__', '__name__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'func_closure', 'func_code', 'func_defaults', 'func_dict', 'func_doc', 'func_globals', 'func_name']
+>>> 
+>>> cube.__name__
+'cube'
+>>> 
+>>> cube(3)
+27
+>>> cube.__call__(3)   		# All functions have a ‘__call__’ method which is called when arguments are passed
+27						    # This is specific to functions only. If you create a new class, then implement this
+>>> 							# ‘__call__’ method yourself under the Class as a Class method.
+
+
+>>> d.__call__('fetch')
+'Fido is fetching'
+>>> d('fetch')
+'Fido is fetching'
+>>> e('owner')
+'Naveen'
+>>> 
+
+
+__str__ and __repr__ introduction:
+
+>>> 
+>>> # All objects have upto TWO ways to display themselves
+>>> # The external way is for end-users, so it needs to be pretty
+>>> # The internal way is for programmers, so it needs to be informative
+>>> 
+>>> # The external way uses __str__, pronounced "stir", short for string
+>>> # The internal way uses __repr__, pronounced "repper", short for "representation"
+>>> 
+>>> # The "print" keywords uses __str__ to display to end-users
+>>> # The ">>>" prompt uses __repr__ to display for programmers
+>>> 
+>>> # Sometimes the pretty form and the informative way are same
+>>> # There is a default __str__ and __repr__. That way can be overridden.
+>>> # BUT the default is not pretty and not informative —> scowling Dick Cheney
+>>> 
+
+>>> print "Hello" + "Naveen"    <— uses __str__ method
+HelloNaveen
+>>> "Hello"+"Naveen"            <— uses __repr__ method (this gives more info)
+'HelloNaveen'
+>>> 
+
+
+class Dog(Animal):          # Dog inherits Animal class
+    'A simple canine class'
+    kind = 'feline'         # class variable; applies to all instances of this class
+
+    def show(self):
+        print 'Woof ! I am a %s named %s' % (self.kind, self.name)
+
+    def __len__(self):
+        return len(self.name)
+
+    def __getitem__(self,index):
+        if index >= len(self):
+            raise IndexError("Oops, I did it again")
+        return index * 111
+
+    def __call__(self,action):
+        if action == 'fetch':
+            return '%s is fetching' % self.name
+        elif action == 'owner':
+            return 'Naveen'
+        elif action == 'play dead':
+            return '%s is ...... can i get up now' % self.name
+        else:
+            raise ValueError('Unknown action')
+        
+    def __str__(self):			# Over riding default __str__ method
+        return 'I am dog named %s' % self.name
+
+    def __repr__(self):			# Over riding default __repr__ method
+        return 'Dog(%r)' % self.name
+
+
+
+>>> d
+<__main__.Dog instance at 0x102e4b3b0>
+>>> print d
+I am dog named Fido
+>>> 
+>>> # Best practice for __repr__: If possible, try to make the __repr__ look like
+>>> # how the object COULD have been created
+>>> 
+>>> print '7' + '0'
+70
+>>> '7' + '0'
+'70'
+>>> 70 * 5
+350
+>>> '70' * 5
+'7070707070'
+>>> 
+>>> d
+Dog('Fido')
+>>> print d
+I am dog named Fido
+>>> 
+
+
+A bit on Python Internal Namespace and assignments:
+Check pythontutor.com
+
+>>> dir()
+['__builtins__', '__doc__', '__name__', '__package__']
+>>> globals()
+{'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', '__doc__': None, '__package__': None}
+>>> globals().keys()
+['__builtins__', '__name__', '__doc__', '__package__']
+>>> sorted(globals().keys())
+['__builtins__', '__doc__', '__name__', '__package__']
+>>> x = 10
+>>> globals()
+{'__builtins__': <module '__builtin__' (built-in)>, '__package__': None, 'x': 10, '__name__': '__main__', '__doc__': None}
+>>> globals()['x']
+10
+>>> globals()['x'] = 11
+>>> x
+11
+>>> type(x)
+<type 'int'>
+>>> x = 'hello'
+>>> type(x)
+<type 'str'>
+>>> x=10
+>>> type(x+5)
+<type 'int'>
+>>> type('x'*5)
+<type 'str'>
+>>> type('x'+5)
+
+Traceback (most recent call last):
+  File "<pyshell#331>", line 1, in <module>
+    type('x'+5)
+TypeError: cannot concatenate 'str' and 'int' objects
+>>> 
+>>> from dis import dis
+>>> f
+
+Traceback (most recent call last):
+  File "<pyshell#334>", line 1, in <module>
+    f
+NameError: name 'f' is not defined
+>>> def f(x):
+	return x * x
+
+>>> x = 10
+>>> f(5)
+25
+>>> dis(f)
+  2           0 LOAD_FAST                0 (x)
+              3 LOAD_FAST                0 (x)
+              6 BINARY_MULTIPLY     
+              7 RETURN_VALUE        
+>>> 
+>>> def f(x):
+	y = x + 1
+	return x * x
+
+>>> f(6)
+36
+>>> dis(f)
+  2           0 LOAD_FAST                0 (x)
+              3 LOAD_CONST               1 (1)
+              6 BINARY_ADD          
+              7 STORE_FAST               1 (y)
+
+  3          10 LOAD_FAST                0 (x)
+             13 LOAD_FAST                0 (x)
+             16 BINARY_MULTIPLY     
+             17 RETURN_VALUE        
+>>> 
+>>>
+
+
+
+D A Y  4
+
+>>> def mypow(base,exp):
+	'Compute a power'
+	return base ** exp
+
+>>> 
+>>> mypow(2,5)                  # positional arguments --> order matters
+32
+>>> mypow(exp=5, base=2)        # keyword arguments --> name matters
+32
+>>> mypow(2, exp=5)             # Hybrid --> positonal go first, keywords next
+32
+>>> t = (2,5)
+>>> type(t)
+<type 'tuple'>
+>>> t[0]
+2
+>>> t[1]
+5
+>>> t[-1]
+5
+>>> b,e = t
+>>> e
+5
+>>> b
+2
+>>> 
+>>> mypow(t[0],t[1])
+32
+>>> mypow(t[:])
+
+Traceback (most recent call last):
+  File "<pyshell#30>", line 1, in <module>
+    mypow(t[:])
+TypeError: mypow() takes exactly 2 arguments (1 given)
+>>> mypow(*t)
+32
+>>> # One star in a function call will unpack a sequence into separate positional arguments
+>>> 
+>>> # Need arises:
+>>> # A language has functions of multiple arguments such as pow(base,exp)
+>>> # A language has sequence containers such as tuples, lists, strings
+>>> 
+>>> def f(a,b):
+	return a+b
+
+>>> f(10,20)
+30
+>>> def f(a,b,c=0):           # 'c' is optional or default argument --> always goes last
+	return a+b
+
+	
+>>> f(10,20,5)
+30
+>>> def f(a,b,c=0, d=0):
+	return a+b+c+d
+
+>>> f(10,20,30)
+60
+>>> def f(a,b, *t):
+	print a
+	print b
+	print t
+
+	
+>>> f(10,20)
+10
+20
+()
+>>> f(10,20,30)
+10
+20
+(30,)
+>>> f(10,20,30,40)
+10
+20
+(30, 40)
+>>> f(10,20,30,-40)
+10
+20
+(30, -40)
+>>> f(10,20,30,'hi')
+10
+20
+(30, 'hi')
+>>> 
+>>> # One star in a function call will unpack a sequence into separate positional arguments
+>>> # One star in a function declaration will pack positional arguments into a tuple
+>>> 
+>>> mypow(exp=5,base=2)
+32
+>>> d = {'exp':5,'base':2}
+>>> d['exp']
+5
+>>> d['base']
+2
+>>> # One star in a function call will unpack a sequence into separate positional arguments
+>>> # Two stars in a function call will unpack a mapping into separate keywords arguments (order doesn’t matter)
+>>> 
+>>> mypow(**d)
+32
+>>> 
+>>> def logging_mypow(*args, **kwds):      # second argument also is referred by **kwargs, **d, **keyargs
+	print 'Calling mypow() with', args, 'and', kwds
+	answer = mypow(*args, **kwds)
+	print 'The answer is', answer
+	return answer
+
+>>> r = logging_mypow(2,5)
+Calling mypow() with (2, 5) and {}
+The answer is 32
+>>> r = logging_mypow(exp=5,base=2)
+Calling mypow() with () and {'base': 2, 'exp': 5}
+The answer is 32
+>>> r = logging_mypow(2,exp=5)
+Calling mypow() with (2,) and {'exp': 5}
+The answer is 32
+>>> 
+>>> s = []
+>>> for i in range(10):
+	t = i * i
+	s.append(t)
+
+	
+>>> s
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+>>> 
+>>> t = (10,20,30)
+>>> type(t)
+<type 'tuple'>
+>>> t = 10,20,30,40
+>>> type(t)
+<type 'tuple'>
+>>> 
+>>> s = '42'
+>>> int(s)
+42
+>>> s = '42.1'
+>>> float(s)
+42.1
+>>> 
+>>> # How to make a function: def
+>>> # How to build a list:    s = []  use a for loop, compute a value, and append it
+>>> # How to parse to file:   show_ipv4 and vcard
+>>> 
+>>> 
+
+
+
+
+
+>>> s = [10,20,30]
+>>> t = (10,20,30)
+>>> type(s)
+<type 'list'>
+>>> type(t)
+<type 'tuple'>
+>>> type(s) == type(t)
+False
+>>> # indexable
+>>> s[1]
+20
+>>> t[1]
+20
+>>> 
+>>> # sliceable
+>>> s[:2]
+[10, 20]
+>>> t[:2]
+(10, 20)
+>>> 
+>>> # sizeable
+>>> len(s)
+3
+>>> len(t)
+3
+>>> 
+>>> # Only one is mutable
+>>> s[0] = 100
+>>> t[0] = 100
+
+Traceback (most recent call last):
+  File "<pyshell#149>", line 1, in <module>
+    t[0] = 100
+TypeError: 'tuple' object does not support item assignment
+>>> 
+>>> # Lists are mutable: update values, sort, reverse, append, pop
+>>> # Tuples are immutable: a little more space efficient, a little faster,
+>>> #                       and can be used as dictionary key
+>>> 
+>>> 
+>>> # Dictionary keys must be IMMUTABLE, because if they could change
+>>> # you will never be able to find the values.
+>>> 
+>>> d = {'raymond':'red'}
+>>> d['raymond'] = 'crimson'
+>>> d
+{'raymond': 'crimson'}
+>>> 
+>>> # How to change the Dictionary keys
+>>> # Save the old value, delete the old key,value pair,
+>>> # create a new pair with new_key = old_value
+>>> 
+>>> value = d['raymond']
+>>> del d['raymond']
+>>> d['raymondo'] = value
+>>> d
+{'raymondo': 'crimson'}
+>>> 
+>>> # Intrinsic benefit of a list is mutability: sorting, reverse, setitem, append, pop
+>>> # Intrinsic benefit of a tuple is immutability: speed/space savings and hashable for dicts
+>>> 
+>>> name = ('Raymond','Hettinger')
+>>> type(name)
+<type 'tuple'>
+>>> d = {name : 'velvet'}
+>>> d
+{('Raymond', 'Hettinger'): 'velvet'}
+>>> 
+>>> # Extrinsic rule:  lists are for looping and used with homogeneous data
+>>> #                  tuples are like structs in C or like records in databases, non-homogenous
+>>> 
+>>> person = ['Raymond', 'Hettinger', 0x31, 'python@rcn.com']
+>>> map(type,person)
+[<type 'str'>, <type 'str'>, <type 'int'>, <type 'str'>]
+>>> 
+>>> # This is equivalent to following C struct
+>>> #
+>>> # struct Person {
+>>> #	char *fname;
+>>> # 	char *lname;
+>>> #	int age,
+>>> #	char *email
+>>> # }
+>>> 
+>>> # Corresponding SQL query
+>>> #
+>>> # CREATE TABLE Persons (fname TEXT, lname TEXT, age INTEGER, email TEXT)
+>>>
+>>> person = ('Raymond', 'Hettinger', 0x31, 'python@rcn.com')
+>>> print 'Mr. %s %s is %d years old. Contact at %s' % person
+Mr. Raymond Hettinger is 49 years old. Contact at python@rcn.com
+>>> 
+>>> person = ['Raymond', 'Hettinger', 0x31, 'python@rcn.com']
+>>> print 'Mr. %s %s is %d years old. Contact at %s' % person
+
+Traceback (most recent call last):
+  File "<pyshell#210>", line 1, in <module>
+    print 'Mr. %s %s is %d years old. Contact at %s' % person
+TypeError: not enough arguments for format string
+>>> 
+>>> # Lists and Tuples don't care whether their data is homogenous
+>>> # String formatting treats lists and tuples differently (tuples get unpacked, lists don't)
+>>> # If non-homogenous data needs to be stored, use tuples (assuming non changes required)
+>>> # If homogenous data needs to be stored, use lists (this also allows for changes)
+>>>
+>>> 
+>>> s = [10,20,40,100]
+>>> for i in s:
+	print i * 8
+
+	
+80
+160
+320
+800
+>>> 
+>>> 
+>>> # lists are for looping -- so that data is usually homogenous so you can do the same operation to every element
+>>> # tuples are like structs in C or like records in a database or like clothes in suitcase.
+>>> # tuples collect non-homogenous info into a container so you can pass it around as one unit.
+>>> 
+>>> computer = {}
+>>> computer['Raymond','Hettinger'] = 'MAC'
+>>> computer['Rachel','Hettinger'] = 'PC'
+>>> # computer.keys()    --> returns keys as Tuples
+>>> computer.keys()
+[('Rachel', 'Hettinger'), ('Raymond', 'Hettinger')]
+>>> computer.values()    —> returns values as Lists
+['PC', 'MAC'] 
+>>> computer.items()   —> returns items as (Tuple of Tuples)
+[(('Rachel', 'Hettinger'), 'PC'), (('Raymond', 'Hettinger'), 'MAC')]
+>>> 
+
+
+NAMED TUPLES
+============
+
+>>> p = (172, .1, .6)
+>>> if 150.0 <= p[0] <= 200.0:
+	print 'This is pretty warm!'
+
+	
+This is pretty warm!
+>>> 
+>>> from collections import namedtuple
+>>> Color = namedtuple('Color',['hue','saturation','luminosity'])  <— Give the heading
+>>> 
+>>> p = Color(172, .1, .6)   <— Give the values
+>>> p
+Color(hue=172, saturation=0.1, luminosity=0.6)
+>>> 
+>>> if p.saturation > .5:
+	print 'Wow, that is bright!'
+
+	
+>>> if p.luminosity > 0.5:
+	print 'Whoa, that is light!'
+
+	
+Whoa, that is light!
+>>> Color
+<class '__main__.Color'>
+>>> type(p)
+<class '__main__.Color'>
+>>> 
+>>> # doctest
+>>> 
+>>> r = 0, 42
+>>> print r
+(0, 42)
+>>> 
+>>> TestResult = namedtuple('TestResult',['failed','attempted'])
+>>> r
+(0, 42)
+>>> r = TestResult(0,42)
+>>> r
+TestResult(failed=0, attempted=42)
+>>> if r.failed == 0:
+	print 'Happy!'
+
+	
+Happy!
+>>> 
+
+
+
+
+Error-handling
+
+Python has a default error handler for everything.
+Prints a traceback message and stop the program.
+
+Often, this is all you could do anyway!
+With a server, log all errors and restart
+
+while True:
+    try:
+        start_server()
+    except Exception:
+        logging.exception()
+
+
+Besides a top level handler for unexpected problems,
+what handlers to you write:
+
+    1) You are expecting the error
+    2) You have something useful you can do about it.
+
+try:
+    with open(filename) as f:
+        data = f.read()
+except IOError:
+    with open('default_settings.txt') as f:
+        data = f.read()    
+    
+
+def get_quote(symbol):
+    'Return a real-time price quote for a given symbol'
+    query = urllib.urlencode({'f': 'sl1d1t1c1ohgv', 'e': '.csv', 's': symbol})
+    url = root_url + query
+    try:
+        u = urllib.urlopen(url)
+    except urllib.HTTPError as e:
+        code = e.code
+        if code == '403':
+            print >> sys.stderr, 'Rate limited, waiting 5 seconds to retry (Cntl-C to exit)'
+            time.sleep(5)
+            u = urllib.urlopen(url)
+        else:
+            raise
+    data = u.read()
+    return float(data.split(',')[1])
+
+
+REGULAR EXPRESSIONS:
+~~~~~~~~~~~~~~~~~~~~
+
+abcd                Exact match
+a.cd                Dot matches any one character     axcd
+[aeiou]             Match any lowercase vowel
+[^aeiou]            Match anything that isn't a lower vowel
+[A-Za-z0-9,]        Character ranges  [ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,]
+abc|def             Match either abc or def
+
+a+                  One or more      a{1,}
+a?                  Zero or one      a{0,1}
+a*                  Zero or more     a{0,}
+a{m,n}              From m to n, inclusive
+
+\s                  [ \n\t\f\r]    Any space character
+\S                  [^ \n\t\f\r]   Any non-space
+\w                  [A-Za-z0-9_]   Wrong!
+\W                  [^A-Za-z0-9_]  More Wrong!
+\d                  [0-9]          Any digit
+\D                  [^0-9]         Any non-digit
+
+\b                  word boundary
+^                   beginning of string
+$                   end of string
+
+re.findall(pattern, string)  --> all matching strings in a list
+re.search(pattern, string)   --> match object or None
+re.match(pattern, string)    --> match object  (professional programmers use this)
+re.sub                       --> substitution and replacing
+
+match objects
+-------------
+start()
+end()
+span()
+group(0)
+groups()
+
+Hints:
+    * patterns should be raw strings r''
+    * always start with findall() and move to search()
+    * start with a small pattern and build-up one step at a time
+
+
+
+>>> with open('/Users/Naveen/Desktop/notes/team_history.txt') as f:
+	hist = f.read()
+
+	
+>>> hist
+'Our team history:\n\n* On 3/14/2013, we scored 14 points and lost the game.\n* On 6/2/2013, we scored 15 points and lost the game.\n* On 9/15/2013, we scored only 1 point and won the game.\n\nGo figure!\n'
+>>> print hist
+Our team history:
+
+* On 3/14/2013, we scored 14 points and lost the game.
+* On 6/2/2013, we scored 15 points and lost the game.
+* On 9/15/2013, we scored only 1 point and won the game.
+
+Go figure!
+
+>>> 
+>>> import re
+>>> re.findall(r'team',hist)
+['team']
+>>> re.findall(r'game',hist)
+['game', 'game', 'game']
+>>> re.findall(r'te.m',hist)
+['team']
+>>> re.findall(r'te?m',hist)
+[]
+>>> re.findall(r'te.?m',hist)
+['team']
+>>> re.findall(r'te[aeiou]m',hist)
+['team']
+>>> re.findall(r'[aeiou]',hist)
+['u', 'e', 'a', 'i', 'o', 'e', 'o', 'e', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'e', 'o', 'e', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'e', 'o', 'e', 'o', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'o', 'i', 'u', 'e']
+>>> 
+>>> re.findall(r'[aeiou]',hist, re.IGNORECASE)
+['O', 'u', 'e', 'a', 'i', 'o', 'O', 'e', 'o', 'e', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'O', 'e', 'o', 'e', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'O', 'e', 'o', 'e', 'o', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'o', 'i', 'u', 'e']
+>>> re.findall(r'[aeiouAEIOU]',hist)
+['O', 'u', 'e', 'a', 'i', 'o', 'O', 'e', 'o', 'e', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'O', 'e', 'o', 'e', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'O', 'e', 'o', 'e', 'o', 'o', 'i', 'a', 'o', 'e', 'a', 'e', 'o', 'i', 'u', 'e']
+>>> 
+>>> re.findall(r'[aeiouAEIOU]+',hist)
+['Ou', 'ea', 'i', 'o', 'O', 'e', 'o', 'e', 'oi', 'a', 'o', 'e', 'a', 'e', 'O', 'e', 'o', 'e', 'oi', 'a', 'o', 'e', 'a', 'e', 'O', 'e', 'o', 'e', 'o', 'oi', 'a', 'o', 'e', 'a', 'e', 'o', 'i', 'u', 'e']
+>>> 
+>>> re.findall(r'[^aeiouAEIOU]+',hist)
+['r t', 'm h', 'st', 'ry:\n\n* ', 'n 3/14/2013, w', ' sc', 'r', 'd 14 p', 'nts ', 'nd l', 'st th', ' g', 'm', '.\n* ', 'n 6/2/2013, w', ' sc', 'r', 'd 15 p', 'nts ', 'nd l', 'st th', ' g', 'm', '.\n* ', 'n 9/15/2013, w', ' sc', 'r', 'd ', 'nly 1 p', 'nt ', 'nd w', 'n th', ' g', 'm', '.\n\nG', ' f', 'g', 'r', '!\n']
+>>> 
+>>> re.findall(r'\d',hist)
+['3', '1', '4', '2', '0', '1', '3', '1', '4', '6', '2', '2', '0', '1', '3', '1', '5', '9', '1', '5', '2', '0', '1', '3', '1']
+>>> re.findall(r'[0-9]+',hist)
+['3', '14', '2013', '14', '6', '2', '2013', '15', '9', '15', '2013', '1']
+>>> re.findall(r'\d+',hist)
+['3', '14', '2013', '14', '6', '2', '2013', '15', '9', '15', '2013', '1']
+>>> re.findall(r'(\d+)',hist)
+['3', '14', '2013', '14', '6', '2', '2013', '15', '9', '15', '2013', '1']
+>>> re.findall(r'(\d+) point',hist)
+['14', '15', '1']
+>>> re.findall(r'(\d+ point)',hist)
+['14 point', '15 point', '1 point']
+>>> re.findall(r'(\d+ point.)',hist)
+['14 points', '15 points', '1 point ']
+>>> 
+>>> score = map(int, re.findall(r'(\d+) point',hist))
+>>> score
+[14, 15, 1]
+>>> len(score)
+3
+>>> min(score)
+1
+>>> max(score)
+15
+>>> sum(score)
+30
+>>> 
+>>> re.findall(r'we',hist)
+['we', 'we', 'we']
+>>> re.findall(r'me',hist)
+['me', 'me', 'me']
+>>> re.findall(r'\bme\b',hist)
+[]
+>>> re.findall(r'\bwe\b',hist)
+['we', 'we', 'we']
+>>> 
+>>> re.findall(r'\d+/\d+/\d+',hist)
+['3/14/2013', '6/2/2013', '9/15/2013']
+>>> 
+>>> re.findall(r'(\d+)/(\d+)/(\d+)',hist)
+[('3', '14', '2013'), ('6', '2', '2013'), ('9', '15', '2013')]
+>>>
+>>> re.findall(r'\d+/\d+/\d+',hist)
+['3/14/2013', '6/2/2013', '9/15/2013']
+>>> 
+>>> mo = re.search(r'(\d+)/(\d+)/(\d+)',hist)
+>>> mo
+<_sre.SRE_Match object at 0x1025ac6b8>
+>>> dir(mo)
+['__class__', '__copy__', '__deepcopy__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'end', 'endpos', 'expand', 'group', 'groupdict', 'groups', 'lastgroup', 'lastindex', 'pos', 're', 'regs', 'span', 'start', 'string']
+>>> mo.start()
+24
+>>> mo.end()
+33
+>>> hist[24:33]
+'3/14/2013'
+>>> 
+>>> mo.group(0)
+'3/14/2013'
+>>> mo.group(1)
+'3'
+>>> mo.group(2)
+'14'
+>>> mo.group(3)
+'2013'
+>>> mo.groups()
+('3', '14', '2013')
+>>> 
+>>> month,day,year = map(int,mo.groups())
+>>> month
+3
+>>> day
+14
+>>> year
+2013
+>>> 
+
+
+
+
+<<<<<< MY PERSONAL NOTES >>>>>>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To convert from String to List, just say 'list(str)'. For example:
+
+>>> a
+'naveen'
+>>> list(a)
+['n', 'a', 'v', 'e', 'e', 'n']
+>>> b
+'hello naveen'
+>>> list(b)
+['h', 'e', 'l', 'l', 'o', ' ', 'n', 'a', 'v', 'e', 'e', 'n']
+>>>
+
+To search for an item in a list sequencially, use a list comprehension. For example:
+
+>>> cities = ['mumbai','delhi','chennai','calcutta','mumbai']
+>>> [city  for city in cities  if city == 'mumbai']
+['mumbai', 'mumbai']
+>>>
+>>> [(index,city)  for index, city in enumerate(cities)  if city == 'mumbai']
+[(0, 'mumbai'), (4, 'mumbai')]
+>>>
+
+
+LIST COMPREHENSIONS:
+~~~~~~~~~~~~~~~~~~~~
+
+[<expr> for <var> in <iterable> if <condition>]
+
+Comprehension Syntax:
+
+[ <expression> for target1 in iterable1 if condition1
+               for target2 in iterable2 if condition2
+               ...
+               for targetN in iterableN if conditionN ]
+
+
+Note: List comprehensions effectively combines both the ‘map’ and ‘filter’ tools into one. 
+
+MAP: <expression> is what should be executed for each item in the iterable.
+FILTER: <if conditionN> is the condition that should be satisfied for the item to be passed-on to <expression>.
+
+For example:
+
+>>> [x**2 for x in range(10) if x%2 == 0]  -> x**2 does the ‘Map’ and x%2==0 does the ‘Filter’
+[0, 4, 16, 36, 64]
+>>> list(map((lambda x: x**2), filter((lambda x: x%2 == 0), range(10))))
+[0, 4, 16, 36, 64]
+>>> 
+>>> [x * y for x in [10,20,30] for y in [5,10,15]]  -> Emulating Nested functions 
+[50, 100, 150, 100, 200, 300, 150, 300, 450]
+>>>
+>>> [x + y for x in 'Guess' for y in 'WHAT']
+['GW', 'GH', 'GA', 'GT', 'uW', 'uH', 'uA', 'uT', 'eW', 'eH', 'eA', 'eT', 'sW', 'sH', 'sA', 'sT', 'sW', 'sH', 'sA', 'sT']
+>>>
+>>> [(x,y) for x in range(10) if x % 2 == 0 for y in range(10) if y % 2 == 1]    -> Nested functions with an ‘if’ condition for each
+[(0, 1), (0, 3), (0, 5), (0, 7), (0, 9), (2, 1), (2, 3), (2, 5), (2, 7), (2, 9), (4, 1), (4, 3), (4, 5), (4, 7), (4, 9), (6, 1), (6, 3), (6, 5), (6, 7), (6, 9), (8, 1), (8, 3), (8, 5), (8, 7), (8, 9)]
+>>>
+
+COMPREHENSIONS works on Dictionaries too.
+
+>>> word = 'letters'
+>>> letter_counts = {letter: word.count(letter) for letter in word}
+>>> letter_counts
+{'l': 1, 'e': 2, 't': 2, 'r': 1, 's': 1}
+
+
+>>> [i*i for i in range(10)]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+>>> 
+>>> sum([i*i for i in range(10)])
+285
+>>> 
+>>> names = ['manny','mo','jack']
+>>> [name.title() for name in names]
+['Manny', 'Mo', 'Jack']
+>>> 
+>>> [name.title() for name in names if name.startswith('m')]
+['Manny', 'Mo']
+>>> 
+>>> # 'ord' tells the position of the letter in the ASCII table
+>>> 
+>>> ord('A')
+65
+>>> ord('B')
+66
+>>> ord('z')
+122
+>>> 
+>>> # 'ord' tells the position of the letter in the ASCII table
+>>> # ‘chr’ tells the character at the given position in ASCII table
+>>>
+>>> [ord(c) for c in 'naveen']
+[110, 97, 118, 101, 101, 110]
+>>> [ord(c)+14 for c in 'naveen']
+[124, 111, 132, 115, 115, 124]
+>>> [chr(ord(c)) for c in 'naveen']
+['n', 'a', 'v', 'e', 'e', 'n']
+>>> [chr(ord(c)+14) for c in 'naveen']
+['|', 'o', '\x84', 's', 's', '|']
+>>> ''.join([chr(ord(c)+14) for c in 'naveen'])
+'|o\x84ss|'
+>>> code = ''.join([chr(ord(c)+14) for c in 'naveen'])
+>>> code
+'|o\x84ss|'
+>>> ''.join([chr(ord(c)-14) for c in code])
+'naveen'
+>>> 
+
+
+
+LAMBDA FUNCTIONS:
+~~~~~~~~~~~~~~~~~
+
+Tiny functions or simple coding constructs that return ‘Function objects’ to be used later.
+Used where you need to embed small bits of executable code inline at the place to be used.
+Note that unlike ‘def’, a lambda function cannot be re-used elsewhere. 
+
+One of the main uses of Lambdas comes in ‘tkinter’ GUI applications. Lambdas are used as 
+call-back functions once a certain event is complete or occurs.
+
+
+>>> f = lambda x,y: x+y       # f is the function object returned by Lambda
+>>> f(3,4)
+7
+>>> g = lambda x,y,z: x*y+z
+>>> g(100,200,300)
+20300
+>>> 
+>>> (lambda x,y: x+y)(3,4)
+7
+>>> 
+
+You can also create a list of lambda function objects to be called in sequence:
+
+>>> L = [lambda x: x**2, lambda x: x**3, lambda x: x**4]
+>>> L
+[<function <lambda> at 0x1006e51b8>, <function <lambda> at 0x1006e5230>, <function <lambda> at 0x1006e52a8>]
+>>> 
+>>> for f in L:
+...    print f(2)
+... 
+4
+8
+16
+>>> 
+
+You can make a dictionary of lambda function objects and call with key values
+
+>>> D = {'level-1': (lambda x: x * 10), 'level-2': (lambda x: x * 20), 'level-3': (lambda x: x * 30)}
+>>> D
+{'level-2': <function <lambda> at 0x1006e5758>, 'level-3': <function <lambda> at 0x1006e57d0>, 'level-1': <function <lambda> at 0x1006e56e0>}
+>>> stage = 'level-2'
+>>> D[stage]
+<function <lambda> at 0x1006e5758>
+>>> D[stage](5)
+100
+>>> 
+
+
+You can pack slightly more logic into lambda functions:
+
+>>> lower = (lambda x,y: x if x<y else y)
+>>> higher = (lambda x,y: x if x>y else y)
+>>> lower(5,10)
+5
+>>> higher(10,20)
+20
+>>> lower('a','b')
+'a'
+>>> higher('a','b')
+'b'
+>>>
+>>> squares = (lambda x: [i**2 for i in x])
+>>> squares([1,2,3,4])
+[1, 4, 9, 16]
+>>>  
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FUNCTIONAL PROGRAMMING TOOLS IN PYTHON:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1) MAP
+2) FILTER
+3) REDUCE
+
+Others functional programming techniques in Python includes the following:
+
+	- Nested Scope Closures
+	- Function Lambdas
+	- Generators and Comprehensions
+	- Decorators
+
+
+MAP function:
+=============
+Syntax:  map(<func_name>,<iterable>)
+
+The Map function applies a passed-in function to each item in an iterable objects and 
+returns a list containing all the function call results.
+
+>>> counters = [1,2,3,4]
+>>> def inc(x): return x + 10
+... 
+>>> list(map(inc,counters))    		—> applies ‘inc’ function to all items in ‘counters’
+[11, 12, 13, 14]
+>>> 
+>>> [inc(x) for x in counters]		—> same thing as above, but using comprehensions
+[11, 12, 13, 14]
+>>> 
+>>> pow(4,5)
+1024
+>>> list(map(pow,[1,2,3,4],[5,6,7,8]))    —> pow needs 2 arguments, hence 2 lists were passed
+[1, 64, 2187, 65536]
+>>> 
+>>> list(map((lambda x: x * 10), range(-5,5)))
+[-50, -40, -30, -20, -10, 0, 10, 20, 30, 40]
+>>> 
+>>> list(map((lambda x: x % 2 == 0), range(5)))   -> Apply (lambda x: x %2 == 0) for each item in range() iterable
+[True, False, True, False, True]
+>>> 
+>>> bob = ['Bob Smith', 42, 30000, 'software']  -> Person List
+>>> sue = ['Sue Jones', 45, 40000, 'hardware']  -> Person List
+>>> people = [bob,sue]                          -> List of people (2-D list)
+>>> pays = map((lambda P: P[2]), people)        -> Pass the name of the 2 lists “bob” and “sue” to Lambda function
+>>> pays
+[30000, 40000]
+>>> 
+
+Quick notes on Zip:
+-------------------
+>>> names  = ['name', 'age', 'pay', 'job']
+>>> values = ['Sue Jones', 45, 40000, 'hdw']
+>>> list(zip(names, values))
+[('name', 'Sue Jones'), ('age', 45), ('pay', 40000), ('job', 'hdw')]
+>>> sue = dict(zip(names, values))
+>>> sue
+{'job': 'hdw', 'pay': 40000, 'age': 45, 'name': 'Sue Jones'}
+>>> list(map((lambda x: x['name']), people))              # ditto, generate
+['Bob Smith', 'Sue Jones']
+
+
+
+FILTER function:
+================
+Syntax:  filter(<func_name>,<iterable>)
+
+Selects an Iterable’s items based on a test function.
+Here, range() is the iterable and (lambda x: x > 0) is the test function. 
+
+>>> list(range(-5,5))
+[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+>>> 
+>>> list(filter((lambda x: x > 0), range(-5,5)))   -> Selects an Iterable’s items based on a test function.
+[1, 2, 3, 4]									        -> This is possible with List Comprehensions (shown below) too.
+>>> 
+>>> list(filter((lambda x: x % 2 == 0), range(5)))  -> Pick up even numbers from 0 to 4
+[0, 2, 4]
+>>> 
+>>> nums
+[1, 5, 3, 77, 89, 23]
+>>> three_largest = heapq.nlargest(3,nums)
+>>> three_largest
+[89, 77, 23]
+>>> from functools import heapq
+>>> reduce((lambda x,y: x * y),three_largest)  # Give the product of the 3 largest numbers in the list
+157619
+>>>
+
+
+
+REDUCE function:
+===============
+Syntax:  reduce(<func_name>,<iterable>)
+
+It accepts an iterable to process, but it’s not an iterable itself - and returns a single result.
+This function reduces a list to a single value by combining elements via a supplied function. For example:
+
+At each step, ‘reduce’  passes the current sum along with next item in the list to the passed-in lambda function.
+>>> reduce((lambda x,y: x + y),[1,2,3,4])   
+10
+
+At each step, ‘reduce’  passes the current product along with next item in the list to the passed-in lambda function.
+>>> reduce((lambda x,y: x * y),[1,2,3,4])
+24
+>>> 
+
+
+>>> s = reduce((lambda x,y: x+y),[1,2,3,4])
+>>> m = reduce((lambda x,y: x*y),[1,2,3,4])
+>>> s
+10
+>>> m
+24
+>>> type(s)
+<type 'int'>
+>>> type(m)
+<type 'int'>
+>>> 
+
+
+IN SUMMARY:
+===========
+
+MAP: If you have a list of items and you want to call a function to each item in the list, Use the “map” tool.
+===
+>>> def square(x):
+...    return x**2
+... 
+>>> map(square,range(5))
+[0, 1, 4, 9, 16]
+>>> 
+>>> map((lambda n: n * 10),range(10))
+[0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+>>>
+>>> map((lambda s: len(s)),['Strike','Hit','Run'])
+[6, 3, 3]
+>>> 
+>>> map((lambda d: len(d)),{'Name' : 'Obama', 'Title': 'President'})
+[4, 5]
+>>> map((lambda d: d.upper()),{'Name' : 'Obama', 'Title': 'President'})
+['NAME', 'TITLE']
+>>> 
+
+
+FILTER: If you have a list of items and you want to pick certain items based on certain condition(s), Use the “filter” tool.
+======
+>>> def multiple_of_two(n):
+...    if n % 2 == 0:
+...       return n
+... 
+>>> filter(multiple_of_two,range(10))
+[2, 4, 6, 8]
+>>>
+>>> filter((lambda n: n % 2 == 0), range(10))   -> condition is n%2 == 0
+[0, 2, 4, 6, 8]
+>>> 
+>>> filter((lambda s: len(s) == 5),['Hello','Mike','Where','are','you','going'])   -> condition is len(s) == 5
+['Hello', 'Where', 'going']
+>>> 
+>>> filter((lambda d: re.search(d.upper(),'TITLE')),{'Name:' : 'Obama', 'Title': 'President'})   -> condition is dict.key == TITLE
+['Title']
+>>>
+>>> filter((lambda d: if d.upper().startswith(’T’)),{‘Name:' : 'Obama', 'Title': 'President', 'Telephone': '123-456-7890'})  -> condition is dict.key starts with letter ’T’
+['Telephone', 'Title']
+>>> 
+
+
+REDUCE: This function reduces a list to a single value by combining elements via a supplied function.
+======
+Example-1: Find the intersection of N given lists:
+
+>>> input_list = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6], [3, 4, 5, 6, 7]]
+>>> result = reduce(set.intersection, map(set, input_list))
+result = set([3, 4, 5])
+
+Example-2:
+
+>>> reduce(lambda hold,next:hold+chr(((ord(next.upper())-65)+13)%26+65),'znlorabggbbhfrshy','')
+'MAYBENOTTOOUSEFUL'
+>>>
+
+Example-3: Calculating the Factorial
+
+>>> reduce(operator.mul, xrange(1, x+1) or (1,))
+
+
+Example-4: Get the List with the maximum N-th element
+
+>>> reduce(lambda x,y: x if x[2] > y[2] else y,[[1,2,3,4],[5,2,5,7],[1,6,0,2]])
+[5, 2, 5, 7]
+>>> 
+>>> reduce(lambda x,y: x if x[2] > y[2] else y,[[1,2,3,4],[5,2,5,7],[1,6,9,0]])
+[1, 6, 9, 0]
+>>> 
+
+Example-5: Find the Min/Max values for each month across different years.
+
+>>> from collections import Counter
+>>> 
+>>> stat2011 = Counter({"January": 12, "February": 20, "March": 50, "April": 70, "May": 15,
+...            "June": 35, "July": 30, "August": 15, "September": 20, "October": 60,
+...            "November": 13, "December": 50})
+>>> 
+>>> stat2012 = Counter({"January": 36, "February": 15, "March": 50, "April": 10, "May": 90,
+...            "June": 25, "July": 35, "August": 15, "September": 20, "October": 30,
+...            "November": 10, "December": 25})
+>>> 
+>>> stat2013 = Counter({"January": 10, "February": 60, "March": 90, "April": 10, "May": 80,
+...            "June": 50, "July": 30, "August": 15, "September": 20, "October": 75,
+...            "November": 60, "December": 15})
+>>> 
+>>> stat_list = [stat2011, stat2012, stat2013]
+>>> 
+>>> print reduce(lambda x, y: x & y, stat_list)     # MIN
+Counter({'March': 50, 'October': 30, 'July': 30, 'June': 25, 'September': 20, 'February': 15, 'August': 15, 'May': 15, 'December': 15, 'January': 10, 'April': 10, 'November': 10})
+>>> print reduce(lambda x, y: x | y, stat_list)     # MAX
+Counter({'March': 90, 'May': 90, 'October': 75, 'April': 70, 'February': 60, 'November': 60, 'June': 50, 'December': 50, 'January': 36, 'July': 35, 'September': 20, 'August': 15})
+>>> 
+
+
+Example-6: Reduce is useful when you need to find the union or intersection of a sequence of set-like objects.
+
+>>> reduce(operator.or_, ({1}, {1, 2}, {1, 3}))  # union
+{1, 2, 3}
+>>> reduce(operator.and_, ({1}, {1, 2}, {1, 3}))  # intersection
+{1}
+
+
+Example-7: Flatten a list
+
+>>> reduce(list.__add__, [[1, 2, 3], [4, 5], [6, 7, 8]], [])
+[1, 2, 3, 4, 5, 6, 7, 8]
+>>> 
+
+
+
+
+
+
+From http://www.ibm.com/developerworks/library/l-prog/
+
+•	map() performs the passed function on each corresponding item in the specified list(s), and returns a list of results.
+
+•	reduce() performs the passed function on each subsequent item and an internal accumulator of a final result; for example, reduce(lambda n,m:n*m, range(1,10)) means "factorial of 10" (in other words, multiply each item by the product of previous multiplications).
+	
+•	filter() uses the passed function to "evaluate" each item in a list, and return a winnowed list of the items that pass the function test.
+
+
+From Python Documentation:
+==========================
+
+https://docs.python.org/2/library/functions.html#map
+map(function, iterable, ...)
+
+Apply function to every item of iterable and return a list of the results. If additional iterable arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel. If one iterable is shorter than another it is assumed to be extended with None items. If function is None, the identity function is assumed; if there are multiple arguments, map() returns a list consisting of tuples containing the corresponding items from all iterables (a kind of transpose operation). The iterable arguments may be a sequence or any iterable object; the result is always a list.
+
+https://docs.python.org/2/library/functions.html#reduce
+reduce(function, iterable[, initializer])
+
+Apply function of two arguments cumulatively to the items of iterable, from left to right, so as to reduce the iterable to a single value. For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates ((((1+2)+3)+4)+5). The left argument, x, is the accumulated value and the right argument, y, is the update value from the iterable. If the optional initializer is present, it is placed before the items of the iterable in the calculation, and serves as a default when the iterable is empty. If initializer is not given and iterable contains only one item, the first item is returned. Roughly equivalent to:
+def reduce(function, iterable, initializer=None):
+    it = iter(iterable)
+    if initializer is None:
+        try:
+            initializer = next(it)
+        except StopIteration:
+            raise TypeError('reduce() of empty sequence with no initial value')
+    accum_value = initializer
+    for x in it:
+        accum_value = function(accum_value, x)
+    return accum_value
+
+
+https://docs.python.org/2/library/functions.html#filter
+filter(function, iterable)
+
+Construct a list from those elements of iterable for which function returns true. iterable may be either a sequence, a container which supports iteration, or an iterator. If iterable is a string or a tuple, the result also has that type; otherwise it is always a list. If function is None, the identity function is assumed, that is, all elements of iterable that are false are removed.
+Note that filter(function, iterable) is equivalent to [item for item in iterable if function(item)] if function is not None and [item for item in iterable if item] if function is None.
+
+
+LIST COMPREHENSIONS VERSUS MAP
+------------------------------
+>>> [x ** 2 for x in range(5)]
+[0, 1, 4, 9, 16]
+>>> list(map((lambda x: x ** 2), range(5)))
+[0, 1, 4, 9, 16]
+>>> 
+
+
+
+CHECK THIS OUT FOR “FUNCTIONAL PROGRAMMING - HOWTO”
+
+https://docs.python.org/2/howto/functional.html
+http://ua.pycon.org/static/talks/kachayev/#/
+http://scipy-lectures.github.io/advanced/advanced_python/
+http://docs.python-guide.org/en/latest/intro/learning/
+https://docs.python.org/2/tutorial/index.html
+http://www.toptal.com/python/top-10-mistakes-that-python-programmers-make
+
+
+GENERATORS AND GENERATOR EXPRESSIONS
+
+Use () parentheses for creating a Generator Object.
+
+(1) Integers:
+
+>>> G1 = (x ** 2 for x in [10,20,30])
+>>> G1
+<generator object <genexpr> at 0x104014a00>
+>>> dir(G1)
+['__class__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__iter__', '__name__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'close', 'gi_code', 'gi_frame', 'gi_running', 'next', 'send', 'throw']
+>>> next(G1)
+100
+>>> next(G1)
+400
+>>> next(G1)
+900
+>>> next(G1)
+
+Traceback (most recent call last):
+  File "<pyshell#23>", line 1, in <module>
+    next(G1)
+StopIteration
+>>> 
+>>> 
+
+
+(2) Strings:
+
+>>> G2 = (s.upper() for s in 'naveen')
+>>> G2
+<generator object <genexpr> at 0x104014c80>
+>>> dir(G2)
+['__class__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__iter__', '__name__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'close', 'gi_code', 'gi_frame', 'gi_running', 'next', 'send', 'throw']
+>>> next(G2)
+'N'
+>>> next(G2)
+'A'
+>>> next(G2)
+'V'
+>>> next(G2)
+'E'
+>>> next(G2)
+'E'
+>>> next(G2)
+'N'
+>>> next(G2)
+
+Traceback (most recent call last):
+  File "<pyshell#38>", line 1, in <module>
+    next(G2)
+StopIteration
+>>> 
+
+
+(3) Dictionaries:
+
+Dictionaries are iterables that produce keys on each iteration, but they don’t have ‘next’ or ‘__next__’ method available.
+Then Generators are iterables which has ‘__next__’ method or ‘next’ available.
+
+>>> D = {'a':1, 'b':2, 'c':3}
+>>> dir(D)
+['__class__', '__cmp__', '__contains__', '__delattr__', '__delitem__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'clear', 'copy', 'fromkeys', 'get', 'has_key', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'pop', 'popitem', 'setdefault', 'update', 'values', 'viewitems', 'viewkeys', 'viewvalues']
+>>> 
+>>> type(D)
+<type 'dict'>
+>>> 
+>>> G3 = iter(D)   <-- setup a key iterator for dictionary
+>>> G3
+<dictionary-keyiterator object at 0x104020730>
+>>> type(G3)
+<type 'dictionary-keyiterator'>
+>>> dir(G3)
+['__class__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__iter__', '__length_hint__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'next']
+>>>  
+>>> next(D)
+
+Traceback (most recent call last):
+  File "<pyshell#12>", line 1, in <module>
+    next(D)
+TypeError: dict object is not an iterator
+>>> 
+>>> next(G3)
+'a'
+>>> next(G3)
+'c'
+>>> next(G3)
+'b'
+>>> next(G3)
+
+Traceback (most recent call last):
+  File "<pyshell#38>", line 1, in <module>
+    next(Gen)
+StopIteration
+>>> 
+
+
+(4) Generators for ‘Map’ and ‘Filter’ tools:
+
+
+>>> list(map((lambda x: x * 2), map(abs,(-1,-2,0,1,2))))   -> Nested ‘Map’ using Generator Expression
+[2, 4, 0, 2, 4]
+>>> 
+>>> ''.join(filter(lambda x: len(x) > 1, line.split()))    -> ‘Filter’ using Generator Expression
+'aabbb'
+>>> 
+
+
+
+(5) Using * arguments to unpack an iterable into individual arguments.
+
+
+>>> def f(a,b,c): print '%s, %s, and %s' % (a,b,c)
+
+>>> f(0,1,2)
+0, 1, and 2
+>>> f(*range(3))
+0, 1, and 2
+>>> f(*(n for n in range(3)))
+0, 1, and 2
+>>> 
+>>> D = {'Name:' : 'Obama', 'Title': 'President', 'Telephone': '123-456-7890'}
+>>> D
+{'Name:': 'Obama', 'Telephone': '123-456-7890', 'Title': 'President'}
+>>>
+>>> f(*D)
+Name:, Telephone, and Title
+>>> f(*D.values())
+Obama, 123-456-7890, and President
+>>> f(*D.keys())
+Name:, Telephone, and Title
+>>> 
+
+
+(6) Using Generators to Calculate the Permutation of a given sequence:
+
+def permute(seq):
+	if not seq:
+		yield seq
+	else:
+		for i in range(len(seq)):
+			rest = seq[:i] + seq[i+1:]
+			print str(i) + ',' + str(i+1)
+			for x in permute(rest):
+				print str(x)
+				print 'seq = %s' % seq[i:i+1]
+				yield seq[i:i+1] + x
+
+				
+>>> permute('1234')
+<generator object permute at 0x104031af0>
+>>> P = permute('1234')
+>>> P
+<generator object permute at 0x104031a00>
+>>> next(P)
+'1234'
+>>> next(P)
+'1243'
+>>> next(P)
+'1324'
+>>> next(P)
+'1342'
+>>> next(P)
+'1423'
+>>> next(P)
+'1432'
+>>> next(P)
+'2134'
+>>> 
+>>> for x in permute('1234'): print x
+
+1234
+1243
+1324
+1342
+1423
+1432
+2134
+2143
+2314
+2341
+2413
+2431
+3124
+3142
+3214
+3241
+3412
+3421
+4123
+4132
+4213
+4231
+4312
+4321
+>>> 
+
+
+
+
+
+Generators:
+
+A generator is a Python sequence creation object. It lets you iterate through potentially huge sequences without creating and storing the whole sequence in memory at once. Generators are often the source of data for iterators. We’ve been using one in code examples: range() generates a series of integers. In Python 2, range() returned a list, which limited it to fit in memory. Python 2 also had the generator xrange(), which became the normal range() of Python 3. This example adds all the integers from 1 to 100:
+>>> sum(range(1, 101))
+5050
+
+Every time you iterate through a generator, it keeps track of where it was the last time it was called and returns the next value. This is different from a normal function, which has no memory of previous calls and always starts at its first line with the same state.
+If you want to create a potentially large sequence, and the code is too large for a generator comprehension, write a generator function. It’s a normal function, but returns its value with a yield statement rather than return. Let’s write our own version of range():
+>>> def my_range(first=0, last=10, step=1):
+...     number = first
+...     while number < last:
+...         yield number
+...         number += step
+...
+>>> for x in my_range(1, 5):
+...     print(x)
+...
+1
+2
+3
+4
+
+
+Decorators
+Sometimes you want to modify an existing function without changing its source code. A common example is adding a debugging statement to see what arguments were passed in.
+A decorator is a function that takes one function as input and returns another function. We’ll dig into our bag of Python tricks and use:
+•	*args and **kwargs
+•	Inner functions
+•	Functions as arguments
+
+The function document_it() defines a decorator that will:
+•	Print the function’s name and the values of its arguments
+•	Run the function with the arguments
+•	Print the result
+•	Return the modified function for use
+
+>>> def document_it(func):
+...     def new_function(*args, **kwargs):
+...         print('Running function:', func.__name__)
+...         print('Positional arguments:', args)
+...         print('Keyword arguments:', kwargs)
+...         result = func(*args, **kwargs)
+...         print('Result:', result)
+...         return result
+...     return new_function
+
+Whatever func you pass to document_it(), you get a new function the extra statements that document_it() adds. A decorator doesn’t actually have to run any code from func, but document_it() calls func part way through so that you get the results of func as well as all the extras.
+Now how do you use this? You can apply the decorator manually:
+>>> def add_ints(a, b):
+...    return a + b
+...
+>>> add_ints(3, 5)
+8
+>>> cooler_add_ints = document_it(add_ints)  # manual decorator assignment
+>>> cooler_add_ints(3, 5)
+Running function: add_ints
+Positional arguments: (3, 5)
+Keyword arguments: {}
+Result: 8
+8
+
+
+
+Reverse Lookup in Dictionaries
+Given a dictionary d and a key k, it is easy to find the corresponding value v = d[k]. This operation is called a lookup.
+But what if you have v and you want to find k? You have two problems: first, there might be more than one key that maps to the value v. Depending on the application, you might be able to pick one, or you might have to make a list that contains all of them. Second, there is no simple syntax to do a reverse lookup; you have to search.
+Here is a function that takes a value and returns the first key that maps to that value:
+def reverse_lookup(d, v):
+    for k in d:
+        if d[k] == v:
+            return k
+    raise ValueError
+
+Here is an example of a successful reverse lookup:
+>>> h = histogram('parrot')
+>>> k = reverse_lookup(h, 2)
+>>> print k
+r
+And an unsuccessful one:
+>>> k = reverse_lookup(h, 3)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in ?
+  File "<stdin>", line 5, in reverse_lookup
+ValueError
+
+
+Inverting Dictionaries:
+
+def invert_dict(d):
+    inverse = dict()
+    for key in d:
+        val = d[key]
+        if val not in inverse:
+            inverse[val] = [key]
+        else:
+            inverse[val].append(key)
+    return inverse
+
+Here is an example:
+>>> hist = histogram('parrot')
+>>> print hist
+{'a': 1, 'p': 1, 'r': 2, 't': 1, 'o': 1}
+>>> inverse = invert_dict(hist)
+>>> print inverse
+{1: ['a', 'p', 't', 'o'], 2: ['r']}
+
+
+
+ZIPPING:
+
+>>> zip([1,2,3],[2,3,4,5])
+[(1, 2), (2, 3), (3, 4)]
+>>> zip('latha','naveen')
+[('l', 'n'), ('a', 'a'), ('t', 'v'), ('h', 'e'), ('a', 'e')]
+>>> 
+>>> names  = ['name', 'age', 'pay', 'job']
+>>> values = ['Sue Jones', 45, 40000, 'hdw']
+>>> list(zip(names, values))
+[('name', 'Sue Jones'), ('age', 45), ('pay', 40000), ('job', 'hdw')]
+>>> sue = dict(zip(names, values))
+>>> sue
+{'job': 'hdw', 'pay': 40000, 'age': 45, 'name': 'Sue Jones'}
+
+
+
+COMPREHENSION EXAMPLES:
+
+>>> [x * x for x in range(10)]        -> List comprehension: builds entire list in memory
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+>>> 
+>>> G = (x * 2 for x in range(10))    -> Generator expression: produces items one at a time
+>>> for n in G: print n
+
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+
+>>>
+>>> {x * x for x in range(10)}        -> Set comprehension
+set([0, 1, 4, 81, 64, 9, 16, 49, 25, 36])
+>>> 
+>>> {x: x * x for x in range(10)}     -> Dictionary comprehension
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
+>>> 
+
+
+EXTENDED COMPREHENSION SYNTAX
+
+
+>>> [x * x for x in range(10) if x % 2 == 0]   -> Lists are ordered
+[0, 4, 16, 36, 64]
+>>> G = (x * 2 for x in range(10) if x % 2 == 0)   -> Generators creates ordered list
+>>> for n in G: print n
+
+0
+4
+8
+12
+16
+
+>>> 
+>>> {x * x for x in range(10) if x % 2 == 0}    -> Sets are not ordered
+set([0, 16, 4, 64, 36])
+>>> 
+>>> {x: x * 2 for x in range(10)}               -> Dicts are not ordered
+{0: 0, 1: 2, 2: 4, 3: 6, 4: 8, 5: 10, 6: 12, 7: 14, 8: 16, 9: 18}
+>>> 
+>>> [x + y for x in range(1,5) for y in [4,5,6]]   -> Nested Lists, keeps duplicates
+[5, 6, 7, 6, 7, 8, 7, 8, 9, 8, 9, 10]
+>>> G = (x + y for x in range(1,5) for y in [4,5,6])   -> Nested Generators, keeps duplicates
+>>> for n in G: print n
+
+5
+6
+7
+6
+7
+8
+7
+8
+9
+8
+9
+10
+
+>>> {x + y for x in range(1,5) for y in [4,5,6]}   -> Sets don’t keep duplicates
+set([5, 6, 7, 8, 9, 10])
+>>> {x: x + y for x in range(1,5) for y in [4,5,6]}   -> Dicts don’t keep duplicates
+{1: 7, 2: 8, 3: 9, 4: 10}
+>>> 
+>>> people
+[{'job': 'dev', 'pay': 30000, 'age': 42, 'name': 'Bob Smith'}, {'job': 'hdw', 'pay': 40000, 'age': 45, 'name': 'Sue Jones'}]
+>>> 
+>>> [(rec['age'] ** 2 if rec['age'] >= 45 else rec['age']) for rec in people]
+[42, 2025]
+>>> 
+
+
+Generate Random Numbers:
+
+Return a string of n random bytes suitable for cryptographic use.
+
+>>> os.urandom(10)
+'\xe1\xbc\xb4\x0c\x9f\x86\x9c\xe4 n'
+>>> 
+
+List Methods
+The following methods are available to lists.
+.append(x)
+Append the value in x to a list.
+>>> l = [0,1,2,3,4]
+>>> l.append(5)
+>>> l
+[0, 1, 2, 3, 4, 5]
+
+.extend(L)
+Append a list to another list. In the following example, l is modified, l2 is not.
+>>> l = [0,1,2,3,4]
+>>> l2 = [5,6,7]
+>>> l.extend(l2)
+>>> l
+[0, 1, 2, 3, 4, 5, 6, 7]
+
+.insert(i,x)
+Insert a value x into list at index I. The following example inserts the value 5 at position 2 in the list.
+>>> l = [0,1,2,3,4]
+>>> l.insert(2,5)
+>>> l
+[0, 1, 5, 2, 3, 4]
+If carefully used, lists with the .insert() and .pop() methods can be a quick and easy way to implement a LIFO (Last in, First Out) queue or stack.
+
+.remove(x)
+Removes the first item in the list that matches 'x'. An error occurs if the item does not exist. The following example removes the value 2 from the list. The second example tries to do it again but gets an error.
+>>> l = [0,1,2,3,4,5]
+>>> l.remove(2)
+>>> l
+[0, 1, 3, 4, 5]
+>>> l.remove(2)
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+ValueError: list.remove(x): x not in list
+
+.pop([i])
+Returns and removes the last item in the list if the optional index number is not included. If it is, it removes the item at that index (zero-based). The following example uses pop() to remove the last item in the list, then removes the item at index position 2.
+>>> l = [0,1,2,3,4,5]
+>>> l.pop()
+5
+>>> l.pop()
+4
+>>> l.pop(2)
+2
+>>> l
+[0, 1, 3]
+If carefully used, lists with the .insert() and .pop() methods can be a quick and easy way to implement a LIFO (Last in, First Out) queue or stack.
+.index(x)
+Returns the position of the item in the list.
+The following example first shows the index position of the value 3 in the example list (which is 3). The second example shows the index position of the item "Oranges" in the list.
+>>> l = [0,1,2,3,4,5]
+>>> l.index(3)
+3
+>>> l1 = ['Apples','Oranges','Kiwi','Peach']
+>>> l1
+['Apples', 'Oranges', 'Kiwi', 'Peach']
+>>> l1.index('Oranges')
+1
+
+.count(x)
+Returns the count of the matching items in the list. If item is not in the list, it returns 0.
+>>> l = [3,1,3,4,3,6,7,8]
+>>> l.count(3)
+3
+>>> l.count(2)
+0
+
+.sort()
+Sorts the list from low to high.
+>>> l2 = [0,1,2,3,2,5,7,3,1,2,5]
+>>> l2.sort()
+>>> l2
+[0, 1, 1, 2, 2, 2, 3, 3, 5, 5, 7]
+
+.reverse( )
+Reverses the list.
+>>> l = [0,1,2,3,4,5,6,7,8]
+>>> l.reverse()
+>>> l
+[8, 7, 6, 5, 4, 3, 2, 1, 0]
+>>> l = ['A','B','C','D','E','F']
+>>> l.reverse()
+>>> l
+['F', 'E', 'D', 'C', 'B', 'A']
+
+
+DICTIONARY METHODS
+
+
+.get(key[,default])
+Returns a single value by key from a dictionary. Unlike the .pop() method, this does not remove the key/value pair from the dictionary. If key does not exist in dictionary, value from the optional default parameter is returned. If default is not given, returns None.
+>>> names = {'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname':
+'Fred', 'phone':'222-222-2222'}
+>>> names
+{'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname': 'Fred',
+'phone':'222-222-2222'}
+>>> names.get('lname')
+'Frackel'
+
+.has_key(key)
+Returns True if the key exists in the dictionary. This method has been depreceated and the suggested way to check is to use key in d.
+>>> names = {'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname':
+'Fred', 'phone':'222-222-2222'}
+>>> names.has_key('city')
+True
+>>> names.has_key('address')
+False
+
+.pop(key[,default])
+Removes and returns the value of an item in the dictionary based on the key provided. If default is not given and the key does not exist, a KeyError is raised.
+>>> names = {'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname':
+'Fred','address':'123 Main Street'}
+>>> names.pop('address')
+'123 Main Street'
+>>> names
+{'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname': 'Fred',
+'phone':'222-222-2222'}
+
+.setdefault(key[,default])
+Returns a value from the supplied key, if it exists. If not, it enters the key as a new item with the supplied default value.
+>>> d1
+{'a': 1, 'c': 3, 'b': 2, 'e': 0, 'd': 4}
+>>> d1.setdefault('c',6)
+3
+>>> d1.setdefault('f',6)
+6
+>>> d1
+{'a': 1, 'c': 3, 'b': 2, 'e': 0, 'd': 4, 'f': 6}
+
+.update(other)
+Updates the dictionary with the key/value pair provided in other. This will overwrite existing keys. Returns None. The other parameter can be either a tuple or list providing the key/value pair(s), or another dictionary.
+>>> names = {'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname': 'Fred'}
+>>> names.update({'address':'123 Main Street'})
+>>> names
+    {'lname': 'Frackel', 'city': 'Aurora', 'state': 'CO', 'fname': 'Fred',
+'phone':'222-222-2222', 'address': '123 Main Street'}
+
+
+SET METHODS
+
+The following methods are available for sets.
+.clear( )
+Removes all data from the set.
+>>> b = set([1,2,3,4,5])
+>>> b
+set([1, 2, 3, 4, 5])
+>>> b.clear()
+>>> b
+set([])
+
+.copy()
+Creates a new set by making a shallow copy.
+>>> b
+set([3, 4, 5, 6])
+>>> c = b.copy()
+>>> c
+set([3, 4, 5, 6])
+
+.pop( )
+Removes an arbitrary item from the set. If the set is empty, a KeyError exception is raised.
+>>> b = set([1,2,3,4,5])
+>>> b
+set([1, 2, 3, 4, 5])
+>>> b.pop()
+1
+>>> b.pop()
+2
+>>> b.pop()
+3
+>>> b
+set([4, 5])
+
+.add(item)
+Adds an item to the set. Since sets can not hold duplicates, if the item already exists, nothing will be done.
+>>> b
+set([4, 5])
+>>> b.add(3)
+>>> b
+set([3, 4, 5])
+>>> b.add(4)
+>>> b
+set([3, 4, 5])
+
+.remove(item)
+Deletes an item from the set. If the item does not exist, a KeyError exception will be raised.
+>>> b
+set([3, 4, 5])
+>>> b.remove(4)
+>>> b
+set([3, 5])
+>>> b.remove(4)
+Traceback (most recent call last):
+ File "<stdin>", line 1, in <module>
+KeyError: 4
+
+.discard(item)
+Removes an item from the set. If the item is not in the set, no error will be raised.
+>>> b
+set([3, 5])
+>>> b.discard(4)
+>>> b.discard(5)
+>>> b
+set([3])
+
+.update(set) or alternately x|=y
+Merges values from the new set into the old set. If a value exists, it is ignored.
+>>> b
+set([3])
+>>> b.update([3,2,1,4,5])
+>>> b
+set([1, 2, 3, 4, 5])
+
+.intersection_update(set) or alternately x&=y
+Updates the set x, discarading any elements that are not in both set x and y.
+>>> a = set([1,2,3,4,5])
+>>> b = set([2,3,4])
+>>> a.intersection_update(b)
+>>> a
+set([2, 3, 4])
+
+.difference_update(set) or alternately x-=y
+Updates set x to a new set having only the values NOT in both set x and y.
+>>> a = set([1,2,3,4,5])
+>>> b = set([2,3,4])
+>>> a.difference_update(b)
+>>> a
+set([1, 5])
+
+.symmetric_difference_update(set) or alternately x^=y
+Updates set x to contain only those values that are not in both set x and y.
+>>> a = set([1,2,3])
+>>> b = set([3,4,5])
+>>> a.symmetric_difference_update(b)
+>>> a
+set([1, 2, 4, 5])
+
+.issubset(set) or alternately x<=y
+Returns True if set y is a subset of set x; otherwise, it returns False.
+>>> a = set([1,2,3])
+>>> b = set([3,4,5])
+>>> c = set([2,3])
+>>> c.issubset(a)
+True
+
+.issuperset(set) or alternately x>=y
+Returns True if set x is a superset of set y; otherwise, it returns False.
+>>> a = set([1,2,3])
+>>> c = set([2,3])
+>>> a.issubset(c)
+True
+
+.union(set) or alternately xly
+Returns a set that conains all unique values in sets x and y.
+>>> a = set([1,2,3])
+>>> c = set([5,6,7])
+>>> a.union(c)
+set([1, 2, 3, 5, 6, 7])
+
+.intersection(set) or alternately x&y
+Returns a new set that contains the values that are in both sets x and y.
+>>> a
+set([1, 2, 3])
+>>> b
+set([2, 3])
+>>> a.intersection(b)
+set([2, 3])
+
+.difference(set) or alternately x-y
+Returns a new set that contains the values that are not in both sets x and y.
+>>> a
+set([1, 2, 3])
+>>> b
+set([2, 3])
+>>> a.difference(b)
+set([1])
+
+.symmetric_difference(set) or alternately x^y
+Returns a new set that contains the values that are not in both sets x and y, but does not update set x.
+>>> a
+set([1, 2, 3])
+>>> b = set([3,4,5])
+>>> a.symmetric_difference(b)
+set([1, 2, 4, 5])
+
+
+Turning Dictionaries to Sets for making the Union, Intersection, etc, operations:
+
+
+>>> d1
+{'a': 5, 'b': 10, 'z': 50}
+>>> d2
+{'x': 10, 'c': 30, 'b': 3}
+>>>
+>>> a = set(d1)  <— you can also give d1.keys() or d1.values()
+>>> a
+set(['a', 'b', 'z'])
+>>> b = set(d2)  <— if you give d2.values(), note that all duplicate values will be removed
+>>> b
+set(['x', 'c', 'b'])
+>>> 
+>>> a|b  <- Union
+set(['a', 'c', 'b', 'x', 'z'])
+>>> a&b  <— Intersection
+set(['b'])
+>>> a-b  <- Elements in ‘a’ but not in ’b’
+set(['a', 'z'])
+>>> b-a  <— Elements in ‘b’ but not in ‘a’
+set(['x', 'c'])
+>>> a^b  <— Elements that are not common to ‘a’ and ‘b’
+set(['a', 'x', 'c', 'z'])
+>>> (a-b)|(b-a)  <— Same as above
+set(['a', 'x', 'c', 'z'])
+>>> 
+
+
+
+
+PYTHON CLASSES
+
+
+>>> class F:
+	def setdata(self,d):
+		self.m, self.n = d
+	def display(self):
+		print self.m + ',' + self.n
+
+
+# Send a Tuple to ‘.setdata’ method
+
+>>> I1 = F()
+>>> dir(I1)
+['__doc__', '__module__', 'display', 'setdata']
+>>>
+>>> I1.setdata(('latha','naveen'))
+>>> I1.display()
+latha,naveen
+>>> 
+
+#Send a List to ‘.setdata’ method:
+
+>>> I2 = F()
+>>> I2.setdata(['naveen','sree'])
+>>> I2.display()
+naveen,sree
+>>> 
+
+
+~~~~~~~~~~~~~~~~~~~~
+FROM PYTHON COOKBOOK
+~~~~~~~~~~~~~~~~~~~~
+
+1) To implement simple Queue, use the “deque” method in “collections” module.
+   This is better and faster than standard list operations (append, pop).
+
+
+>>> from collections import deque
+>>> mq = deque(maxlen=3)
+>>> mq.append(3)
+>>> mq
+deque([3], maxlen=3)
+>>> mq.append(5)
+>>> mq.append(9)
+>>> mq
+deque([3, 5], maxlen=3)
+>>> mq.pop()
+9
+>>> mq.popleft()
+3
+>>>
+>>> mq.appendleft(44)
+>>> mq
+deque([44, 5, 9], maxlen=3)
+
+
+2) To find the Nlargest and Nsmallest of a set of numbers, use the “heapq” module:
+
+>>> import heapq
+>>> nums = [1,8,3,44,56,4,99]
+>>> type(nums)
+<type 'list'>
+>>> heapq.nlargest(3,nums)
+[99, 56, 44]
+>>> heapq.nsmallest(3,nums)
+[1, 3, 4]
+>>> 
+>>> min(nums)
+1
+>>> max(nums)
+99
+>>>
+>>> sorted(nums)
+[1, 3, 4, 8, 44, 56, 99]
+>>> sorted(nums)[0]
+1
+>>> sorted(nums)[-1]
+99
+>>>
+>>> heapq.heappush(nums,100)
+>>> nums
+[1, 8, 3, 44, 56, 4, 99, 100]
+>>> heapq.heappop(nums)
+1
+>>> nums
+[3, 8, 4, 44, 56, 100, 99]  <— first item in the heap is dropped; result is not ordered
+>>> heapq.heappop(nums)
+3
+>>> nums
+[4, 8, 99, 44, 56, 100]
+>>> heapq.heappop(nums)
+4
+>>> nums
+[8, 44, 99, 100, 56]
+>>> 
+
+
+
+3) Keeping Dictionaries in Order
+
+>>> from collections import OrderedDict
+>>> d = OrderedDict()
+>>> d['name'] = 'Naveen'
+>>> d['title'] = 'Engineer'
+>>> d['company'] = 'Cisco'
+>>> d
+OrderedDict([('name', 'Naveen'), ('title', 'Engineer'), ('company', 'Cisco')])
+>>> for key in d:
+...    print key
+... 
+name
+title
+company
+>>> 
+
+
+4) Calculating Min and Max over Dictionaries:
+
+>>> price = {
+...    'ACME' : 45.34,
+...    'AAPL' : 612.78,
+...    'IBM' : 212.99,
+...    'FB' : 10.75
+... }
+>>> 
+>>> min(price)
+'AAPL'
+>>> max(price)
+'IBM'
+>>> min(price.values())
+10.75
+>>> max(price.values())
+612.78
+>>> zip(price.values(),price.keys())    <— zip as (value,key) tuples
+[(10.75, 'FB'), (612.78, 'AAPL'), (212.99, 'IBM'), (45.34, 'ACME')]
+>>> sorted(zip(price.values(),price.keys()))[0]
+(10.75, 'FB')
+>>> sorted(zip(price.values(),price.keys()))[-1]
+(612.78, 'AAPL')
+>>> 
+>>> min(zip(price.values(),price.keys()))   <— Min
+(10.75, 'FB')
+>>> max(zip(price.values(),price.keys()))   <— Max
+(612.78, 'AAPL')
+>>> 
+>>> min(V for V in price.values())
+10.75
+>>> max(V for V in price.values())
+612.78
+>>> 
+
+
+5) Finding Commonalities in Two Dictionaries:
+
+a = {
+   'x' : 1,
+   'y' : 2,
+   'z' : 3
+}
+
+b = {
+   'w' : 10,
+   'x' : 11,
+   'y' : 2
+}
+
+# Find keys in common
+a.keys() & b.keys()   # { 'x', 'y' }
+
+# Find keys in a that are not in b
+a.keys() - b.keys()   # { 'z' }
+
+# Find (key,value) pairs in common
+a.items() & b.items() # { ('y', 2) }
+
+
+
+6) Remove Duplicates from Sequence BUT preserve the Order:
+
+>>> A = [3,4,5,2,3,4,8,6,3]
+>>> 
+>>> def dedupe(items):
+...   seen = set()
+...   for item in items:
+...     if item not in seen:
+...       yield item
+...       seen.add(item)
+... 
+>>> dedupe(A)
+<generator object dedupe at 0x1007ee2d0>
+>>> list(dedupe(A))
+[3, 4, 5, 2, 8, 6]
+>>> set(A)                     <— set() won’t preserve the order
+set([2, 3, 4, 5, 6, 8])
+>>> 
+
+
+7) Find out the most frequently occurring items in a sequence:
+
+>>> from collections import Counter
+>>> words = ['there','was','a','little','pig','which','had','3','little','pig','where','is','my','pig','someone','took','my','pig']
+>>> W = Counter(words)
+>>> W.most_common(3)
+[('pig', 4), ('little', 2), ('my', 2)]
+>>> 
+
+
+8) Extracting a subset of a Dictionary:
+
+>>> price
+{'FB': 10.75, 'AAPL': 612.78, 'IBM': 212.99, 'ACME': 45.34}
+>>>>>> p = {key:value for key,value in price.items() if value > 200}
+>>> p
+{'AAPL': 612.78, 'IBM': 212.99}
+>>> 
+
+
+9) Combining Multiple Dictionaries:
+
+a = {'x': 1, 'z': 3 }
+b = {'y': 2, 'z': 4 }
+
+from collections import ChainMap
+c = ChainMap(a,b)
+print(c['x'])      # Outputs 1  (from a)
+print(c['y'])      # Outputs 2  (from b)
+print(c['z'])      # Outputs 3  (from a)
+
+
+10) Iterating over Multiple Sequences:
+
+>>> xpts = [1, 5, 4, 2, 10, 7]
+>>> ypts = [101, 78, 37, 15, 62, 99]
+>>> for x,y in zip(xpts,ypts):
+...    print x+y
+... 
+102
+83
+41
+17
+72
+106
+>>>
+>>> ypts = [101, 78, 37, 15, 62, 99,7]
+>>> for X in xpts:
+...   if X in ypts:   <— find common elements
+...     print X
+... 
+7
+>>> 
+
+
+
+CHAPTERS 2, 6, 11
+=================
+
+11) Splitting over Multiple Delimiters:
+
+The re.split() method can be used to specify multiple patterns for the separators.
+
+>>> line = 'the quick  brown, fox, jumped; over    the, lazy; dog'
+>>> line.split()
+['the', 'quick', 'brown,', 'fox,', 'jumped;', 'over', 'the,', 'lazy;', 'dog']
+>>> 
+>>> re.split(r'[;,\s]\s*',line)
+['the', 'quick', 'brown', 'fox', 'jumped', 'over', 'the', 'lazy', 'dog']
+>>> 
+
+
+12) Print all files that ends with .py extension in a certain directory:
+
+>>> for item in os.listdir('/Users/Naveen'):
+...    if item.endswith('.py'):
+...       print item
+... 
+array1.py
+arrow.py
+bgp.py
+bgp1.py
+first.py
+people.py
+script.py
+>>> 
+
+
+
+13) Matching and Searching Text Patterns:
+
+>>> d1 = '11/07/1978'
+>>> d2 = '15/10/1978'
+>>>
+>>> re.match(r'[\d+/\d+/\d+]$’, d1)        <— using Square brackets without Capture groups
+<_sre.SRE_Match object at 0x1007ef988>
+>>> mo = re.match(r'[\d+/\d+/\d+]$’, d1)   <— ‘$’ ensures that there is nothing after the match.
+>>> mo.group(0)   							      <— returns the first digit that matched
+1
+>>> datepat = re.compile(r'(\d+)/(\d+)/(\d+)$’)   <— Create/Compile a pattern matcher with Capture Groups
+>>> mo = datepat.match(d1)                        <— Pre-compiling saves time
+>>> mo
+<_sre.SRE_Match object at 0x1031b1620>
+>>> mo.groups()
+('11', '07', '1978')
+>>> month,day,year = mo.groups()
+>>> month
+'11'
+>>> day
+'07'
+>>> year
+'1978'
+>>> 
+>>> tag = 'Today is 07/27/2014. Pycon starts on 12/10/2015.'    <— Matching all Occurrences
+>>> datepat.findall(tag)
+[('07', '27', '2014'), ('12', '10', '2015')]
+>>> 
+>>> re.findall(r'(\d+)/(\d+)/(\d+)',tag)
+[('07', '27', '2014'), ('12', '10', '2015')]
+>>> d1 = 'Naveen was born on 11/07/1978, but Latha was born on 10/15/1978.'
+>>> mo1 = re.match(r'(.*?)(\d+\/\d+\/\d+)(.*?)(\d+\/\d+\/\d+)',d1)    <— use the () parenthesis to collect the match items
+>>> mo1.groups()
+('Naveen was born on ', '11/07/1978', ', but Latha was born on ', '10/15/1978')
+>>> mo1.group(1)
+'Naveen was born on '
+>>> mo1.group(2)
+'11/07/1978'
+>>> mo1.group(4)
+'10/15/1978'
+>>> 
+
+
+14) Search and Replace Text in Strings
+
+>>> text
+'yeah, but nah .. but yeah never means yeah if nah is the language'
+>>>
+>>> text.replace('yeah','yep')   <— simple search and replace
+'yep, but nah .. but yep never means yep if nah is the language'
+>>> 
+>>> tag
+'Today is 07/27/2014. Pycon starts on 12/10/2015'
+>>>
+>>> re.sub(r'(\d+)/(\d+)/(\d+)',r'\3-\1-\2',tag)    <— \3, \1, \2 denotes the group number in the Matched Object
+'Today is 2014-07-27. Pycon starts on 2015-12-10'
+>>> 
+>>> datepat.sub(r'\3.\1.\2',tag)
+'Today is 2014.07.27. Pycon starts on 2015.12.10'
+>>> 
+>>> h = 'Street Address,Num-Premises,Latitude,Longitude'
+>>> re.sub(r'[-\s]','_',h)
+'Street_Address,Num_Premises,Latitude,Longitude'
+>>> 
+
+
+15) Longest and Shortest Match:
+
+>>> punchline = 'She says "yes". He says "no". Who is right?'
+>>> patt = re.compile(r'\"(.*)\"')   <— * is a greedy operator
+>>> patt.findall(punchline)
+['yes". He says "no']
+>>> patt1 = re.compile(r'\"(.*?)\"') <— ? makes the matching non-greedy
+>>> patt1.findall(punchline)
+['yes', 'no']
+>>>
+
+
+16) Interpolating Variables in Strings:
+
+>>> name = 'Naveen'
+>>> title = 'Engineer'
+>>>
+>>> print '%s is an %s' % (name, title)
+Naveen is an Engineer
+>>> 
+>>> '{name} has {m} messages'.format(name='naveen',m=37)
+'naveen has 37 messages'
+>>>
+>>> '{} has {} messages'.format('naveen',37)
+'naveen has 37 messages'
+>>>
+
+
+17) Increment 48-bit MAC addresses:
+
+Hex to Decimal:
+
+>>> print int(‘0x100',16)  <— int() takes Hex number and give Integer/Decimal number
+256
+>>> 
+
+Decimal to Hex:
+
+>>> hex(256)
+'0x100'
+>>> format(256,'X')    <— convert integer to hex
+'100'
+>>>
+
+def incr_mac(mac,step):
+  ms = mac.split(':')
+  mn = ''.join(ms)
+  dec = int(mn,16)
+  dec += step
+  mf = format(dec,'X')
+  mnew = ''
+  skip = 0
+  for s in mf:
+    if skip == 0:
+      mnew = mnew + s
+    else:
+      mnew = mnew + s + ':'
+    skip += 1
+    skip = skip % 2
+  return mnew.rstrip(':')
+
+with open('mac.txt','w') as f:
+   for x in range(1000):
+      mac = incr_mac(mac,1)
+      f.write(str(mac) + '\n')
+
+
+Note: To split as MAC address string for every 2 characters, 
+      use the following regexp. Use the {} quantifier to match
+      the number of times you are looking for the preceding pattern.
+
+>>> h = 'abcd1234dc22'
+>>> re.split(r'([0-9a-fA-F]{2})',h)    <— option 1
+['', 'ab', '', 'cd', '', '12', '', '34', '', 'dc', '', '22', '']
+>>> 
+>>> G = re.findall(r'([0-9a-fA-F]{2})',h)   <— option 2
+>>> ':'.join(G)
+'ab:cd:12:34:dc:22'
+>>> 
+
+
+18) Formatting Numbers from Decimal to Binary,Octal,Hex
+
+
+>>> a = 1000
+>>> bin(a)
+'0b1111101000'
+>>> oct(a)
+'01750'
+>>> hex(a)
+'0x3e8'
+>>>
+>>> format(a,'o')
+'1750'
+>>> format(a,'b')
+'1111101000'
+>>> format(a,'x')
+'3e8'
+>>>
+
+
+19) Matching and Incr/Decr IPv6 addresses:
+
+NOTE:
+
+(1) re.match() and re.search() starts looking for the pattern from the beginning of the line. 
+    Returns matched objects in groups.
+    
+(2) re.findall()  returns a list of all matched items.
+
+>>> line
+'The router interface has ipv6 address 1E00:3456:CAFE:BABE:1234:4258:7586:0001 as Primary Address.'
+>>>
+>>> mo = re.match(r'(.*?) ([0-9A-F:]+)',line)  <— The ‘?’ is needed to make ‘*’ just match what is needed. Not the whole line.
+>>> mo.groups()
+('The router interface has ipv6 address', '1E00:3456:CAFE:BABE:1234:4258:7586:0001')
+>>> mo.group(0)
+'The router interface has ipv6 address 1E00:3456:CAFE:BABE:1234:4258:7586:0001'
+>>> mo.group(1)
+'The router interface has ipv6 address'
+>>> mo.group(2)
+'1E00:3456:CAFE:BABE:1234:4258:7586:0001'
+>>>
+>>> line1 = 'The router interface has ipv6 address 3001::0001 as Loopback.'
+>>> mo = re.match(r'(.*?) ([0-9A-F:]+)',line1)
+>>> mo.groups()
+('The router interface has ipv6 address', '3001::0001')
+>>> mo.group(2)
+'3001::0001'
+>>> 
+>>> mo = re.match(r'(.*)? ([0-9A-F:]+) (.*)?',line)    <— You can put the ‘?’ outside also to make the ‘*’ less greedy.
+>>> mo.groups()
+('The router interface has ipv6 address', '1E00:3456:CAFE:BABE:1234:4258:7586:0001', 'as Primary Address.')
+>>> 
+>>> mo.group(0)
+'The router interface has ipv6 address 1E00:3456:CAFE:BABE:1234:4258:7586:0001 as Primary Address.'
+>>> mo.group(1)
+'The router interface has ipv6 address'
+>>> mo.group(2)
+'1E00:3456:CAFE:BABE:1234:4258:7586:0001'
+>>> mo.group(3)
+'as Primary Address.'
+>>> 
+>>> line2 = "Interface has MAC 01:22:BA:34:45:55"
+>>> mo = re.match(r'(.*)? ([0-9A-F:]+)',line2)
+>>> mo.group(2)
+'01:22:BA:34:45:55'
+>>> mo.groups()
+('Interface has MAC', '01:22:BA:34:45:55')
+>>> 
+
+Second Variation to find ‘any’ IPv6 address:
+
+IPv6 addresses can be of any of the following types:
+
+3ffe::
+3001::0001
+2001:0001::5
+1E00:3456:CaFe:babe:1234:4258:7586:0001
+2001:abCD::10fe
+
+>>> line1 = 'The router interface has ipv6 address 3001::0001 as Loopback.'
+>>> patt = re.compile(r'(.*?) ([0-9a-fA-F]+\:\:?)([0-9a-fA-F]+\:?)?([0-9a-fA-F]+\:?)?([0-9a-fA-F]+\:?)?([0-9a-fA-F]+\:?)?([0-9a-fA-F]+\:?)?([0-9a-fA-F]+\:?)?([0-9a-fA-F]+\:?)?')
+>>> no = patt.search(line1)                                                                                    
+>>> no.groups()                                                                                                
+('The router interface has ipv6 address', '3001::', '0001', None, None, None, None, None, None)
+>>> 
+>>> line = 'The router interface has ipv6 address 1E00:3456:CaFe:babe:1234:4258:7586:0001 as Primary Address.'
+>>> no = patt.search(line)
+>>> no.groups()
+('The router interface has ipv6 address', '1E00:', '3456:', 'CaFe:', 'babe:', '1234:', '4258:', '7586:', '0001')
+>>>
+
+
+— The following pattern uses \w+ instead of [0-9a-fA-F]+. 
+— Remember that \w+ matches any characters from [a-zA-Z], which an IPv6 address cannot have
+- First match  = (\w+\:\:?)   -> this means there must be an ASCII word + colon (:) + optional colon (:)
+— Second match = (\w+\:?\:?)? -> this means both colons are made optional and the entire second word is optional too
+— Third match  = (\w+\:?\:?)? -> same as second match above
+
+
+>>> PATT = re.compile(r'(.*?) (\w+\:\:?)(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?')
+>>> n = PATT.search(line1)
+>>> n.groups()
+('The router interface has ipv6 address', '3001::', '0001', None, None, None, None, None, None)
+>>> n = PATT.search(line)
+>>> n.groups()
+('The router interface has ipv6 address', '1E00:', '3456:', 'CaFe:', 'babe:', '1234:', '4258:', '7586:', '0001')
+>>>
+>>> line2 = 'The GigE interface has 2001:0001::5 as secondary IPv6 address.'
+>>> n = PATT.search(line2)
+>>> n.groups()
+('The GigE interface has', '2001:', '0001::', '5', None, None, None, None, None)
+>>> 
+>>> line3 = 'The POS interface has 2001:abCD::10fe as IPv6 address.'
+>>> n = PATT.search(line3)
+>>> n.groups()
+('The POS interface has', '2001:', 'abCD::', '10fe', None, None, None, None, None)
+>>> 
+
+— Adding last (\/[0-9]+)? pattern to catch the subnet mask —
+
+>>> PATT = re.compile(r'(.*?) (\w+\:\:?)(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\/[0-9]+)?')
+>>> line4 = ‘The VRF has 3000::1:b:0:0/96 prefix’
+>>> mo = PATT.search(line4)
+>>> mo.groups()
+('The VRF has', '3000::', '1:', 'b:', '0:', '0', None, None, None, '/96')
+>>> 
+
+PATT = re.compile(r'(.*?) (\w+\:\:?)(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\/[0-9]+)?')
+with open('/Users/Naveen/bgp.txt') as f:
+   line = f.read()
+   mo = PATT.match(line)
+   print mo.groups()
+   
+
+Incrementing/Decrementing IPv6 addresses:
+
+(a) Convert the big IPv6 Hex to Decimal.
+    Make the Step increment or decrement.
+    Convert the big Decimal back to Hex.
+
+>>> v6 = '1E00:3456:CaFe:babe:1234:4258:7586:0001'
+>>>
+>>> ''.join(v6.split(':'))
+'1E003456CaFebabe1234425875860001'
+>>>
+>>> int(''.join(v6.split(':')),16)
+39877901435292763309162043901030563841L
+>>>
+>>> int(''.join(v6.split(':')),16) + 10
+39877901435292763309162043901030563851L
+>>>
+>>> d = int(''.join(v6.split(':')),16) + 10    -> increment by 10
+>>> d
+39877901435292763309162043901030563851L
+>>> format(d,'x')
+'1e003456cafebabe123442587586000b'
+>>>
+>>> d = int(''.join(v6.split(':')),16) + 65536  -> increment by ffff; next hex digit gets incremented
+>>> format(d,'x')
+'1e003456cafebabe1234425875870001'
+>>>
+>>> ':'.join(re.findall(r'([0-9a-fA-F]{4})',h))
+'1e00:3456:cafe:babe:1234:4258:7586:000b'
+>>> 
+>>> d = int(''.join(v6.split(':')),16) - 1   -> decrement by 1
+>>> format(d,'x')
+'1e003456cafebabe1234425875860000'
+>>> d = int(''.join(v6.split(':')),16) - 2   -> decrement by 2; next hex digit gets decremented
+>>> format(d,'x')
+'1e003456cafebabe123442587585ffff'
+>>> ':'.join(re.findall(r'([0-9a-fA-F]{4})',format(d,'x')))
+'1e00:3456:cafe:babe:1234:4258:7585:ffff'
+>>> 
+
+
+>>> line = 'The router interface has ipv6 address 1E00:3456:CaFe:babe:1234:4258:7586:0001 as Primary Address.'
+>>> mo = patt.search(line)
+>>> mo.groups()
+('The router interface has ipv6 address', '1E00:', '3456:', 'CaFe:', 'babe:', '1234:', '4258:', '7586:', '0001')
+>>> 
+>>> o1 = mo.group(2).strip(':')
+>>> o1
+'1E00'
+>>> o2 = mo.group(3).strip(':')
+>>> o3 = mo.group(4).strip(':')
+>>> o4 = mo.group(5).strip(':')
+>>> o4 = mo.group(6).strip(':')
+>>> o4 = mo.group(5).strip(':')
+>>> o5 = mo.group(6).strip(':')
+>>> o6 = mo.group(7).strip(':')
+>>> o7 = mo.group(8).strip(':')
+>>> o8 = mo.group(9).strip(':')
+>>> 
+
+(b) This method uses the 
+
+Note: In the following proc, only the word8 has to be incremented by ‘step’.
+      Rest of the words must be incremented by ‘1’.
+      The format(int(word8,16)+step,’x’)[-4:] picks up the last 4 chars after increment.
+
+def incripv6(v6addr,step):  
+   word8 = v6addr.split(':')[7]
+   word7 = v6addr.split(':')[6]
+   word6 = v6addr.split(':')[5]
+   word5 = v6addr.split(':')[4]
+   word4 = v6addr.split(':')[3]
+   word3 = v6addr.split(':')[2]
+   word2 = v6addr.split(':')[1]
+   word1 = v6addr.split(':')[0]
+   print word1+':'+word2+':'+word3+':'+word4+':'+word5+':'+word6+':'+word7+':'+word8
+   carry = 1
+   if exceeds65535(int(word8,16)+step):
+      word8 = format(int(word8,16)+step,'x')[-4:]
+      if exceeds65535(int(word7,16)+carry):
+         word7 = format(int(word7,16)+carry,'x')[-4:]
+         if exceeds65535(int(word6,16)+carry):
+            word6 = format(int(word6,16)+carry,'x')[-4:] 
+            if exceeds65535(int(word5,16)+carry):
+               word5 = format(int(word5,16)+carry,'x')[-4:] 
+               if exceeds65535(int(word4,16)+carry):
+                  word4 = format(int(word4,16)+carry,'x')[-4:] 
+                  if exceeds65535(int(word3,16)+carry):
+                     word3 = format(int(word3,16)+carry,'x')[-4:] 
+                     if exceeds65535(int(word2,16)+carry):
+                        word2 = format(int(word2,16)+carry,'x')[-4:] 
+                        if exceeds65535(int(word1,16)+carry):
+                           word1 = format(int(word1,16)+carry,'x')[-4:]
+                        else:
+                           word1 = format(int(word1,16)+carry,'x')
+                     else:
+                        word2 = format(int(word2,16)+carry,'x')
+                  else:
+                     word3 = format(int(word3,16)+carry,'x')
+               else:
+                  word4 = format(int(word4,16)+carry,'x')
+            else:
+               word5 = format(int(word5,16)+carry,'x')
+         else:
+            word6 = format(int(word6,16)+carry,'x')
+      else:
+         word7 = format(int(word7,16)+carry,'x')
+   else:
+      word8 = format(int(word8,16)+step,'x')
+   return word1+':'+word2+':'+word3+':'+word4+':'+word5+':'+word6+':'+word7+':'+word8
+
+
+def exceeds65535(decimal):
+    if decimal > 65535:
+       return 1
+    else:
+       return 0
+
+def belowZero(decimal):
+    if decimal < 0:
+       return 1
+    else:
+       return 0
+ 
+
+
+>>> incripv6('1E00:3456:CaFe:babe:1234:4258:7586:0001',100)
+1E00:3456:CaFe:babe:1234:4258:7586:0001
+'1E00:3456:CaFe:babe:1234:4258:7586:65'
+>>> 
+>>> incripv6('1E00:3456:CaFe:babe:1234:4258:7586:0001',1000)
+1E00:3456:CaFe:babe:1234:4258:7586:0001
+'1E00:3456:CaFe:babe:1234:4258:7586:3e9'
+>>> incripv6('1E00:3456:CaFe:babe:1234:4258:7586:0001',65535)
+1E00:3456:CaFe:babe:1234:4258:7586:0001
+'1E00:3456:CaFe:babe:1234:4258:7587:0000'
+>>> 
+>>> incripv6('1E00:3456:CaFe:babe:1234:4258:7586:0001',655350)
+1E00:3456:CaFe:babe:1234:4258:7586:0001
+'1E00:3456:CaFe:babe:1234:4258:7587:fff7'
+>>> 
+
+
+# If you want to increment by ‘step’ every word, then check the following:
+
+def incripv6(line,step):
+   PATT = re.compile(r'(.*?) (\w+\:\:?)(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?(\w+\:?\:?)?')
+   mo = patt.search(line)
+   word1 = mo.group(2).strip(':')
+   word2 = mo.group(3).strip(':')
+   word3 = mo.group(4).strip(':')
+   word4 = mo.group(5).strip(':')
+   word5 = mo.group(6).strip(':')
+   word6 = mo.group(7).strip(':')
+   word7 = mo.group(8).strip(':')
+   word8 = mo.group(9).strip(':')
+   #print 'current ipv6 address %s' % word1+':'+word2+':'+word3+':'+word4+':'+word5+':'+word6+':'+word7+':'+word8
+   word8 = format(int(word8,16)+step,'x')[-4:] if exceeds65535(int(word8,16)+step) else format(int(word8,16)+step,'x')
+   word7 = format(int(word7,16)+step,'x')[-4:] if exceeds65535(int(word7,16)+step) else format(int(word7,16)+step,'x')
+   word6 = format(int(word6,16)+step,'x')[-4:] if exceeds65535(int(word6,16)+step) else format(int(word6,16)+step,'x')
+   word5 = format(int(word5,16)+step,'x')[-4:] if exceeds65535(int(word5,16)+step) else format(int(word5,16)+step,'x')
+   word4 = format(int(word4,16)+step,'x')[-4:] if exceeds65535(int(word4,16)+step) else format(int(word4,16)+step,'x')
+   word3 = format(int(word3,16)+step,'x')[-4:] if exceeds65535(int(word3,16)+step) else format(int(word3,16)+step,'x')
+   word2 = format(int(word2,16)+step,'x')[-4:] if exceeds65535(int(word2,16)+step) else format(int(word2,16)+step,'x')
+   word1 = format(int(word1,16)+step,'x')[-4:] if exceeds65535(int(word1,16)+step) else format(int(word1,16)+step,'x')
+   return word1+':'+word2+':'+word3+':'+word4+':'+word5+':'+word6+':'+word7+':'+word8
+
+
+
+20) Creating Custom Iteration Patterns with Generators:
+
+>>> def frange(start, stop, increment):
+...   x = start
+...   while x < stop:
+...     yield x            <— the presence of ‘yield x’ makes this function a Generator
+...     x += increment
+... 
+>>> for N in frange(1,10,0.5):    <— a for loop can consume a generator object
+...    print N
+... 
+1
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+4.5
+5.0
+5.5
+6.0
+6.5
+7.0
+7.5
+8.0
+8.5
+9.0
+9.5
+>>> 
+>>> 
+
+
+21) Serializing Python Objects:
+
+You need to serialize a Python object into a byte stream so that you can do things such as save it to a file, store it in a database, or transmit it over a network connection. The most common approach for serializing data is to use the pickle module. To dump an object to a file, you do this:
+
+import pickle
+
+data = ...   # Some Python object
+f = open('somefile', 'wb')
+pickle.dump(data, f)
+To dump an object to a string, use pickle.dumps():
+s = pickle.dumps(data)
+
+To re-create an object from a byte stream, use either the pickle.load() or pickle.loads() functions. For example:
+# Restore from a file
+f = open('somefile', 'rb')
+data = pickle.load(f)
+
+# Restore from a string
+data = pickle.loads(s)
+
+
+
+22) Reading and Writing JSON Data
+
+You want to read or write data encoded as JSON (JavaScript Object Notation). The json module provides an easy way to encode and decode data in JSON. The two main functions are json.dumps() and json.loads(), mirroring the interface used in other serialization libraries, such as pickle. Here is how you turn a Python data structure into JSON:
+import json
+
+data = {
+   'name' : 'ACME',
+   'shares' : 100,
+   'price' : 542.23
+}
+
+json_str = json.dumps(data)
+
+Here is how you turn a JSON-encoded string back into a Python data structure:
+	data = json.loads(json_str)
+
+If you are working with files instead of strings, you can alternatively use json.dump() and json.load() to encode and decode JSON data. For example:
+# Writing JSON data
+with open('data.json', 'w') as f:
+     json.dump(data, f)
+
+# Reading data back
+with open('data.json', 'r') as f:
+     data = json.load(f)
+
+
+
+23) EXAMPLES OF REGULAR EXPRESSIONS:
+
+
+>>> line = 'Joke: what do you call a pig with three eyes? piiig!'
+>>> import re
+>>> mo = re.search(r'(.*?)\? ([a-z]+)',line)  <— search all chars a-z after ‘?’
+>>> mo.groups()
+('Joke: what do you call a pig with three eyes', 'piiig')
+>>> 
+>>> mo.group(0)
+'Joke: what do you call a pig with three eyes? piiig'
+>>> mo.group(1)
+'Joke: what do you call a pig with three eyes'
+>>> mo.group(2)
+'piiig'
+>>>
+>>> mo = re.match(r'(.*?)\? ([a-z!]+)',line)  <— match all chars [a-z!] after ‘?’
+>>> mo.group(2)
+'piiig!'
+>>> 
+
+Note: 
+
+Python offers two different primitive operations based on regular expressions: 
+(a) match checks for a match only at the beginning of the string,
+(b) search checks for a match anywhere in the string (this is what Perl does by default).
+
+
+>>> str = 'purple alice-b@google.com monkey dishwasher'
+>>> mo = re.search(r'\s([a-zA-Z0-9\_\-\@\.]+)',str)   <-- get the email address 
+>>> mo.groups()
+('alice-b@google.com',)
+>>> mo = re.search(r'\s([\w\_\-\@\.]+)',str)
+>>> mo.groups()
+('alice-b@google.com',)
+>>> mo.groups()
+('alice-b@google.com',)
+>>> mo = re.search(r'\s([\w.-@\w.-]+)',str)
+>>> mo.groups()
+('alice-b@google.com',)
+>>> 
+
+findall() is probably the single most powerful function in the re module. 
+Above we used re.search() to find the first match for a pattern. 
+findall() finds *all* the matches and returns them as a list of strings, with each string representing one match.
+
+>>> str = 'purple alice@google.com, blah monkey bob@abc.com blah dishwasher'
+>>> emails = re.findall(r'[\w\.-]+@[\w\.-]+',str)  <— Very Important
+>>> emails
+['alice@google.com', 'bob@abc.com']
+>>> 
+
+Matching Phone Numbers:
+
+(.*?) 		- picks up any set of chars and make them available as group.
+\d{m,n} 	- picks up consecutive occurrence of a digit from ‘m’ upto ’n’ times.
+\d(n} 		- match exactly ’n’ number of consecutive digits
+(){n} 		- match exactly ’n’ number of consecutive occurrence of pattern match
+(){m,n} 	- match up ‘m’ to ’n’ consecutive occurrence of the previous match
+
+
+>>> phone_text = 'Customer phone number is 1-800-555-1212 for the AM slot and 800.444.2323 for the PM slot.'
+>>> phone_nums = re.findall(r'.*?[1\-\.]?(\d{3})[\-\.](\d{3})[\.\-](\d{4})',phone_text)
+>>> phone_nums
+[('800', '555', '1212'), ('800', '444', '2323')]
+>>> 
+
+>>> text = 'Finding consecutive words: digdig says bockbock'
+>>> words = re.search(r'(dig){2}',text)   <— Match exactly 2 occurrences of word ‘dig’
+>>> words.group(0)
+'digdig'
+>>> words.group(1)
+'dig'
+>>>
+>>> words = re.search(r'(dig){3}',text)   <— Match exactly 3 occurrences of word ‘dig’
+>>> words.group(1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'NoneType' object has no attribute 'group'
+>>>
+>>> words = re.search(r'(dig){1,3}',text)    <— Match 1 to 3 occurrences of word ‘dig’
+>>> words.groups()
+('dig',)
+>>> words.group()
+'digdig'
+>>> words.group(0)
+'digdig'
+>>> words.group(1)
+'dig'
+>>>
+
+
+The re.sub(pat, replacement, str) function searches for all the instances of pattern in the given string, and replaces them. 
+The replacement string can include '\1', '\2' which refer to the text from group(1), group(2), and so on from the original matching text.
+
+>>> str = 'purple alice@google.com, blah monkey bob@abc.com blah dishwasher'
+
+## re.sub(pat, replacement, str) -- returns new string with all replacements,
+## \1 is group(1), \2 group(2) in the replacement
+
+>>> print re.sub(r'([\w\.-]+)@([\w\.-]+)', r'\1@yo-yo-dyne.com', str)
+>>> purple alice@yo-yo-dyne.com, blah monkey bob@yo-yo-dyne.com blah dishwasher
+
+
+24) Working with JSON <-> Python Objects:
+
+>>> import json
+>>> data = {
+...    'name' : 'ACME',
+...    'shares' : 100,
+...    'price' : 542.23
+... }
+>>> data
+{'price': 542.23, 'name': 'ACME', 'shares': 100}
+>>> type(data)
+<type 'dict'>
+>>> 
+>>> json_str = json.dumps(data)   <— json.dumps Serializes Python ‘dict’ object to a JSON encoded ‘string’ object
+>>> type(json_str)
+<type 'str'>
+>>> json_str
+'{"price": 542.23, "name": "ACME", "shares": 100}'
+>>> 
+>>> ndata = json.loads(json_str)  <— json.loads de-serializes JSON encoded ‘string’ object to Python ‘dict’ object
+>>> type(ndata)
+<type 'dict'>
+>>> ndata
+{u'price': 542.23, u'name': u'ACME', u'shares': 100}
+>>> 
+>>> data1 = {
+...    'name' : {'first' : 'James', 'last' : 'watson'},
+...    'shares' : {'AAPL' : 350, 'CSCO' : 100},
+...    'ROI' : ['15%', '25%']
+... }
+>>> data1
+{'ROI': ['15%', '25%'], 'name': {'last': 'watson', 'first': 'James'}, 'shares': {'AAPL': 350, 'CSCO': 100}}
+>>> data1['name']['first']
+'James'
+>>> data1['shares']['AAPL']
+350
+>>> json_str1 = json.dumps(data1)
+>>> type(json_str1)
+<type 'str'>
+>>> json_str1
+'{"ROI": ["15%", "25%"], "name": {"last": "watson", "first": "James"}, "shares": {"AAPL": 350, "CSCO": 100}}'
+>>> ndata1 = json.loads(json_str1)
+>>> type(ndata1)
+<type 'dict'>
+>>> ndata1
+{u'ROI': [u'15%', u'25%'], u'name': {u'last': u'watson', u'first': u'James'}, u'shares': {u'AAPL': 350, u'CSCO': 100}}
+>>> 
+>>> for key,value in zip(ndata1.keys(),ndata1.values()):
+...    print 'key = ' + key
+...    print 'val = ' + str(value)  <— convert value to string; since ‘+’ won’t concatenate a ‘list’ and a ‘str’
+... 
+key = ROI
+val = [u'15%', u'25%']
+key = name
+val = {u'last': u'watson', u'first': u'James'}
+key = shares
+val = {u'AAPL': 350, u'CSCO': 100}
+>>>
+
+
+25) Working with XML data:
+
+Contents of country.xml file
+
+<?xml version="1.0"?>
+<data>
+    <country name="Liechtenstein">
+        <rank>1</rank>
+        <year>2008</year>
+        <gdppc>141100</gdppc>
+        <neighbor name="Austria" direction="E"/>
+        <neighbor name="Switzerland" direction="W"/>
+    </country>
+    <country name="Singapore">
+        <rank>4</rank>
+        <year>2011</year>
+        <gdppc>59900</gdppc>
+        <neighbor name="Malaysia" direction="N"/>
+    </country>
+    <country name="Panama">
+        <rank>68</rank>
+        <year>2011</year>
+        <gdppc>13600</gdppc>
+        <neighbor name="Costa Rica" direction="W"/>
+        <neighbor name="Colombia" direction="E"/>
+    </country>
+</data>
+
+>>> import xml.etree.ElementTree as ET
+>>> tree = ET.parse('country.xml')
+>>> type(tree)
+<class 'xml.etree.ElementTree.ElementTree'>
+>>>
+>>> root = tree.getroot()   -> this is Fundamental !
+>>> type(root)
+<class 'xml.etree.ElementTree.Element'>
+>>> dir(root)
+['__class__', '__delattr__', '__delitem__', '__dict__', '__doc__', '__format__', '__getattribute__', '__getitem__', '__hash__', '__init__', '__len__', '__module__', '__new__', '__nonzero__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_children', 'append', 'attrib', 'clear', 'copy', 'extend', 'find', 'findall', 'findtext', 'get', 'getchildren', 'getiterator', 'insert', 'items', 'iter', 'iterfind', 'itertext', 'keys', 'makeelement', 'remove', 'set', 'tag', 'tail', 'text']
+>>> 
+
+
+To access Tag names 			: use ‘.tag’ 
+To access Tag attributes 		: use ‘.attrib’  (In the above example, only ‘country’ and ‘neighbor’ tags have attribute ‘name’)
+To access Values inside Tags	: use ‘.text’
+
+
+(a) Get the name of all children from the current ‘root’:
+
+>>> for child in root:
+...   print child.tag, child.attrib
+...
+country {'name': 'Liechtenstein'}
+country {'name': 'Singapore'}
+country {'name': 'Panama'}
+
+>>> for child in root:
+...   print 'Tag = ' + child.tag + ' -- Attribute = ' + str(child.attrib)
+... 
+Tag = country -- Attribute = {'name': 'Liechtenstein'}
+Tag = country -- Attribute = {'name': 'Singapore'}
+Tag = country -- Attribute = {'name': 'Panama'}
+>>> 
+
+
+(b) Get the Tag and Text for all Grand children under the current root:
+
+>>> for child in root:
+...   for grandchild in child:
+...     print 'Tag = ' + grandchild.tag + '\tValue = ' + str(grandchild.text)
+... 
+Tag = rank		Value = 1
+Tag = year		Value = 2008
+Tag = gdppc	Value = 141100
+Tag = neighbor	Value = None
+Tag = neighbor	Value = None
+Tag = rank		Value = 4
+Tag = year		Value = 2011
+Tag = gdppc	Value = 59900
+Tag = neighbor	Value = None
+Tag = rank		Value = 68
+Tag = year		Value = 2011
+Tag = gdppc	Value = 13600
+Tag = neighbor	Value = None
+Tag = neighbor	Value = None
+>>>  
+
+
+(c) Print the Tag names of all Grand children and their Values.
+    If a Tag has no value, then print the Tag attribute:
+
+
+>>> for child in root:
+...   for grandchild in child:
+...     val = str(grandchild.text) if str(grandchild.text) != 'None' else str(grandchild.attrib)
+...     print 'Tag = ' + grandchild.tag + '\tValue = ' + val
+... 
+Tag = rank			Value = 1
+Tag = year			Value = 2008
+Tag = gdppc		Value = 141100
+Tag = neighbor		Value = {'direction': 'E', 'name': 'Austria'}
+Tag = neighbor		Value = {'direction': 'W', 'name': 'Switzerland'}
+Tag = rank			Value = 4
+Tag = year			Value = 2011
+Tag = gdppc		Value = 59900
+Tag = neighbor		Value = {'direction': 'N', 'name': 'Malaysia'}
+Tag = rank			Value = 68
+Tag = year			Value = 2011
+Tag = gdppc		Value = 13600
+Tag = neighbor		Value = {'direction': 'W', 'name': 'Costa Rica'}
+Tag = neighbor		Value = {'direction': 'E', 'name': 'Colombia'}
+>>> 
+
+
+(d) Print the Countries and their Ranks
+
+>>> for country in root.iter('country'):
+...   rank = country.find('rank').text
+...   name = country.get('name')
+...   print name, rank
+... 
+Liechtenstein 1
+Singapore 4
+Panama 68
+>>> 
+>>> for country in root.findall('country'):
+...   rank = country.find('rank').text
+...   name = country.get('name')
+...   print name, rank
+... 
+Liechtenstein 1
+Singapore 4
+Panama 68
+>>> 
+>>> 
+
+
+(e) Increment the Rank of each Country by 1:
+
+>>> for rank in root.iter('rank'):
+...   print rank.text
+... 
+1
+4
+68
+>>> for rank in root.iter('rank'):
+...   new_rank = int(rank.text) + 1
+...   rank.text = str(new_rank)
+... 
+>>> tree.write('country.xml')
+>>> for rank in root.iter('rank'):
+...   print rank.text
+... 
+2
+5
+69
+>>>
+>>> with open('/Users/Naveen/country.xml') as f:
+...   print f.read()
+... 
+<data>
+    <country name="Liechtenstein">
+        <rank>2</rank>
+        <year>2008</year>
+        <gdppc>141100</gdppc>
+        <neighbor direction="E" name="Austria" />
+        <neighbor direction="W" name="Switzerland" />
+    </country>
+    <country name="Singapore">
+        <rank>5</rank>
+        <year>2011</year>
+        <gdppc>59900</gdppc>
+        <neighbor direction="N" name="Malaysia" />
+    </country>
+    <country name="Panama">
+        <rank>69</rank>
+        <year>2011</year>
+        <gdppc>13600</gdppc>
+        <neighbor direction="W" name="Costa Rica" />
+        <neighbor direction="E" name="Colombia" />
+    </country>
+</data>
+>>> 
+
+Remember this (to parse any XML data):
+
+>>> import xml.etree.ElementTree as ET
+>>> xmltree = ET.parse('country.xml')
+>>> root=xmltree.getroot()
+or
+>>> root = ET.parse('country.xml').getroot()
+
+
+26) Get Weather data in XML format using HTTP urllib given the Zip code and print the details:
+
+http://api.wunderground.com/auto/wui/geo/WXCurrentObXML/index.xml?query=94536
+
+<current_observation><credit>Weather Underground NOAA Weather Station</credit><credit_URL>http://wunderground.com/</credit_URL><termsofservice link="http://www.wunderground.com/weather/api/d/terms.html">This feed will be deprecated. Please switch to http://www.wunderground.com/weather/api/</termsofservice><image><url>http://icons.wxug.com/graphics/wu2/logo_130x80.png</url><title>Weather Underground</title><link>http://wunderground.com/</link></image><display_location><full>Fremont, CA</full><city>Fremont</city><state>CA</state><state_name>California</state_name><country>US</country><country_iso3166>US</country_iso3166><zip>94536</zip><latitude>37.56283188</latitude><longitude>-122.00044250</longitude><elevation>6.00000000 ft</elevation></display_location><observation_location><full>Palo Alto, California</full><city>Palo Alto</city><state>California</state><country>US</country><country_iso3166>US</country_iso3166><latitude>37.46110916</latitude><longitude>-122.11505890</longitude><elevation>7 ft</elevation></observation_location><station_id>KPAO</station_id><observation_time>Last Updated on August 5, 3:47 PM PDT</observation_time><observation_time_rfc822>Tue, 05 Aug 2014 22:47:00 GMT</observation_time_rfc822><observation_epoch>1407278820</observation_epoch><local_time>August 5, 4:52 PM PDT</local_time><local_time_rfc822>Tue, 05 Aug 2014 23:52:22 GMT</local_time_rfc822><local_epoch>1407282742</local_epoch><weather>Mostly Cloudy</weather><temperature_string>75 F (24 C)</temperature_string><temp_f>75</temp_f><temp_c>24</temp_c><relative_humidity>61%</relative_humidity><wind_string>From the NNW at 21 MPH </wind_string><wind_dir>NNW</wind_dir><wind_degrees>330</wind_degrees><wind_mph>21</wind_mph><wind_gust_mph/><pressure_string>30.01 in (1016 mb)</pressure_string><pressure_mb>1016</pressure_mb><pressure_in>30.01</pressure_in><dewpoint_string>61 F (16 C)</dewpoint_string><dewpoint_f>61</dewpoint_f><dewpoint_c>16</dewpoint_c><heat_index_string>NA</heat_index_string><heat_index_f>NA</heat_index_f><heat_index_c>NA</heat_index_c><windchill_string>NA</windchill_string><windchill_f>NA</windchill_f><windchill_c>NA</windchill_c><visibility_mi>10.0</visibility_mi><visibility_km>16.1</visibility_km><icons><icon_set name="Default"><icon_url>http://icons.wxug.com/i/c/a/mostlycloudy.gif</icon_url></icon_set><icon_set name="Smiley"><icon_url>http://icons.wxug.com/i/c/b/mostlycloudy.gif</icon_url></icon_set><icon_set name="Generic"><icon_url>http://icons.wxug.com/i/c/c/mostlycloudy.gif</icon_url></icon_set><icon_set name="Old School"><icon_url>http://icons.wxug.com/i/c/d/mostlycloudy.gif</icon_url></icon_set><icon_set name="Cartoon"><icon_url>http://icons.wxug.com/i/c/e/mostlycloudy.gif</icon_url></icon_set><icon_set name="Mobile"><icon_url>http://icons.wxug.com/i/c/f/mostlycloudy.gif</icon_url></icon_set><icon_set name="Simple"><icon_url>http://icons.wxug.com/i/c/g/mostlycloudy.gif</icon_url></icon_set><icon_set name="Contemporary"><icon_url>http://icons.wxug.com/i/c/h/mostlycloudy.gif</icon_url></icon_set><icon_set name="Helen"><icon_url>http://icons.wxug.com/i/c/i/mostlycloudy.gif</icon_url></icon_set><icon_set name="Incredible"><icon_url>http://icons.wxug.com/i/c/k/mostlycloudy.gif</icon_url></icon_set></icons><icon_url_base>http://icons.wxug.com/graphics/conds/</icon_url_base><icon_url_name>.GIF</icon_url_name><icon>mostlycloudy</icon><forecast_url>http://www.wunderground.com/US/CA/Fremont.html</forecast_url><history_url>http://www.wunderground.com/history/airport/KPAO/2014/8/5/DailyHistory.html</history_url><ob_url>http://www.wunderground.com/cgi-bin/findweather/getForecast?query=37.46110916,-122.11505890</ob_url></current_observation>
+
+
+class CurrentInfo:
+    def getCurrents(self,debuglevel,Location):
+        if debuglevel > 0:
+           print "Location = %s" % Location
+        try:
+            CurrentConditions = 'http://api.wunderground.com/auto/wui/geo/WXCurrentObXML/index.xml?query=%s' % Location
+            urllib.socket.setdefaulttimeout(8)
+            usock = urllib.urlopen(CurrentConditions)
+            tree = ET.parse(usock)
+            usock.close()
+        except:
+            print 'ERROR - Current Conditions - Could not get information from server…'
+            if debuglevel > 0:
+                print Location
+                sys.exit(1)
+        # Get Display Location
+        for loc in tree.findall(".//full"):   # find all elements with <full> tag
+            self.location = loc.text
+        # Get Observation time
+        for tim in tree.findall(".//observation_time"):  # find all elements with <observation_time> tag
+            self.obtime = tim.text
+        # Get Current conditions
+        for weather in tree.findall(".//weather"):
+            self.we = weather.text
+        # Get Temp
+        for TempF in tree.findall(".//temperature_string"):
+            self.tmpB = TempF.text
+        #Get Humidity
+        for hum in tree.findall(".//relative_humidity"):
+            self.relhum = hum.text
+        # Get Wind info
+        for windstring in tree.findall(".//wind_string"):
+            self.winds = windstring.text
+        # Get Barometric Pressure
+        for pressure in tree.findall(".//pressure_string"):
+            self.baroB = pressure.text
+    def output(self):
+        print 'Weather Information From Wunderground.com '
+        print 'Weather info for %s ' % self.location
+        print self.obtime
+        print 'Current Weather - %s' % self.we
+        print 'Current Temp - %s' % self.tmpB
+        print 'Barometric Pressure - %s' % self.baroB
+        print 'Relative Humidity - %s' % self.relhum
+        print 'Winds %s' % self.winds
+    def DoIt(self,Location):
+        self.getCurrents(1,Location)
+        self.output()
+
+def main():
+    location = '94536'
+    currents = CurrentInfo()
+    currents.DoIt(location)
+
+#===========================================================
+# Main loop
+#===========================================================
+if __name__ == "__main__":
+    from xml.etree import ElementTree as ET
+    import urllib
+    import sys
+    main()
+
+
+
+
+(27) Working with HTTP Data:
+
+>>> import urllib2
+>>> uo = urllib2.urlopen('http://www.cisco.com')  <— uo = URL Object
+>>> data = uo.read()
+>>> type(data)         <— data is a string
+<type 'str'>
+>>> 
+>>> print uo.info()
+Date: Wed, 30 Jul 2014 01:18:06 GMT
+Server: Apache
+Set-Cookie: ObSSOCookie=7K1VX1TeHvQKZdwWfhscMiOtQTy5pjsiS5eiK4%2FmEivynxU%2FAhxGULPcwYN3H%2F6W7GTilJw70XZRHzm73fZlkbD3%2BUHA8XO%2F34%2BcIr24%2BaiTw5xgPsO%2F20xzQkP2oQ5GOQEjhoggDUL0nBMGkx0mScYOYj9DgBmv%2Bei34I9LJ6hhP3P%2FZ5U6g2FR2KYmnGcfxBul9KH7zKE4UmjT55dRkt3SUF%2Bl9IclQRIzsKZzmCT4o3Mxzp0tiowAfHPh5HTpYT6LZcRWD%2FbYjcmOLT0zNLTXNtYAKSS3qPLd5gbd8kggjNoAiX2onz0oVS7GU9Kh0OR8yNTKgZLtA6Sdx1hRMApNKnb2NXvRLrvo7h0y%2BKnV3C4WQlTuNTrAcnEUajq3; path=/; domain=.cisco.com;
+Cache-Control: private
+Pragma: private
+Set-Cookie: CP_GUTC=72.163.4.167.1406683086868517; path=/; expires=Mon, 29-Jul-19 01:18:06 GMT; domain=.cisco.com
+ETag: "ffc591-63c6-4ff5ee2f19ee7"
+Accept-Ranges: bytes
+Content-Length: 25542
+CDCHOST: wemxweb-publish-prod1-01
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/html
+
+>>> 
+>>> print uo.geturl()
+http://www.cisco.com
+>>>
+>>> print uo.getcode()
+200
+>>> 
+>>> print uo.msg
+'OK'
+>>> print data.title()    <— prints the entire HTML content
+
+<!Doctype Html>
+<Head>
+    <Title>Cisco Systems, Inc</Title>
+<Meta Name="Fb:App_Id" Content="156494687694418"  />
+    <Meta Name="Iocontentsource" Content="Wem"  />
+    <Meta Name="Concept" Content="Welcome To Cisco"  />
+    <Meta Name="Doctype" Content="Cisco.Com Default Home"  />
+
+<skip>
+
+    <!-- Sitecatalyst Code Version: H.24.4. -->
+    <Noscript><Img Src="//Cisco.112.2O7.Net/B/Ss/Cisco-Mobile/5/12345" Width="2" Height="2" Border="0" Alt=""/></Noscript>
+    <!--[If Ie 8]></Ie><![Endif]-->
+    
+
+</Body>
+</Html>
+
+>>>
+
+HTMLParser:
+
+https://docs.python.org/2/library/htmlparser.html
+
+
+
+(28) Performing Basic HTTP Authentication:
+
+import urllib2, base64
+
+request = urllib2.Request("https://viking-perf-server/VKG_PERF/")
+base64string = base64.encodestring('%s:%s' % ('nsreeram', '<password>')).replace('\n', '')
+request.add_header("Authorization", "Basic %s" % base64string)   
+result = urllib2.urlopen(request)
+result.read()
+
+
+
+(29) Working with Dates:
+
+>>> from datetime import datetime, date, timedelta 
+>>> import calendar
+>>> date.today()
+datetime.date(2014, 8, 6)
+>>> date.today().replace(day=2)
+datetime.date(2014, 8, 2)
+>>> date.today().replace(year=2000)
+datetime.date(2000, 8, 6)
+>>> date.today().replace(month=12)
+datetime.date(2014, 12, 6)
+>>> 
+>>> Today = date.today()
+>>> Today
+datetime.date(2014, 8, 6)
+>>> Today.year
+2014
+>>> Today.month
+8
+>>> Today.day
+6
+>>> 
+>>> date.weekday(Today)
+2
+>>>
+>>> end_date = Today + timedelta(days=10)  <— 10 days from Today
+>>> end_date
+datetime.date(2014, 8, 16)
+>>> 
+>>> end_date = Today - timedelta(days=10)  <— 10 days before Today
+>>> end_date
+datetime.date(2014, 7, 27)
+>>> 
+>>> Now = datetime.now()
+>>> Now
+datetime.datetime(2014, 8, 6, 12, 7, 32, 634453)
+>>>
+>>> datetime.strftime(Now, '%A %B %d, %Y')   <— Print in human readable format
+'Wednesday August 06, 2014'
+>>> 
+>>> calendar.monthrange(Today.year, Today.month)  <— Gives the ‘day of the week’ and ‘number of days in the month’
+(4, 31)
+>>> 
+>>> datetime.today()   <— Includes both the ‘date’ object and the ‘time’ object
+datetime.datetime(2014, 8, 6, 12, 0, 40, 636476)
+>>>
+>>> type(Today)
+<type 'datetime.date'>
+>>> type(timedelta(days=10))
+<type 'datetime.timedelta'>
+>>> 
+
+
+(30) Find out if a given variable is number or not:
+
+>>> import numbers
+>>> import decimal
+>>> x
+'age'
+>>>
+>>> isinstance(x,numbers.Number)
+False
+>>> isinstance(10,numbers.Number)
+True
+>>>
+
+(31) Implement a simple Binary Tree (a tree with only 2 leaves):
+----------------------------------------------------------------
+
+class Tree:
+  def __init__(self,value,left=None,right=None): # by default, there are no Leaves
+    self.value = value
+    self.left = left
+    self.right = right
+  def __str__(self):
+    return str(self.value)	
+
+def print_tree(tr,numtabs=0):
+    if tr == None: return
+    print('\t'*numtabs + tr.value)  # Print it in tree form
+    numtabs += 1
+    print_tree(tr.left,numtabs)
+    print_tree(tr.right,numtabs)
+	
+t = Tree('country',	Tree('america',	Tree('NA',Tree('usa'),Tree('mexico')),	Tree('SA',Tree('brazil'),Tree('chile'))),
+					Tree('india',	Tree('NI',Tree('delhi'),Tree('other')),	Tree('SI',Tree('bangalore'),Tree('mysore'))))
+
+>>> print_tree(t)
+country
+        america
+                NA
+                        usa
+                        mexico
+                SA
+                        brazil
+                        chile
+        india
+                NI
+                        delhi
+                        other
+                SI
+                        bangalore
+                        mysore
+>>>				
+
+def print_tree_inorder(tr,numtabs=0):
+    if tr == None: return
+    numtabs += 1
+    print_tree_inorder(tr.left,numtabs)
+    print('\t'*numtabs + tr.value)
+    print_tree_inorder(tr.right,numtabs)
+	
+>>> print_tree_inorder(t)
+                                usa
+                        NA
+                                mexico
+                america
+                                brazil
+                        SA
+                                chile
+        country
+                                delhi
+                        NI
+                                other
+                india
+                                bangalore
+                        SI
+                                mysore
+>>>
+
+def search_tree(tr,val):
+    print("Current value = %s \t\t Looking for %s" %(tr.value,val))
+    if tr.value == val:
+        return True
+    else:
+        if tr.left != None:
+            search_tree(tr.left,val)
+        if tr.right != None:
+            search_tree(tr.right,val)
+    return False
+
+>>> search_tree(t,str('delhi'))
+Current value = country          Looking for delhi
+Current value = america          Looking for delhi
+Current value = NA               Looking for delhi
+Current value = usa              Looking for delhi
+Current value = mexico           Looking for delhi
+Current value = SA               Looking for delhi
+Current value = brazil           Looking for delhi
+Current value = chile            Looking for delhi
+Current value = india            Looking for delhi
+Current value = NI               Looking for delhi
+Current value = delhi            Looking for delhi
+True
+>>>
+
+
+FROM CODEACADEMY.COM WEBSITE ON CLASSES
+=======================================
+
+class Car(object):
+    condition = "new"
+    def __init__(self, model, color, mpg):
+        self.model = model
+        self.color = color
+        self.mpg   = mpg
+    def display_car(self):
+        print('This is a {} {} with {} MPG.'.format(self.color,self.model,self.mpg))
+    def drive_car(self):
+        self.condition = "used"
+
+class ElectricCar(Car):
+    battery_type = ""
+    def __init__(self,battery):
+        self.battery_type = battery
+    def drive_car(self):
+        self.condition = "like new"
+        
+my_car = ElectricCar("molten salt")
+my_car.model = "toyota"
+my_car.color = "grey"
+my_car.mpg = 45
+print(my_car.condition)
+my_car.drive_car()
+print(my_car.condition)
+
+OUTPUT:
+-------
+new
+like new
+
+
+You can tell Python how to represent an Object of a certain class
+by using the __repr__() method. This method can tell what an Object
+of this class would do (or) how/why type of information is held 
+inside of the Object. The __repr__() is like the spokesperson 
+for the Object.
+
+class Point3D(object):
+    def __init__(self,x,y,z):
+        self.x = x
+        self.y = y
+        self.z = z
+    def __repr__(self):
+        return "(%d, %d, %d)" % (self.x, self.y, self.z)
+
+my_point = Point3D(1,2,3)
+print(my_point)               <-- Printing the Object will call the __repr__() method
+
+OUTPUT:
+-------
+(1, 2, 3)
+
+
+
+To reverse a String in Python:
+------------------------------
+
+>>> "HELLO"[::-1]
+'OLLEH'
+>>>
+
+To iterate over a very big dictionary
+-------------------------------------
+To iterate over all keys and values in a dictionary, use the d.iteritems()
+instead of d.items(). See the example below.
+
+for k,v in d.iteritems():
+   print(k,v)
+
+
+
+===========================
+LYNDA.COM - PYTHON PATTERNS
+===========================
+https://github.com/faif/python-patterns
+
+~~~~~~~~~~~~~~~~~~~~
+DECORATOR Functions
+~~~~~~~~~~~~~~~~~~~~
+
+Python makes implementing Decorator very straightforward due to its built in language features.
+Our challenge here is to add additional features to an existing object dynamically without using
+subclassing. Here's our scenario. We start with a function simply displaying a Hello World! message,
+and then we'd like to make the message look fancier by decorating it with additional tags,
+such as blink, as you can see here.
+
+Functions are also objects in Python, and we can simply add additional features to these functions
+using this built in decorator feature in Python. Patterns such as adapter, composite, and strategy
+are related to the decorator pattern.
+
+from functools import wraps
+
+def make_blink(function):
+   '''Make a decorator function'''
+
+   # This makes the decorator transparent in terms of its name and docstring
+   @wraps(function)
+
+   # Define the inner function
+   def decorator():
+
+      # Grab the return value of the function being decorated
+      ret = function()
+
+      # Add new functionality to the function being decorated
+      return '<blink>' + ret + '</blink>'
+
+   # Return the decorator function now
+   return decorator
+
+
+# Apply the decorator here
+@make_blink                      <-- This line causes a function call to make_blink()
+def hello_world():                   every time a call to function hello_world() is made
+   '''Original Function '''
+
+   return 'Hello, World!'
+
+
+if __name__ == '__main__':
+
+  # Check the result of decorating
+  print(hello_world())
+
+  # Check if the function name is still the same name as the function being decorated
+  print(hello_world.__name__)
+
+  # Check if the docstring is still the same as that of the function being decorated
+  print(hello_world.__doc__)
+
+
+eussjlts0602 [15:24] [enavsre/Desktop/Python-3.5.1] -> ./python decorator.py
+<blink>Hello, World!</blink>
+hello_world
+Original Function
+eussjlts0602 [15:24] [enavsre/Desktop/Python-3.5.1] ->
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+PROXY CLASSES WHO CREATE MORE IMPORTANT OBJECTS BASED ON AVAILAIBILITY
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Proxy becomes handy when creating an object that is very resource intensive. The problem
+we need to solve here is to postpone our object creation as long as possible, due to the
+resource intensive nature of the object we're creating. Therefore, there is a need for a
+placeholder which will in turn create the object if its creation is absolutely necessary.
+
+import time
+
+class CEO:
+   '''This class defines methods to keep CEO busy or available'''
+
+   def busy(self):
+      print('CEO is busy with Customer meetings')
+
+   def arrangeMeeting(self):
+      print('CEO is available to meet you now')
+
+
+class Secretary:
+   '''This class tracks how busy CEO is and make appointments on his/her behalf'''
+
+   def __init__(self):
+      '''Define the "relatively less resource intensive" to act as proxy/middleman'''
+
+      self.CEObusy = 'No'
+      self.CEOWhoIsTracked = None
+
+   def make_appts(self):
+      '''Check the current CEO state and make appointments'''
+
+      print('*** Secretary is checking if CEO is available ***')
+      if self.CEObusy == 'No':
+
+         # If CEO is available, then create the CEO object
+         self.CEOWhoIsTracked = CEO()
+         time.sleep(5)
+
+         # Make an appointment now
+         self.CEOWhoIsTracked.arrangeMeeting()
+
+      else:
+         # If CEO is busy, then wait for 5 secs
+         time.sleep(5)
+         self.CEOWhoIsTracked.busy()
+         print('CEO is busy right now. Check back later.')
+
+
+if __name__ == '__main__':
+
+   # Create Secretary object
+   S = Secretary()
+
+   # Ask Secretary to make an appointment
+   S.make_appts()
+
+   # Update the CEO status to Busy
+   S.CEObusy = 'Yes'
+
+
+
+eussjlts0602 [16:13] [enavsre/Desktop/Python-3.5.1] -> ./python proxy.py
+*** Secretary is checking if CEO is available ***
+CEO is available to meet you now
+*** Secretary is checking if CEO is available ***
+CEO is busy with Customer meetings
+CEO is busy right now. Check back later.
+eussjlts0602 [16:13] [enavsre/Desktop/Python-3.5.1] ->
+
+
+~~~~~~~~~~~~~~~~
+ADAPTER CLASSES
+~~~~~~~~~~~~~~~~
+
+Adapter converts the interface of a class into another one a client is expecting. This time
+our problem is that the interfaces are incompatible between a client and a server. In our
+scenario, we have Korean and British objects which have different method names for speaking.
+Instead, the client would like to use a uniform interface that is the speak method.
+
+In the following example, we are going to create a GenericAdapter (sort of HLTAPI) that will
+call the appropriate connect methods depending on the type of object being connected to.
+We will create one general 'connect' method which will call appropriate connect methods
+within each chassis object (Ixia or Spirent)
+
+import time
+
+class Ixia:
+
+   '''This class connect to Ixia'''
+
+   def __init__(self,ipaddress):
+      self.name = 'Ixia'
+      self.connected = 'No'
+      self.ixiaIP = ipaddress
+
+   def connect_via_ssh(self):
+
+      '''Implements method to SSH to ixia'''
+
+      if self.connected == 'No':
+         print('Attempting to SSH to ixia ip address : {}'.format(self.ixiaIP))
+         time.sleep(2)
+         print('Connection successful')
+         self.connected = 'Yes'
+      else:
+         print('Already connected to Ixia')
+         print('Using Existing Session Handler')
+
+
+class Spirent:
+
+   '''This class connect to Spirent'''
+
+   def __init__(self,ipaddress):
+      self.name = 'Spirent'
+      self.connected = 'No'
+      self.spirentIP = ipaddress
+
+   def connect_via_telnet(self):
+
+      '''Implements method to Telnet to Sprirent'''
+
+      if self.connected == 'No':
+         print('Attempting to Telnet to ip address : {}'.format(self.spirentIP))
+         time.sleep(2)
+         print('Connection successful')
+         self.connected = 'Yes'
+      else:
+         print('Already connected to Spirent')
+         print('Using Existing Session Handler')
+
+
+class GenericAdapter:
+
+   '''Implement an Adapter class that implements connect_generic() method
+      which works for either ixia or spirent class objects'''
+
+   def __init__(self,chassisObj,**kwargs):
+      '''Change the name of the method'''
+
+      self.chassis = chassisObj
+      self.__dict__.update(kwargs)
+
+   def __getattr__(self,attr):
+      '''Return the rest of the attributes'''
+      return getattr(self.chassis,attr)
+
+
+if __name__ == '__main__':
+
+   chassisList = []
+   ixiaObj = Ixia('10.1.1.1')
+   spirentObj = Spirent('20.1.1.1')
+
+   # Create a mapping between generic 'Connect' to 'connect_via_X'
+   # If ixiaObj.Connect() is called, then map it to ixiaObj.connect_via_ssh
+   # If spirentObj.Connect() is called, then map it to spirentObj.connect_via_telnet
+  
+   chassisList.append(GenericAdapter(ixiaObj, Connect=ixiaObj.connect_via_ssh))
+   chassisList.append(GenericAdapter(spirentObj, Connect=spirentObj.connect_via_telnet))
+
+   for chassis in chassisList:
+      print('Connected to {} using {} method'.format(chassis.name,chassis.Connect.__name__))
+
+
+
+eussjlts0602 [17:26] [enavsre/Desktop/Python-3.5.1] -> ./python adapter.py
+Connected to Ixia using connect_via_ssh method
+Connected to Spirent using connect_via_telnet method
+eussjlts0602 [17:26] [enavsre/Desktop/Python-3.5.1] ->
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+OBSERVER AND OBSERVED
+~~~~~~~~~~~~~~~~~~~~~~
+
+Observer establishes a one-to-many relationship between a subject and multiple observers.
+Our problem here is that a subject object need to be monitored, and other observer objects
+need to be notified when there is a change in the subject. In our scenario we need to be
+able keep track of core temperatures of reactors at a power plant. When there is a change
+in the core temperature registered observers need to be notified.
+
+
+class Subject:
+   '''Implements the Subject class'''
+
+   def __init__(self,item_monitored):
+      self._name = item_monitored
+      self._temp = 0
+      self._observers = []
+
+   def attach(self,observer):
+      if observer not in self._observers:
+         self._observers.append(observer)
+
+   def detach(self,observer):
+      try:
+         self._observers.remove(observer)
+      except:
+         pass
+
+   def get_temp(self):
+      return self._temp
+
+   def set_temp(self,newtemp):
+      self._temp = newtemp
+      self.notify()              <-- call notify() method and alert all Viewers/Observers
+
+   def notify(self):
+      for observer in self._observers:
+         observer.update(self)   <-- Send 'self' so that Viewers/Observers can report the
+                                     subject modified and its current value. We have the
+                                     reference to the Viewers/Observers object here
+
+class Viewer:
+   '''Implements the Observer class'''
+
+   def __init__(self,name):
+      self._name = name
+
+   def update(self,subject):     <-- Has a reference to Subject class
+      print('Viewer {} was notified of new Temperature value : {} on Subject {}'.format(self._name, subject._temp, subject._name))
+
+
+
+if __name__ =='__main__':
+
+   S1 = Subject('Sensor 1')
+
+   V1 = Viewer('v1')
+   V2 = Viewer('v2')
+
+   S1.attach(V1)
+   S1.attach(V2)
+
+   S1.set_temp(80)
+   S1.set_temp(90)
+
+
+
+eussjlts0602 [18:03] [enavsre/Desktop/Python-3.5.1] -> ./python observer.py
+Viewer v1 was notified of new Temperature value : 80 on Subject Sensor 1
+Viewer v2 was notified of new Temperature value : 80 on Subject Sensor 1
+Viewer v1 was notified of new Temperature value : 90 on Subject Sensor 1
+Viewer v2 was notified of new Temperature value : 90 on Subject Sensor 1
+eussjlts0602 [18:03] [enavsre/Desktop/Python-3.5.1] ->
+
+
+
+~~~~~~~~
+VISITORS
+~~~~~~~~
+
+The Visitor design pattern allows adding new features to an existing class hierarchy without changing it.
+It is sometimes necessary to add new operations dynamically to existing classes with minimal changes.
+For our scenario, we present a House class. Visitors in this scenario include HVAC specialist and Electrician.
+HVAC specialist in our scenario is Visitor type 1 and Electrician is Visitor type 2.
+
+import re
+import time
+
+class House:
+   '''Implements the House class and defines methods
+      that accepts certain visitors'''
+
+   def __init__(self):
+      print('House object created')
+
+   def accept(self,visitor):
+
+      self.visitor = visitor
+      self.allowed_visitors = ['hvac_specialist','electrician']
+      visitor_name = visitor.__class__.__name__    <-- Prints the class name of the object. IMP!!!
+      print(visitor_name)
+
+      if visitor_name.lower() in self.allowed_visitors:
+         print('Visitor {} is allowed to operate on House'.format(visitor_name))
+         visitor.perform_job(self)
+      else:
+         print('Visitor is NOT allowed')
+
+   def joblist(self,visitor):
+      visitor_name = visitor.__class__.__name__
+      print('Visitor {} working on Task 1'.format(visitor_name))
+      time.sleep(1)
+      print('Visitor {} working on Task 2'.format(visitor_name))
+      time.sleep(1)
+      print('Visitor {} working on Task 3'.format(visitor_name))
+      time.sleep(1)
+      print('Visitor {} working on Task 4'.format(visitor_name))
+      time.sleep(1)
+      print('Visitor {} working on Task 5'.format(visitor_name))
+      time.sleep(1)
+
+
+class hvac_specialist:
+   '''Implements the HVAC specialist class'''
+
+   def __init__(self):
+      print('HVAC specialist class created')
+
+   def perform_job(self,house):
+      house.joblist(self)
+
+
+class electrician:
+   '''Implements the Electrician class'''
+
+   def __init__(self):
+      print('Electrician class created')
+
+   def perform_job(self,house):
+      house.joblist(self)
+
+
+if __name__ == '__main__':
+
+   house = House()
+   visitor1  = hvac_specialist()
+   visitor2  = electrician()
+   house.accept(visitor1)
+   house.accept(visitor2)
+
+
+
+eussjlts0602 [20:07] [enavsre/Desktop/Python-3.5.1] -> ./python visitors.py
+House object created
+HVAC specialist class created
+Electrician class created
+hvac_specialist
+Visitor hvac_specialist is allowed to operate on House
+Visitor hvac_specialist working on Task 1
+Visitor hvac_specialist working on Task 2
+Visitor hvac_specialist working on Task 3
+Visitor hvac_specialist working on Task 4
+Visitor hvac_specialist working on Task 5
+electrician
+Visitor electrician is allowed to operate on House
+Visitor electrician working on Task 1
+Visitor electrician working on Task 2
+Visitor electrician working on Task 3
+Visitor electrician working on Task 4
+Visitor electrician working on Task 5
+eussjlts0602 [20:07] [enavsre/Desktop/Python-3.5.1] ->
+
+
+~~~~~~~~
+STRATEGY
+~~~~~~~~
+
+The Strategy pattern offers a family of interchangeable algorithms to a client.
+The problem we often see is that there is a need for dynamically changing the
+behavior of an object. So we offer our Strategy class with its default behavior.
+When there is a need, we provide another variation of the Strategy class by
+dynamically replacing its default method with a new one.
+
+
+import types
+
+class Strategy:
+   '''Implements Strategy class and dynamically calls the appropriate function'''
+
+   def __init__(self, function=None):
+      self.name = 'Default Strategy'
+      if function:
+         self.execute = types.MethodType(function,self)
+
+   def execute(self):                                <-- Call this function in 'Default Strategy'
+      print('{} format is used'.format(self.name))
+
+
+#Replacement Method 1
+def strategy_one(self):                              <-- Call this function dynamically when User requests 'strategy_one'
+   print('{} is used to execute method 1'.format(self.name))
+
+#Replacement Method 2
+def strategy_two(self):                              <-- Call this function dynamically when User requests 'strategy_two'
+   print('{} is used to execute method 2'.format(self.name))
+
+
+if __name__ == '__main__':
+
+   s0 = Strategy()
+   s0.execute()
+
+   s1 = Strategy(strategy_one)
+   s1.name = 'Strategy One'
+   s1.execute()
+
+   s2 = Strategy(strategy_two)
+   s2.name = 'Strategy Two'
+   s2.execute()
+
+
+eussjlts0602 [20:44] [enavsre/Desktop/Python-3.5.1] -> ./python strategy.py
+Default Strategy format is used
+Strategy One is used to execute method 1
+Strategy Two is used to execute method 2
+eussjlts0602 [20:45] [enavsre/Desktop/Python-3.5.1] ->
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+PYTHON TIPS, TRICKS AND INTERVIEW QUESTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Trick #1
+========
+Reversing a string in Python
+
+>>> a =  "codementor"
+>>> print "Reverse is",a[::-1]
+Reverse is rotnemedoc
+
+Trick #2
+========
+Transposing a Matrix
+
+>>> mat = [[1, 2, 3], [4, 5, 6]]
+>>> zip(*mat)
+[(1, 4), (2, 5), (3, 6)]
+
+Trick #8:
+========
+a = [[1, 2], [3, 4], [5, 6]]
+Convert it to a single list without using any loops.
+Output:- [1, 2, 3, 4, 5, 6]
+
+>>> import itertools 
+>>> list(itertools.chain.from_iterable(a))
+[1, 2, 3, 4, 5, 6]
+
+Trick #10:
+==========
+Take a string input.
+For example "1 2 3 4" and return [1, 2, 3, 4]
+
+Remember list being returned has integers in it. Don't use more than one line of code.
+
+>>> result = map(lambda x:int(x) ,raw_input().split())
+1 2 3 4
+>>> result
+[1, 2, 3, 4]
+
+Python Question 1:
+==================
+Print all files in a directory and it sub-directories
+
+def print_directory_contents(sPath):
+    import os                                       
+    for sChild in os.listdir(sPath):                
+        sChildPath = os.path.join(sPath,sChild)
+        if os.path.isdir(sChildPath):
+            print_directory_contents(sChildPath)
+        else:
+            print(sChildPath)
+
+Python Question 2:
+=================
+To prove which one is faster, use the cProfile package.
+			
+def f1(lIn):
+    l1 = sorted(lIn)
+    l2 = [i for i in l1 if i<0.5]
+    return [i*i for i in l2]
+
+def f2(lIn):
+    l1 = [i for i in lIn if i<0.5]
+    l2 = sorted(l1)
+    return [i*i for i in l2]
+
+def f3(lIn):
+    l1 = [i*i for i in lIn]
+    l2 = sorted(l1)
+    return [i for i in l1 if i<(0.5*0.5)]
+
+import cProfile
+import random
+lIn = [random.random() for i in range(100000)]
+cProfile.run('f1(lIn)')
+cProfile.run('f2(lIn)')
+cProfile.run('f3(lIn)')
+
+>>> cProfile.run('f1(lIn)')
+         7 function calls in 0.057 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.056    0.056 <stdin>:1(f1)
+        1    0.005    0.005    0.005    0.005 <stdin>:3(<listcomp>)
+        1    0.003    0.003    0.003    0.003 <stdin>:4(<listcomp>)
+        1    0.001    0.001    0.057    0.057 <string>:1(<module>)
+        1    0.000    0.000    0.057    0.057 {built-in method exec}
+        1    0.047    0.047    0.047    0.047 {built-in method sorted}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
+>>> cProfile.run('f2(lIn)')
+         7 function calls in 0.029 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.028    0.028 <stdin>:1(f2)
+        1    0.005    0.005    0.005    0.005 <stdin>:2(<listcomp>)
+        1    0.003    0.003    0.003    0.003 <stdin>:4(<listcomp>)
+        1    0.001    0.001    0.029    0.029 <string>:1(<module>)
+        1    0.000    0.000    0.029    0.029 {built-in method exec}
+        1    0.020    0.020    0.020    0.020 {built-in method sorted}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
+>>> cProfile.run('f3(lIn)')
+         7 function calls in 0.054 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.053    0.053 <stdin>:1(f3)
+        1    0.005    0.005    0.005    0.005 <stdin>:2(<listcomp>)
+        1    0.004    0.004    0.004    0.004 <stdin>:4(<listcomp>)
+        1    0.001    0.001    0.054    0.054 <string>:1(<module>)
+        1    0.000    0.000    0.054    0.054 {built-in method exec}
+        1    0.043    0.043    0.043    0.043 {built-in method sorted}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
+>>>	
+
+Python Question 3
+=================
+Explain decorators in simple terms.
+
+@my_decorator
+def my_func(stuff):
+    do_things
+
+---Is equivalent to---
+
+def my_func(stuff):
+    do_things
+
+my_func = my_decorator(my_func)
+
+
+Python Question 4
+=================
+More examples of decorators:
+
+def time_this(original_function):      
+    def new_function(*args,**kwargs):
+        import datetime                 
+        before = datetime.datetime.now()                     
+        x = original_function(*args,**kwargs)                
+        after = datetime.datetime.now()                      
+        print "Elapsed Time = {0}".format(after-before)      
+        return x                                             
+    return new_function                                   
+
+@time_this
+def func_a(stuff):
+    import time
+    time.sleep(3)
+
+func_a(1)
+
+
+
+
+
+
+
+M I S C E L L A N E O U S
+=========================
+
+Data Persistance
+	Supports storing Python data in a persistent form on disk.
+	pickle—Python object serialization
+	Implements powerful algorithm for serializing and deserializing a Python object structure.
+	anydbm—Generic access to DBM—style databases
+	Generic interface to varients of the DBM database. This library has been renamed to dbm in Python 3.x.
+	sqlite3—API interface for SQLite databases
+	Provides a SQL interface to SQLite databases.
+
+Cryptographic Services
+	This set of library modules implements various algorithms of a cryptographic nature.
+	hashlib—Secure hashes and message digest algorithm
+	Implements a common interface to many different secure hash and message algorithms.
+	md5—MD5 message digest algorithm
+	Implements an interface to RSA's MD5 algorithm.
+	sha—SHA—1 message digest algorithm
+	Implements an interface to NIST's Secure Hash Algorithm.
+
+Structured Markup Processing Tools
+	Provides support for working with various forms of structured data markup.
+	HTMLParser—Simple HTML and XHTML parser
+	Provides basis for parsing text files formatted in HTML and XHTML. HTMLParser has been renamed to html.parser in Python 3.x.
+	htmllib—Parser for HTML documents
+	Provides a class that allows for parsing text files formatted in HTML. Removed in Python 3.
+	xml.etree.elementtree—ElementTree XML API
+	Provides a flexable container object that handles XML files.
+	xml.dom—The Document Object Module API
+	Provides an easy way to handls DOM XML files.
+	xml.sax—Support for SAX2 parsers
+	Provides a number of librarys for SAX.
+
+Internet Protocols and support
+	Provides libraries that implement Internet protocols and support for related technology.
+	webbrowser—Convienient Web—browser controller
+	Provides a high-level interface to allow displaying Web-based documents to users.
+	cgi—Common Gateway Interface support
+	Support library for Common Gateway Interface (CGI) scripts.
+	urllib—Open arbitrary resources by URL
+	Provides a high-level interface for fetching data across the World Wide Web. Has been split into parts and renamed in Python 3, named urllib.request, urllib.parse, and urllib.error. urllib.urlopen( ) function has been removed in Python 3.x in favor of urllib2.urlopen().
+	urllib2—extensible library for opening URSs
+	Provides functions and classes that help opening URLs. Has been split across several modules in Python 3 named urllib.request and urllib.error.
+	poplib—POP3 protocol client
+	Provides a class that allows connection to POP3 servers.
+
+
+
+FROM MASTERING PYTHON REGULAR EXPRESSIONS
+=========================================
+
+There are two ways of matching patterns and executing the operations related to the regular expressions. We can compile a pattern, which gives us a RegexObject, or we can use the module operations. Let's compare the two different mechanisms in the following examples.
+If we want to re-use the regular expression, we can use the following code:
+>>> pattern = re.compile(r'<HTML>')
+>>> pattern.match("<HTML>")
+
+On the other hand, we can directly perform the operation on the module using the following line of code:
+>>> re.match(r'<HTML>', "<HTML>")
+
+The re module provides a wrapper for every operation in the RegexObject. You can see them as shortcuts.
+
+Internally, these wrappers create the RegexObject and then call the corresponding method. You might be wondering whether every time you call one of these wrappers it compiles the regular expression first. The answer is no. The re module caches the compiled pattern so that in future calls it doesn't have to compile it again.
+Beware of the memory needs of your program. When you're using module operations, you don't control the cache, and so you can end up with a lot of memory usage. You can always use re.purge to clear the cache but this is a tradeoff with performance. Using compiled patterns allows you to have a fine-grained control of the memory consumption because you can decide when to purge them.
+There are some differences between both ways though. With the RegexObject, it is possible to limit the region in which the pattern will be searched, for example limit the search of a pattern between the characters at index 2 and 20. In addition to that, you can set flags in every call by using the operations in the module. However, be careful; every time you change the flag, a new pattern will be compiled and cached.
+
+match(string[, pos[, endpos]])
+This method tries to match the compiled pattern only at the beginning of the string. If there is a match, then it returns a MatchObject.
+The optional pos parameter specifies where to start searching, as shown in the following code:
+>>> pattern = re.compile(r'<HTML>')
+>>> pattern.match("⇢ ⇢ <HTML>")
+    None
+>>> pattern.match("⇢ ⇢ <HTML>", 2)
+   <_sre.SRE_Match at 0x1043bc850>
+
+In the highlighted code, we can see how the pattern has a match even though there are two whitespaces in the string. This is possible because we've set pos to 2, so the match operation starts searching in that position.
+
+>>> pattern = re.compile(r'^<HTML>')   <— using ^ anchor
+>>> pattern.match("<HTML>")
+   <_sre.SRE_Match at 0x1043bc8b8>
+
+Anchor characters tip
+The characters ^ and $ indicate the start and end of the string respectively. You can neither see them in the strings nor write them, but they are always there and are valid characters for the regex engine.
+
+The second argument, endpos, sets how far the pattern will try to match in the string. In the following case, it's equivalent to slicing:
+
+>>> pattern = re.compile(r'<HTML>$')
+>>> pattern.match("<HTML>⇢", 0,6)
+<_sre.SRE_Match object at 0x1007033d8>
+>>> pattern.match("<HTML>⇢"[:6])
+<_sre.SRE_Match object at 0x100703370>
+
+As you can see, there is no difference between slicing and endpos.
+
+search(string[, pos[, endpos]])
+This operation would be like the match of many languages, Perl for example. It tries to match the pattern at any location of the string and not just at the beginning. If there is a match, it returns a MatchObject.
+>>> pattern = re.compile(r"world")
+>>> pattern.search("hello⇢world")
+   <_sre.SRE_Match at 0x1080901d0>
+>>> pattern.search("hola⇢mundo ")
+    None
+
+The pos and endpos parameters have the same meaning as that in the match operation.
+Note that with the MULTILINE flag, the ^ symbol matches at the beginning of the string and at the beginning of each line (we'll see more on this flag later). So, it changes the behavior of search.
+In the following example, the first search matches <HTML> because it's at the beginning of the string, but the second search doesn't match because the string starts with a whitespace. And finally, in the third search, we have a match as we find <HTML> right after new line, thanks to re.MULTILINE.
+>>> pattern = re.compile(r'^<HTML>', re.MULTILINE)
+>>> pattern.search("<HTML>")
+   <_sre.SRE_Match at 0x1043d3100>
+>>> pattern.search("⇢<HTML>")
+   None
+>>> pattern.search("⇢ ⇢\n<HTML>")
+   <_sre.SRE_Match at 0x1043bce68>
+
+So, as long as the pos parameter is less than, or equal to, the new lines, there will be a match.
+>>> pattern.search("⇢ ⇢\n<HTML>",  3)
+  <_sre.SRE_Match at 0x1043bced0>
+>>> pattern.search('</div></body>\n<HTML>', 4)
+  <_sre.SRE_Match at 0x1036d77e8>
+>>> pattern.search("  \n<HTML>", 4)
+   None
+
+findall(string[, pos[, endpos]])
+The previous operations worked with one match at a time. On the contrary, in this case it returns a list with all the non-overlapping occurrences of a pattern and not the MatchObject like search and match do.
+In the following example, we're looking for every word in a string. So, we obtain a list in which every item is the pattern found, in this case a word.
+>>> pattern = re.compile(r"\w+")
+>>> pattern.findall("hello⇢world")
+    ['hello', 'world']
+
+
+sub(repl, string, count=0)
+This operation returns the resulting string after replacing the matched pattern in the original string with the replacement. If the pattern is not found, the original string is returned. For example, we're going to replace the digits in the string with - (dash):
+>>> pattern = re.compile(r"[0-9]+")
+>>> pattern.sub("-", "order0⇢order1⇢order13")
+  'order-⇢order-⇢order-'
+Basically, the regex matches 1 and more digits and replaces the pattern matched, 0, 1, and 13 here, with - (dash).
+Note that it replaces the leftmost non-overlapping occurrences of the pattern.
+
+
+subn(repl, string, count=0)
+It is basically the same operation as sub, you can think of it as a utility above sub. It returns a tuple with the new string and the number of substitutions made. Let us see the working by using the same example as before:
+>>> text = "imagine⇢a⇢new⇢*world*,⇢a⇢magic⇢*world*"
+>>> pattern = re.compile(r'\*(.*?)\*')
+>>> pattern.subn(r"<b>\g<1><\\b>", text)
+('imagine⇢a⇢new⇢<b>world<\\b>,⇢a⇢magic⇢<b>world<\\b>', 2)
+
+
+
+MatchObject
+This object represents the matched pattern; you will get one every time you execute one of these operations:
+•	match
+•	search
+•	finditer
+
+
+>>> pattern = re.compile(r"(\w+) (\w+)")
+>>> match = pattern.search("Hello⇢world")
+
+The pattern matches the whole string and captures two groups, Hello and world. Once we have the match, we can see the the following concrete cases:
+•	With no arguments or zero, it returns the entire match. >>> match.group()
+•			Hello⇢world'
+
+•	>>> match.group(0)
+•			'Hello⇢world' 
+•	With group1 bigger than 0, it returns the corresponding group. >>> match.group(1)
+•			'Hello'
+
+•	>>> match.group(2)
+•	'world' 
+•	If the group doesn't exist, an IndexError will be thrown. 
+•	>>> match.group(3)
+•	…
+•	IndexError: no such group 
+•	With multiple arguments, it returns the corresponding groups. >>> match.group(0, 2)
+•	   ('Hello⇢world', 'world')  In this case, we want the whole pattern and the second group, that's why we pass 0 and 2.
+
+•	Groups can be named, we'll see it in depth in the next chapter; there is a special notation for it. If the pattern has named groups, they can be accessed using the names or the index:
+•	>>> pattern = re.compile(r"(?P<first>\w+) (?P<second>\w+)")
+•	
+•	In the preceding example, we've compiled a pattern to capture two groups: the first one is named first and the second one is named second.
+•	>>> match = pattern.search("Hello⇢world")
+•	>>> match.group('first')
+•	'Hello'
+•	
+•	
+groups([default])
+The groups operation is similar to the previous operation. However, in this case it returns a tuple with all the subgroups in the match instead of giving you one or some of the groups. Let's see it with the example we've used in the previous section:
+>>> pattern = re.compile("(\w+) (\w+)")
+>>> match = pattern.search("Hello⇢World")
+>>> match.groups()
+   ('Hello', 'World')
+
+As we had in the previous section, we have two groups Hello and World and that's exactly what groups gives us. In this case, you can see groups as group(1, lastGroup).
+In case there are groups that don't match, the default argument is returned. If the default argument is not specified then None is used, for example:
+>>> pattern = re.compile("(\w+) (\w+)?")
+>>> match = pattern.search("Hello⇢")
+>>> match.groups("mundo")
+   ('Hello', 'mundo')
+>>> match.groups()
+   ('Hello', None)
+
+The pattern in the preceding example is trying to match two groups made of one or more alphanumeric characters. The second one is optional; so we get only one group with the string Hello. After getting the match, we call groups with default set to mundo so that it returns mundo as the second group. Note that in the following call we don't set default, so None is returned.
+groupdict([default])
+The groupdict method is used in the cases where named groups have been used. It will return a dictionary with all the groups that were found:
+>>> pattern = re.compile(r"(?P<first>\w+) (?P<second>\w+)")
+>>> pattern.search("Hello⇢world").groupdict()
+{'first': 'Hello', 'second': 'world'}
+
+In the preceding example, we use a pattern similar to what we've seen in the previous sections. It captures two groups with the names first and second. So, groupdict returns them in a dictionary. Note that if there aren't named groups, then it returns an empty dictionary.
+
+start([group])
+Sometimes, it is useful to know the index where the pattern matched. As with all the operations related to groups, if the argument group is zero, then the operation works with the whole string matched:
+>>> pattern = re.compile(r"(?P<first>\w+) (?P<second>\w+)?")
+>>> match = pattern.search("Hello⇢")
+>>> match.start(1)
+0
+If there are groups that don't match, then -1 is returned:
+>>> math = pattern.search("Hello⇢")
+>>> match..start(2)
+-1
+
+end([group])
+The end operation behaves exactly the same as start, except that it returns the end of the substring matched by the group:
+>>> pattern = re.compile(r"(?P<first>\w+) (?P<second>\w+)?")
+>>> match = pattern.search("Hello⇢")
+>>> match.end (1)
+5
+
+span([group])
+It's an operation that gives you a tuple with the values from start and end. This operation is often used in text editors to locate and highlight a search. The following code is an example of this operation:
+>>> pattern = re.compile(r"(?P<first>\w+) (?P<second>\w+)?")
+>>> match = pattern.search("Hello⇢")
+>>> match.span(1)
+(0, 5)
+
+expand(template)
+This operation returns the string after replacing it with backreferences in the template string. It's similar to sub.
+Continuing with the example in the previous section:
+>>> text = "imagine⇢a⇢new⇢*world*,⇢a⇢magic⇢*world*"
+>>> match = re.search(r'\*(.*?)\*', text)
+>>> match.expand(r"<b>\g<1><\\b>")
+  '<b>world<\\b>'
+
+Module operations
+Let's see two useful operations from the module.
+escape()
+It escapes the literals that may appear in the expressions.
+>>> re.findall(re.escape("^"), "^like^")
+['^', '^']
+
+purge()
+It purges the regular expressions cache. We've already talked about this; you need to use this in order to release memory when you're using the operations through the module. Keep in mind that there is a tradeoff with the performance; once you release the cache, every pattern has to be compiled and cached again.
+
+Backreferences
+As we've mentioned previously, one of the most powerful functionalities that grouping gives us is the possibility of using the captured group inside the regex or other operations. That's exactly what backreferences provide. Probably the best known example to bring some clarity is the regex to find duplicated words, as shown in the following code:
+>>>pattern = re.compile(r"(\w+) \1")
+>>>match = pattern.search(r"hello hello world")
+>>>match.groups()
+('hello',)
+
+Here, we're capturing a group made up of one or more alphanumeric characters, after which the pattern tries to match a whitespace, and finally we have the \1 backreference. You can see it highlighted in the code, meaning that it must exactly match the same thing it matched as the first group.
+
+Named groups
+Remember from the previous chapter when we got a group through an index?
+>>>pattern = re.compile(r"(\w+) (\w+)")
+>>>match = pattern.search("Hello⇢world")
+>>>match.group(1)
+  'Hello'
+>>>match.group(2)
+  'world'
+
+We just learnt how to access the groups using indexes to extract information and to use it as backreferences. Using numbers to refer to groups can be tedious and confusing, and the worst thing is that it doesn't allow you to give meaning or context to the group. That's why we have named groups. In order to use it, we have to use the syntax,(?P<name>pattern), where the P comes from Python-specific extensions.
+
+Let's see how it works with the previous example in the following code snippet:
+>>> pattern = re.compile(r"(?P<first>\w+) (?P<second>\w+)")
+>>> match = re.search("Hello world")
+>>>match.group("first")
+  'Hello'
+>>>match.group("second")
+  'world'
+
+So, backreferences are now much simpler to use and maintain as is evident in the following example:
+>>>pattern = re.compile(r"(?P<country>\d+)-(?P<id>\w+)")
+>>>pattern.sub(r"\g<id>-\g<country>", "1-a\n20-baer\n34-afcr")
+'a-1\nbaer-20\nafcr-34'
+
+As we see in the previous example, in order to reference a group by the name in the sub operation, we have to use \g<name>.
+We can also use named groups inside the pattern itself, as seen in the following example:
+>>>pattern = re.compile(r"(?P<word>\w+) (?P=word)")
+>>>match = pattern.search(r"hello hello world")
+>>>match.groups()
+('hello',)
+
+This is simpler and more readable than using numbers.
+Through these examples, we've used the following three different ways to refer to named groups:
+Use	Syntax
+Inside a pattern	(?P=name)
+In the repl string of the sub operation	\g<name>
+In any of the operations of the MatchObject	match.group('name')
+
+
